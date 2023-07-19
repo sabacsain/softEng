@@ -7,7 +7,7 @@ from pathlib import Path
 
 # from tkinter import *
 # Explicit imports to satisfy Flake8
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, ttk
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -403,5 +403,35 @@ button_8.place(
     width=21.0,
     height=30.0
 )
+
+#########################################################################
+# CUSTOM CODE
+
+#function to get value of combo box
+def cbx_type_click(event):
+    global type
+    type = cbx_type.get()
+    print(type)
+
+# DROPDOWN MENU
+cbx_type_options = ["Canned Goods", "Fruit", "Meat", "Vegetable"]       # change me
+cbx_type  = ttk.Combobox(values=cbx_type_options)
+cbx_type.bind("<<ComboboxSelected>>", cbx_type_click)
+cbx_type.place(
+x=1035.0,
+y=460.0,
+width=184,
+height=56,
+)
+cbx_type.config(
+font=("Inter ExtraLight", 20 * -1),
+justify="center",
+state="readonly"
+)
+
+
+
+
+
 window.resizable(False, False)
 window.mainloop()
