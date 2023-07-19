@@ -36,6 +36,57 @@ canvas = Canvas(
 
 canvas.place(x = 0, y = 0)
 canvas.create_rectangle(
+    994.0,
+    178.0,
+    1222.0,
+    322.0,
+    fill="#17232D",
+    outline="")
+
+canvas.create_rectangle(
+    395.0,
+    179.0,
+    662.0,
+    322.0,
+    fill="#16232C",
+    outline="")
+
+canvas.create_rectangle(
+    665.0,
+    179.0,
+    991.0,
+    322.0,
+    fill="#17232D",
+    outline="")
+
+canvas.create_text(
+    440.0,
+    264.0,
+    anchor="nw",
+    text="Meat",
+    fill="#8AC926",
+    font=("Poppins Black", 35 * -1)
+)
+
+canvas.create_text(
+    700.0,
+    264.0,
+    anchor="nw",
+    text="PHP 12342",
+    fill="#8AC926",
+    font=("Poppins Black", 40 * -1)
+)
+
+canvas.create_text(
+    1012.0,
+    264.0,
+    anchor="nw",
+    text="4",
+    fill="#A2EA2E",
+    font=("Poppins Black", 40 * -1)
+)
+
+canvas.create_rectangle(
     0.0,
     1.0,
     336.0,
@@ -123,6 +174,92 @@ image_2 = canvas.create_image(
     image=image_image_2
 )
 
+canvas.create_rectangle(
+    395.0,
+    127.0,
+    1222.0,
+    173.0,
+    fill="#000000",
+    outline="")
+
+canvas.create_text(
+    408.0,
+    139.0,
+    anchor="nw",
+    text="Current Day Waste Report",
+    fill="#FFFFFF",
+    font=("Poppins SemiBold", 14 * -1)
+)
+
+canvas.create_text(
+    441.0,
+    200.0,
+    anchor="nw",
+    text="Most Wasted Food Item By Price",
+    fill="#FFFFFF",
+    font=("Poppins Bold", 20 * -1)
+)
+
+canvas.create_text(
+    700.0,
+    200.0,
+    anchor="nw",
+    text="Accumulated Price of All Food Wastes",
+    fill="#FFFFFF",
+    font=("Poppins Bold", 20 * -1)
+)
+
+canvas.create_text(
+    441.0,
+    290.0,
+    anchor="nw",
+    text="PHP 2000",
+    fill="#8AC926",
+    font=("Poppins Bold", 20 * -1)
+)
+
+canvas.create_text(
+    441.0,
+    290.0,
+    anchor="nw",
+    text="PHP 2000",
+    fill="#8AC926",
+    font=("Poppins Bold", 20 * -1)
+)
+
+canvas.create_rectangle(
+    393.0,
+    401.0,
+    1220.0,
+    447.0,
+    fill="#000000",
+    outline="")
+
+canvas.create_text(
+    406.0,
+    413.0,
+    anchor="nw",
+    text="Periodic Waste Report",
+    fill="#FFFFFF",
+    font=("Poppins SemiBold", 14 * -1)
+)
+
+image_image_3 = PhotoImage(
+    file=relative_to_assets("image_3.png"))
+image_3 = canvas.create_image(
+    1153.0,
+    423.0,
+    image=image_image_3
+)
+
+image_image_4 = PhotoImage(
+    file=relative_to_assets("image_4.png"))
+image_4 = canvas.create_image(
+    1028.0,
+    423.0,
+    image=image_image_4
+)
+
 canvas.create_text(
     393.0,
     64.0,
@@ -130,6 +267,158 @@ canvas.create_text(
     text="Waste Report",
     fill="#8AC926",
     font=("Poppins Bold", 25 * -1)
+)
+
+button_image_5 = PhotoImage(
+    file=relative_to_assets("button_5.png"))
+button_5 = Button(
+    image=button_image_5,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: print("button_5 clicked"),
+    relief="flat"
+)
+button_5.place(
+    x=1044.0,
+    y=612.0,
+    width=173.0,
+    height=32.0
+)
+
+button_image_6 = PhotoImage(
+    file=relative_to_assets("button_6.png"))
+button_6 = Button(
+    image=button_image_6,
+    borderwidth=0,
+    highlightthickness=0,
+    command=lambda: print("button_6 clicked"),
+    relief="flat"
+)
+button_6.place(
+    x=1040.0,
+    y=335.0,
+    width=180.0,
+    height=32.0
+)
+
+canvas.create_rectangle(
+    393.0,
+    110.0,
+    1222.0,
+    112.0,
+    fill="#030302",
+    outline="")
+
+canvas.create_rectangle(
+    391.0,
+    378.0,
+    1220.0,
+    380.0,
+    fill="#030302",
+    outline="")
+
+canvas.create_rectangle(
+    391.0,
+    663.0,
+    1220.0,
+    665.0,
+    fill="#030302",
+    outline="")
+
+canvas.create_text(
+    1009.0,
+    197.0,
+    anchor="nw",
+    text="Total Kilograms of Food Wastes",
+    fill="#FFFFFF",
+    font=("Poppins Bold", 20 * -1)
+)
+
+canvas.create_rectangle(
+    989.0,
+    455.0,
+    1217.0,
+    599.0,
+    fill="#A2EA2E",
+    outline="")
+
+canvas.create_rectangle(
+    390.0,
+    456.0,
+    657.0,
+    599.0,
+    fill="#A2EA2E",
+    outline="")
+
+canvas.create_rectangle(
+    660.0,
+    456.0,
+    986.0,
+    599.0,
+    fill="#A2EA2E",
+    outline="")
+
+canvas.create_text(
+    435.0,
+    541.0,
+    anchor="nw",
+    text="Meat",
+    fill="#2D2F36",
+    font=("Poppins Black", 35 * -1)
+)
+
+canvas.create_text(
+    695.0,
+    556.0,
+    anchor="nw",
+    text="PHP 12342",
+    fill="#263B4A",
+    font=("Poppins Black", 40 * -1)
+)
+
+canvas.create_text(
+    1007.0,
+    552.0,
+    anchor="nw",
+    text="4",
+    fill="#33363F",
+    font=("Poppins Black", 40 * -1)
+)
+
+canvas.create_text(
+    436.0,
+    477.0,
+    anchor="nw",
+    text="Most Wasted Food Item By Price",
+    fill="#12191D",
+    font=("Poppins Bold", 20 * -1)
+)
+
+canvas.create_text(
+    1004.0,
+    474.0,
+    anchor="nw",
+    text="Total Kilograms of Food Wastes",
+    fill="#212C35",
+    font=("Poppins Bold", 20 * -1)
+)
+
+canvas.create_text(
+    436.0,
+    564.0,
+    anchor="nw",
+    text="PHP 2000",
+    fill="#33363F",
+    font=("Poppins Bold", 20 * -1)
+)
+
+canvas.create_text(
+    695.0,
+    477.0,
+    anchor="nw",
+    text="Accumulated Price of All Food Wastes",
+    fill="#220000",
+    font=("Poppins Bold", 20 * -1)
 )
 window.resizable(False, False)
 window.mainloop()
