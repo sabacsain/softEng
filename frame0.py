@@ -7,7 +7,7 @@ from pathlib import Path
 
 # from tkinter import *
 # Explicit imports to satisfy Flake8
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, ttk
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -244,21 +244,6 @@ canvas.create_text(
     font=("Poppins SemiBold", 14 * -1)
 )
 
-image_image_3 = PhotoImage(
-    file=relative_to_assets("image_3.png"))
-image_3 = canvas.create_image(
-    1153.0,
-    423.0,
-    image=image_image_3
-)
-
-image_image_4 = PhotoImage(
-    file=relative_to_assets("image_4.png"))
-image_4 = canvas.create_image(
-    1028.0,
-    423.0,
-    image=image_image_4
-)
 
 canvas.create_text(
     393.0,
@@ -420,5 +405,56 @@ canvas.create_text(
     fill="#220000",
     font=("Poppins Bold", 20 * -1)
 )
+
+
+#########################################################################
+# CUSTOM CODE
+
+# DROPDOWN MENU
+#function to get value of combo box
+def cbx_month_click(event):
+    global type
+    month = cbx_month.get()
+    print(month)
+
+def cbx_year_click(event):
+    global type
+    year = cbx_year.get()
+    print(year)
+
+# MONTH 
+cbx_month_options = ["January", "February", "Meat", "Vegetable"]       # change me
+cbx_month  = ttk.Combobox(values=cbx_month_options)
+cbx_month.bind("<<ComboboxSelected>>", cbx_month_click)
+cbx_month.place(
+x=970.0,
+y=408.0,
+width=100,
+height=30,
+)
+cbx_month.config(
+font=("Inter ExtraLight", 20 * -1),
+justify="center",
+state="readonly"
+)
+
+# YEAR
+cbx_year_options = ["2021", "2022", "2023"]       # change me
+cbx_year  = ttk.Combobox(values=cbx_year_options)
+cbx_year.bind("<<ComboboxSelected>>", cbx_month_click)
+cbx_year.place(
+x=1100.0,
+y=408.0,
+width=100,
+height=30,
+)
+cbx_year.config(
+font=("Inter ExtraLight", 20 * -1),
+justify="center",
+state="readonly"
+)
+
+
+
 window.resizable(False, False)
 window.mainloop()
