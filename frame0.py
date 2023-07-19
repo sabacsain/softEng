@@ -60,30 +60,30 @@ canvas.create_rectangle(
     outline="")
 
 canvas.create_text(
-    440.0,
-    264.0,
+    410.0,
+    245.0,
     anchor="nw",
     text="Meat",
     fill="#8AC926",
-    font=("Poppins Black", 35 * -1)
+    font=("Poppins-Black", 28 * -1)
 )
 
 canvas.create_text(
-    700.0,
-    264.0,
+    680.0,
+    260.0,
     anchor="nw",
     text="PHP 12342",
     fill="#8AC926",
-    font=("Poppins Black", 40 * -1)
+    font=("Poppins Black", 32 * -1)
 )
 
 canvas.create_text(
     1012.0,
-    264.0,
+    260.0,
     anchor="nw",
     text="4",
     fill="#A2EA2E",
-    font=("Poppins Black", 40 * -1)
+    font=("Poppins Black", 32 * -1)
 )
 
 canvas.create_rectangle(
@@ -192,40 +192,32 @@ canvas.create_text(
 )
 
 canvas.create_text(
-    441.0,
-    200.0,
+    410.0,
+    185.0,
     anchor="nw",
-    text="Most Wasted Food Item By Price",
+    text="Most Wasted Food\nItem By Price",
     fill="#FFFFFF",
-    font=("Poppins Bold", 20 * -1)
+    font=("Poppins SemiBold", 18 * -1)
 )
 
 canvas.create_text(
-    700.0,
-    200.0,
+    680.0,
+    185.0,
     anchor="nw",
-    text="Accumulated Price of All Food Wastes",
+    text="Accumulated Price of\nAll Food Wastes",
     fill="#FFFFFF",
-    font=("Poppins Bold", 20 * -1)
+    font=("Poppins SemiBold", 18 * -1)
 )
 
 canvas.create_text(
-    441.0,
-    290.0,
+    410.0,
+    278.0,
     anchor="nw",
     text="PHP 2000",
     fill="#8AC926",
-    font=("Poppins Bold", 20 * -1)
+    font=("Poppins SemiBold", 20 * -1)
 )
 
-canvas.create_text(
-    441.0,
-    290.0,
-    anchor="nw",
-    text="PHP 2000",
-    fill="#8AC926",
-    font=("Poppins Bold", 20 * -1)
-)
 
 canvas.create_rectangle(
     393.0,
@@ -251,7 +243,7 @@ canvas.create_text(
     anchor="nw",
     text="Waste Report",
     fill="#8AC926",
-    font=("Poppins Bold", 25 * -1)
+    font=("Poppins-Black", 25 * -1)
 )
 
 button_image_5 = PhotoImage(
@@ -312,11 +304,11 @@ canvas.create_rectangle(
 
 canvas.create_text(
     1009.0,
-    197.0,
+    185.0,
     anchor="nw",
-    text="Total Kilograms of Food Wastes",
+    text="Total Kilograms of\nFood Wastes",
     fill="#FFFFFF",
-    font=("Poppins Bold", 20 * -1)
+    font=("Poppins SemiBold", 18 * -1)
 )
 
 canvas.create_rectangle(
@@ -328,7 +320,7 @@ canvas.create_rectangle(
     outline="")
 
 canvas.create_rectangle(
-    390.0,
+    393.0,
     456.0,
     657.0,
     599.0,
@@ -344,8 +336,8 @@ canvas.create_rectangle(
     outline="")
 
 canvas.create_text(
-    435.0,
-    541.0,
+    410.0,
+    520.0,
     anchor="nw",
     text="Meat",
     fill="#2D2F36",
@@ -353,57 +345,57 @@ canvas.create_text(
 )
 
 canvas.create_text(
-    695.0,
-    556.0,
+    680.0,
+    535.0,
     anchor="nw",
     text="PHP 12342",
-    fill="#263B4A",
-    font=("Poppins Black", 40 * -1)
+    fill="#33363F",
+    font=("Poppins-Black", 32 * -1)
 )
 
 canvas.create_text(
     1007.0,
-    552.0,
+    535.0,
     anchor="nw",
     text="4",
     fill="#33363F",
-    font=("Poppins Black", 40 * -1)
+    font=("Poppins Black", 32 * -1)
 )
 
 canvas.create_text(
-    436.0,
-    477.0,
+    410.0,
+    460.0,
     anchor="nw",
-    text="Most Wasted Food Item By Price",
+    text="Most Wasted Food\nItem By Price",
     fill="#12191D",
-    font=("Poppins Bold", 20 * -1)
+    font=("Poppins SemiBold", 18 * -1)
 )
 
 canvas.create_text(
     1004.0,
-    474.0,
+    460.0,
     anchor="nw",
-    text="Total Kilograms of Food Wastes",
-    fill="#212C35",
-    font=("Poppins Bold", 20 * -1)
+    text="Total Kilograms of\nFood Wastes",
+    fill="#12191D",
+    font=("Poppins SemiBold", 18 * -1)
 )
 
 canvas.create_text(
-    436.0,
+    410.0,
     564.0,
     anchor="nw",
     text="PHP 2000",
-    fill="#33363F",
-    font=("Poppins Bold", 20 * -1)
+    fill="#2D2F36",
+    font=("Poppins SemiBold", 20 * -1)
 )
 
 canvas.create_text(
-    695.0,
-    477.0,
+    680.0,
+    460.0,
     anchor="nw",
-    text="Accumulated Price of All Food Wastes",
-    fill="#220000",
-    font=("Poppins Bold", 20 * -1)
+    text="Accumulated Price of All\nFood Wastes",
+    fill="#12191D",
+    font=("Poppins SemiBold", 18 * -1)
 )
 
 
@@ -423,23 +415,23 @@ def cbx_year_click(event):
     print(year)
 
 # MONTH 
-cbx_month_options = ["January", "February", "Meat", "Vegetable"]       # change me
+cbx_month_options = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC", "-"]       # change me
 cbx_month  = ttk.Combobox(values=cbx_month_options)
 cbx_month.bind("<<ComboboxSelected>>", cbx_month_click)
 cbx_month.place(
-x=970.0,
+x=990.0,
 y=408.0,
 width=100,
 height=30,
 )
 cbx_month.config(
-font=("Inter ExtraLight", 20 * -1),
+font=("Poppins Regular", 20 * -1),
 justify="center",
 state="readonly"
 )
 
 # YEAR
-cbx_year_options = ["2021", "2022", "2023"]       # change me
+cbx_year_options = ["2021", "2022", "2023", "-"]       # change me
 cbx_year  = ttk.Combobox(values=cbx_year_options)
 cbx_year.bind("<<ComboboxSelected>>", cbx_month_click)
 cbx_year.place(
@@ -449,7 +441,7 @@ width=100,
 height=30,
 )
 cbx_year.config(
-font=("Inter ExtraLight", 20 * -1),
+font=("Poppins Regular", 20 * -1),
 justify="center",
 state="readonly"
 )
