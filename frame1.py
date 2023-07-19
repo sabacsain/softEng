@@ -360,49 +360,6 @@ button_7.place(
     height=55.0
 )
 
-image_image_6 = PhotoImage(
-    file=relative_to_assets("image_6.png"))
-image_6 = canvas.create_image(
-    1124.0,
-    492.0,
-    image=image_image_6
-)
-
-entry_image_4 = PhotoImage(
-    file=relative_to_assets("entry_4.png"))
-entry_bg_4 = canvas.create_image(
-    1124.5,
-    492.5,
-    image=entry_image_4
-)
-entry_4 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
-)
-entry_4.place(
-    x=1036.0,
-    y=481.0,
-    width=177.0,
-    height=21.0
-)
-
-button_image_8 = PhotoImage(
-    file=relative_to_assets("button_8.png"))
-button_8 = Button(
-    image=button_image_8,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_8 clicked"),
-    relief="flat"
-)
-button_8.place(
-    x=1192.0,
-    y=478.0,
-    width=21.0,
-    height=30.0
-)
 
 #########################################################################
 # CUSTOM CODE
