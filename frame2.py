@@ -548,12 +548,18 @@ button_11.place(
 # CUSTOM CODE
 
 # CALENDAR
+
 cal=DateEntry(selectmode='day')
 cal.grid(row=1, column=1, padx=15)
 cal.place(
     x=1050,
     y=490
 )
+
+expiration = cal.get()          
+print(expiration)                   #printing date. change me
+
+
 
 # DROPDOWN MENU
 
@@ -562,7 +568,6 @@ def cbx_type_click(event):
     global type
     type = cbx_type.get()
     print(type)
-
 
 # TYPE
 cbx_type_options = ["Beef", "Bread", "Chicken", "Juice", "Milk", "Pork", "Potato"]       # change me

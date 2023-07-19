@@ -279,22 +279,22 @@ canvas.create_text(
 # CUSTOM CODE
 
 #function to get value of combo box
-def cbx_type_click(event):
+def cbx_ingredient_click(event):
     global type
-    type = cbx_type.get()
+    type = cbx_ingredient.get()
     print(type)
 
 # DROPDOWN MENU
-cbx_type_options = ["Beef", "Bread", "Chicken", "Juice", "Milk", "Pork", "Potato"]       # change me
-cbx_type  = ttk.Combobox(values=cbx_type_options)
-cbx_type.bind("<<ComboboxSelected>>", cbx_type_click)
-cbx_type.place(
+cbx_ingredient_options = ["Beef", "Bread", "Chicken", "Juice", "Milk", "Pork", "Potato"]       # change me
+cbx_ingredient  = ttk.Combobox(values=cbx_ingredient_options)
+cbx_ingredient.bind("<<ComboboxSelected>>", cbx_ingredient_click)
+cbx_ingredient.place(
 x=675.0,
 y=265.0,
 width=265,
 height=56,
 )
-cbx_type.config(
+cbx_ingredient.config(
 font=("Inter ExtraLight", 20 * -1),
 justify="center",
 state="readonly"
