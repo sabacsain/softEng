@@ -6,8 +6,11 @@
 from pathlib import Path
 
 # from tkinter import *
-# Explicit imports to satisfy Flake8
+# Explicit imports to satisfy Flake8.
+import tkinter as tk
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+from tkinter import ttk
+from tkcalendar import DateEntry
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -338,33 +341,6 @@ entry_1.place(
     height=17.0
 )
 
-image_image_4 = PhotoImage(
-    file=relative_to_assets("image_4.png"))
-image_4 = canvas.create_image(
-    571.0,
-    558.0,
-    image=image_image_4
-)
-
-entry_image_2 = PhotoImage(
-    file=relative_to_assets("entry_2.png"))
-entry_bg_2 = canvas.create_image(
-    571.0,
-    558.5,
-    image=entry_image_2
-)
-entry_2 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
-)
-entry_2.place(
-    x=519.0,
-    y=549.0,
-    width=104.0,
-    height=17.0
-)
 
 button_image_8 = PhotoImage(
     file=relative_to_assets("button_8.png"))
@@ -567,5 +543,42 @@ button_11.place(
     width=200.0,
     height=39.0
 )
+
+#########################################################################
+# CUSTOM CODE
+
+# CALENDAR
+cal=DateEntry(selectmode='day')
+cal.grid(row=1, column=1, padx=15)
+cal.place(
+    x=1050,
+    y=490
+)
+
+# DROPDOWN MENU
+
+#function to get value of combo box
+def cbx_type_click(event):
+    global type
+    type = cbx_type.get()
+    print(type)
+
+
+# TYPE
+cbx_type_options = ["Beef", "Bread", "Chicken", "Juice", "Milk", "Pork", "Potato"]       # change me
+cbx_type  = ttk.Combobox(values=cbx_type_options)
+cbx_type.bind("<<ComboboxSelected>>", cbx_type_click)
+cbx_type.place(
+x=513.0,
+y=540.0,
+width=200,
+height=43,
+)
+cbx_type.config(
+font=("Inter ExtraLight", 20 * -1),
+justify="center",
+state="readonly"
+)
+
 window.resizable(False, False)
 window.mainloop()

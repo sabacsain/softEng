@@ -7,7 +7,7 @@ from pathlib import Path
 
 # from tkinter import *
 # Explicit imports to satisfy Flake8
-from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
+from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, ttk
 
 
 OUTPUT_PATH = Path(__file__).parent
@@ -216,16 +216,16 @@ entry_1.place(
 image_image_4 = PhotoImage(
     file=relative_to_assets("image_4.png"))
 image_4 = canvas.create_image(
-    808.0,
-    281.0,
+    984.0,
+    391.0,
     image=image_image_4
 )
 
 entry_image_2 = PhotoImage(
     file=relative_to_assets("entry_2.png"))
 entry_bg_2 = canvas.create_image(
-    808.5,
-    281.5,
+    984.0,
+    391.0,
     image=entry_image_2
 )
 entry_2 = Entry(
@@ -235,34 +235,6 @@ entry_2 = Entry(
     highlightthickness=0
 )
 entry_2.place(
-    x=688.0,
-    y=270.0,
-    width=241.0,
-    height=21.0
-)
-
-image_image_5 = PhotoImage(
-    file=relative_to_assets("image_5.png"))
-image_5 = canvas.create_image(
-    984.0,
-    391.0,
-    image=image_image_5
-)
-
-entry_image_3 = PhotoImage(
-    file=relative_to_assets("entry_3.png"))
-entry_bg_3 = canvas.create_image(
-    984.0,
-    391.0,
-    image=entry_image_3
-)
-entry_3 = Entry(
-    bd=0,
-    bg="#FFFFFF",
-    fg="#000716",
-    highlightthickness=0
-)
-entry_3.place(
     x=857.0,
     y=379.0,
     width=254.0,
@@ -285,22 +257,6 @@ button_5.place(
     height=55.0
 )
 
-button_image_6 = PhotoImage(
-    file=relative_to_assets("button_6.png"))
-button_6 = Button(
-    image=button_image_6,
-    borderwidth=0,
-    highlightthickness=0,
-    command=lambda: print("button_6 clicked"),
-    relief="flat"
-)
-button_6.place(
-    x=901.0,
-    y=267.0,
-    width=28.0,
-    height=30.0
-)
-
 canvas.create_rectangle(
     395.0,
     126.0,
@@ -317,5 +273,36 @@ canvas.create_text(
     fill="#FFFFFF",
     font=("Poppins SemiBold", 14 * -1)
 )
+
+
+#########################################################################
+# CUSTOM CODE
+
+#function to get value of combo box
+def cbx_type_click(event):
+    global type
+    type = cbx_type.get()
+    print(type)
+
+# DROPDOWN MENU
+cbx_type_options = ["Beef", "Bread", "Chicken", "Juice", "Milk", "Pork", "Potato"]       # change me
+cbx_type  = ttk.Combobox(values=cbx_type_options)
+cbx_type.bind("<<ComboboxSelected>>", cbx_type_click)
+cbx_type.place(
+x=675.0,
+y=265.0,
+width=265,
+height=56,
+)
+cbx_type.config(
+font=("Inter ExtraLight", 20 * -1),
+justify="center",
+state="readonly"
+)
+
+
+
+
+
 window.resizable(False, False)
 window.mainloop()
