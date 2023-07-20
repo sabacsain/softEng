@@ -52,7 +52,7 @@ def showTodayWasteRecord(window, waste_entry,weight_entry, pcs_entry, cbx_type):
 
     #get values from table and display it to the treeview di pa tapos
     records = pd.read_sql_query("SELECT * FROM waste_tbl WHERE DATE=?",conn, params=[date.today()])
-    
+
     #Displays table if today_waste_tbl exist
     # Creates the treeview widget
     global today_waste_tbl
@@ -69,9 +69,9 @@ def showTodayWasteRecord(window, waste_entry,weight_entry, pcs_entry, cbx_type):
     # Set Initial Width of Columns
     for col in today_waste_tbl['columns']:
         if (col=="ID"):
-            today_waste_tbl.column(col, width=100, anchor='center')
+            today_waste_tbl.column(col, width=0, stretch=NO, anchor='center')
         elif (col=="WASTE"): 
-            today_waste_tbl.column(col, width=270, anchor='center')
+            today_waste_tbl.column(col, width=370, anchor='center')
         elif (col=="TYPE"): 
             today_waste_tbl.column(col, width=150, anchor='center')
         elif (col=="KGS"): 
@@ -163,16 +163,17 @@ def insert_waste_record (wasteName_entry,weight_entry,pcs_entry,typeOfWaste_cbx,
             conn = sql.connect(path())
             c = conn.cursor()
 
-            
-            c.execute("INSERT INTO waste_tbl (WASTE, TYPE, KGS, PCS, PRICE) VALUES (?,?,?,?,?)", (wasteName,typeOfWaste, weight, pcs, price))
+            print(waste,typeOfWaste, weight, pcs, price)
+            c.execute("INSERT INTO waste_tbl (WASTE, TYPE, KGS, PCS, PRICE, DATE) VALUES (?,?,?,?,?,?)", (waste,typeOfWaste, weight, pcs, price,date.today()))
 
             conn.commit()
+
             conn.close()
-        
+
         except sql.Error as e:
             messagebox.showerror("Error",f"Error occured: {e}")
-        
 
+        
         showTodayWasteRecord(window, wasteName_entry, weight_entry, pcs_entry, typeOfWaste_cbx)
 
         
@@ -225,7 +226,30 @@ def update_waste_record(wasteName_entry,weight_entry,pcs_entry,typeOfWaste_cbx, 
 
         showTodayWasteRecord(window, wasteName_entry, weight_entry, pcs_entry, typeOfWaste_cbx)
 
-def delete_waste_record():
-    print("fak")
+def delete_waste_record(wasteName_entry, weight_entry,pcs_entry, typeOfWaste_cbx, window):
+    wasteName = wasteName_entry.get()
+    weight = weight_entry.get()
+    pcs = pcs_entry.get()
+    typeOfWaste = typeOfWaste_cbx.get()
+
+    #if no record is clicked, do not allow removal of record
+    if(not today_waste_tbl.selection()):
+        messagebox.showerror("Error","No record selected")
+        return
+    
+    try:
+        #SQL connection
+        conn = sql.connect(path())
+        c = conn.cursor()
+
+        c.execute("DELETE FROM waste_tbl WHERE ID=?",[waste_ID])
+
+        conn.commit()
+        conn.close()
+
+        showTodayWasteRecord(window, wasteName_entry, weight_entry, pcs_entry, typeOfWaste_cbx)
+
+    except sql.Error as e:
+        messagebox.showerror("Error",f"Error occured: {e}")
 
 #---------------END OF TODAY'S WASTE------------------------------

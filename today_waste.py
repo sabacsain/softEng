@@ -365,7 +365,7 @@ def start(window,frame):
         image=remove_button_image,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: functions.delete_waste_record(),
+        command=lambda: functions.delete_waste_record(waste_entry, weight_entry,pcs_entry, cbx_type, window),
         # command=lambda: print("button_7 clicked"),
         relief="flat"
     )
