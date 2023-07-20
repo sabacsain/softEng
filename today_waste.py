@@ -329,7 +329,7 @@ def start(window,frame):
         image=add_button_image,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: functions.insert_waste_record(waste_entry.get(), weight_entry.get(),pcs_entry.get(), cbx_type.get(), window),
+        command=lambda: functions.insert_waste_record(waste_entry, weight_entry,pcs_entry, cbx_type, window),
         # command=lambda: print("button_5 clicked"),
         relief="flat"
     )
@@ -347,7 +347,8 @@ def start(window,frame):
         image=save_button_image,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_6 clicked"),
+        command=lambda: functions.update_waste_record(waste_entry, weight_entry, pcs_entry, cbx_type, window),
+        # command=lambda: print("button_6 clicked"),
         relief="flat"
     )
     save_button.place(
@@ -406,7 +407,7 @@ def start(window,frame):
 
 
     #FUNCTIONS
-    functions.showTodayWasteRecord(window)
+    functions.showTodayWasteRecord(window, waste_entry, weight_entry, pcs_entry, cbx_type)
 
 
     window.resizable(False, False)
