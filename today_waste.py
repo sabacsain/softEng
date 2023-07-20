@@ -217,20 +217,21 @@ def start(window,frame):
         image=image_image_3
     )
 
-    entry_image_1 = PhotoImage(
+    #waste name
+    waste_entry_image = PhotoImage(
         file=relative_to_assets("entry_1.png"))
-    entry_bg_1 = canvas.create_image(
+    waste_entry_bg = canvas.create_image(
         675.5,
         490.5,
-        image=entry_image_1
+        image=waste_entry_image
     )
-    entry_1 = Entry(
+    waste_entry = Entry(
         bd=0,
         bg="#FFFFFF",
         fg="#000716",
         highlightthickness=0
     )
-    entry_1.place(
+    waste_entry.place(
         x=474.0,
         y=472.0,
         width=403.0,
@@ -254,25 +255,26 @@ def start(window,frame):
         image=image_image_4
     )
 
-    entry_image_2 = PhotoImage(
+    #waste name
+    weight_entry_image = PhotoImage(
         file=relative_to_assets("entry_2.png"))
-    entry_bg_2 = canvas.create_image(
+    weight_entry_bg = canvas.create_image(
         550.0,
         562.5,
-        image=entry_image_2
+        image=weight_entry_image
     )
-    entry_2 = Entry(
+    weight_entry = Entry(
         bd=0,
         bg="#FFFFFF",
         fg="#000716",
         highlightthickness=0
     )
-    entry_2.place(
+    weight_entry.place(
         x=474.0,
         y=545.0,
         width=152.0,
         height=33.0
-    )
+    ) 
 
     canvas.create_text(
         653.0,
@@ -291,20 +293,20 @@ def start(window,frame):
         image=image_image_5
     )
 
-    entry_image_3 = PhotoImage(
+    pcs_entry_image = PhotoImage(
         file=relative_to_assets("entry_3.png"))
-    entry_bg_3 = canvas.create_image(
+    pcs_entry_bg = canvas.create_image(
         800.0,
         562.5,
-        image=entry_image_3
+        image=pcs_entry_image
     )
-    entry_3 = Entry(
+    pcs_entry = Entry(
         bd=0,
         bg="#FFFFFF",
         fg="#000716",
         highlightthickness=0
     )
-    entry_3.place(
+    pcs_entry.place(
         x=723.0,
         y=545.0,
         width=154.0,
@@ -327,7 +329,7 @@ def start(window,frame):
         image=add_button_image,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: functions.insert_waste_record(),
+        command=lambda: functions.insert_waste_record(waste_entry.get(), weight_entry.get(),pcs_entry.get(), cbx_type.get(), window),
         # command=lambda: print("button_5 clicked"),
         relief="flat"
     )
@@ -381,7 +383,6 @@ def start(window,frame):
     def cbx_type_click(event):
         global type
         type = cbx_type.get()
-        print(type)
 
     # DROPDOWN MENU
     cbx_type_options = ["Canned Goods", "Fruit", "Meat", "Vegetable"]       # change me
