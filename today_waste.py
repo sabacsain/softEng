@@ -9,6 +9,7 @@ from pathlib import Path
 # Explicit imports to satisfy Flake8
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage, ttk
 import functions
+from datetime import date
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"assets/frame1")
@@ -43,9 +44,9 @@ def start(window,frame):
 
     canvas.create_text(
         1113.0,
-        7.0,
+        11.0,
         anchor="nw",
-        text="06-08-2023",
+        text=date.today(),
         fill="#000000",
         font=("Poppins Regular", 18 * -1)
     )
@@ -369,6 +370,7 @@ def start(window,frame):
 
 
     #########################################################################
+    
     # CUSTOM CODE
 
     #function to get value of combo box
@@ -398,6 +400,8 @@ def start(window,frame):
     style.configure("TCombobox", fieldbackground= "white", background= "#DEEAEE")
 
 
+    #FUNCTIONS
+    functions.showTodayWasteRecord(window)
 
 
     window.resizable(False, False)
