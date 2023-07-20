@@ -365,7 +365,8 @@ def start(window,frame):
         image=remove_button_image,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_7 clicked"),
+        command=lambda: functions.delete_waste_record(),
+        # command=lambda: print("button_7 clicked"),
         relief="flat"
     )
     remove_button.place(

@@ -177,6 +177,12 @@ def insert_waste_record (wasteName_entry,weight_entry,pcs_entry,typeOfWaste_cbx,
 
         
 def update_waste_record(wasteName_entry,weight_entry,pcs_entry,typeOfWaste_cbx, window):
+
+    #if no record is clicked, do not allow update of record
+    if(not today_waste_tbl.selection()):
+        messagebox.showerror("Error","No record selected")
+        return
+
     wasteName = wasteName_entry.get()
     weight = weight_entry.get()
     pcs = pcs_entry.get()
@@ -216,11 +222,10 @@ def update_waste_record(wasteName_entry,weight_entry,pcs_entry,typeOfWaste_cbx, 
         
         except sql.Error as e:
             messagebox.showerror("Error",f"Error occured: {e}")
-        
 
         showTodayWasteRecord(window, wasteName_entry, weight_entry, pcs_entry, typeOfWaste_cbx)
 
-    
-
+def delete_waste_record():
+    print("fak")
 
 #---------------END OF TODAY'S WASTE------------------------------
