@@ -320,48 +320,52 @@ def start(window,frame):
         font=("Poppins SemiBold", 14 * -1)
     )
 
-    button_image_5 = PhotoImage(
+    # BUTTON - add record
+    add_button_image = PhotoImage(
         file=relative_to_assets("button_5.png"))
-    button_5 = Button(
-        image=button_image_5,
+    add_button = Button(
+        image=add_button_image,
         borderwidth=0,
         highlightthickness=0,
-        command=lambda: print("button_5 clicked"),
+        command=lambda: functions.insert_waste_record(),
+        # command=lambda: print("button_5 clicked"),
         relief="flat"
     )
-    button_5.place(
+    add_button.place(
         x=395.0,
         y=611.0,
         width=266.0,
         height=55.0
     )
 
-    button_image_6 = PhotoImage(
+    # BUTTON - save/update record
+    save_button_image = PhotoImage(
         file=relative_to_assets("button_6.png"))
-    button_6 = Button(
-        image=button_image_6,
+    save_button = Button(
+        image=save_button_image,
         borderwidth=0,
         highlightthickness=0,
         command=lambda: print("button_6 clicked"),
         relief="flat"
     )
-    button_6.place(
+    save_button.place(
         x=675.0,
         y=611.0,
         width=267.0,
         height=55.0
     )
 
-    button_image_7 = PhotoImage(
+    # BUTTON - remove/delete record
+    remove_button_image = PhotoImage(
         file=relative_to_assets("button_7.png"))
-    button_7 = Button(
-        image=button_image_7,
+    remove_button = Button(
+        image=remove_button_image,
         borderwidth=0,
         highlightthickness=0,
         command=lambda: print("button_7 clicked"),
         relief="flat"
     )
-    button_7.place(
+    remove_button.place(
         x=956.0,
         y=611.0,
         width=266.0,

@@ -26,6 +26,9 @@ def path():
 
     return db_path
      
+
+#-----------------TODAY'S WASTE------------------------------
+
 # Displays table for Today's Waste Page
 def showTodayWasteRecord(window):
     
@@ -34,13 +37,14 @@ def showTodayWasteRecord(window):
     c = conn.cursor()
 
     #Creates table for today's waste page
-    create_waste_table = """CREATE TABLE IF NOT EXISTS today_waste_tbl
-        (ID INTEGER PRIMARY KEY,
+    create_waste_table = """CREATE TABLE IF NOT EXISTS waste_tbl
+        (ID INTEGER PRIMARY KEY AUTOINCREMENT,
         WASTE TEXT NOT NULL,
         TYPE TEXT NOT NULL, 
-        KGS INTEGER DEFAULT 0,
+        KGS FLOAT DEFAULT 0,
         PCS INTEGER DEFAULT 0,
-        PRICE FLOAT NOT NULL)    
+        PRICE FLOAT NOT NULL,
+        DATE DEFAULT (date('now')))    
     """
     c.execute(create_waste_table)
     # conn.commit()
@@ -74,8 +78,15 @@ def showTodayWasteRecord(window):
             today_waste_tbl.column(col, width=102, anchor='center')
 
     #get values from table and display it to the treeview di pa tapos
-    records = pd.read_sql_query("SELECT * FROM today_waste_tbl", conn)
+    records = pd.read_sql_query("SELECT * FROM waste_tbl", conn)
 
 
 #Closes connections
     conn.close()
+
+
+# adding today's waste
+def insert_waste_record ():
+    print("fudge")
+
+#---------------END OF TODAY'S WASTE------------------------------
