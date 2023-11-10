@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dropdown Example</title>
+  <style>
+    /* Add some basic styling for visibility */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    /* Style for the navigation bar */
+    nav {
+      background-color: #333;
+      overflow: hidden;
+    }
+
+    /* Style for the navigation links */
+    nav a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    /* Style for the dropdown container */
+    .dropdown {
+      float: left;
+      overflow: hidden;
+    }
+
+    /* Style for the dropdown button */
+    .dropbtn {
+      font-size: 16px;
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+    }
+
+    /* Style for the dropdown content (hidden by default) */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    /* Style for the dropdown links */
+    .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+
+    /* Change color on hover */
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+
+    <!-- Add a dropdown -->
+    <div class="dropdown">
+      <button class="dropbtn">Services</button>
+      <div class="dropdown-content">
+        <a href="#web">Web Development</a>
+        <a href="#app">App Development</a>
+        <a href="#design">Design</a>
+      </div>
+    </div>
+
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div>
+    <h1>Pie Chart Example</h1>
+
+  <!-- Create a canvas element to draw the pie chart -->
+  <canvas id="myPieChart" width="400" height="400"></canvas>
+
+  <script>
+    // Get the canvas element and its 2d context
+    var canvas = document.getElementById('myPieChart');
+    var context = canvas.getContext('2d');
+
+    // Data for the pie chart (percentages)
+    var data = [30, 20, 50]; // You can adjust these values
+
+    // Colors for the pie chart segments
+    var colors = ['#FF6384', '#36A2EB', '#FFCE56'];
+
+    // Function to draw the pie chart
+    function drawPieChart() {
+      var total = data.reduce(function (acc, value) {
+        return acc + value;
+      }, 0);
+
+      var startAngle = 0;
+      var endAngle = 0;
+
+      for (var i = 0; i < data.length; i++) {
+        endAngle += (Math.PI * 2) * (data[i] / total);
+
+        context.beginPath();
+        context.moveTo(canvas.width / 2, canvas.height / 2);
+        context.arc(canvas.width / 2, canvas.height / 2, canvas.height / 3, startAngle, endAngle, false);
+        context.closePath();
+
+        context.fillStyle = colors[i];
+        context.fill();
+
+        startAngle = endAngle;
+      }
+    }
+
+    // Call the drawPieChart function
+    drawPieChart();
+  </script>
+
+  </div>
+
+</body>
+</html>
