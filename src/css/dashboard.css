@@ -15,11 +15,11 @@
   font-weight: 600;
   color: #77a6b6;
   margin-right: 20px;
-  width: 300px;
+  /* width: 300px; */
 }
 
-.report-section {
-  display: flex;
+#dashboard-current-day-report > div {
+  display: inline-flex;
 }
 
 .button-recom {
@@ -32,6 +32,8 @@
   cursor: pointer;
   font-family: "Poppins";
   font-weight: 600;
+  height: 30px;
+  max-height: 50px;
 }
 
 .button-recom:hover {
@@ -77,10 +79,10 @@
   border-radius: 5px;
   background-color: white;
   flex: 1;
+  max-width: 400px;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
   padding: 20px;
   font-weight: 600;
-
 }
 
 .cd-card-title {
@@ -90,24 +92,117 @@
   width: 250px;
 }
 
-.cd-card-subtitle{
+.cd-card-subtitle {
   color: #77a6b6;
   font-weight: 600;
 }
 
-.cd-card-value{
+.cd-card-value {
   text-align: right;
   margin-right: 100px;
   font-size: 24px;
   line-height: 20px;
-  color: #7D9A99;
+  color: #7d9a99;
   margin-top: 5px;
 }
 
-.cd-card-subvalue{
+.cd-card-subvalue {
   text-align: right;
   margin-right: 100px;
-  color: #7D9A99;
+  color: #7d9a99;
 }
 /*-----------PERIODIC WASTE SECTION---------------*/
 /*-----------PERIODIC WASTE SECTION---------------*/
+
+#dashboard-periodic-report > div {
+  display: flex;
+  justify-content: space-between;
+}
+#report-date-range-container {
+  height: auto;
+  display: flex;
+  gap: 10px;
+  /* background-color: yellow; */
+}
+
+.report-heading-container {
+  display: flex;
+}
+
+.main-range-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#date-range {
+  height: 36px;
+  min-width: 213px;
+  font-family: "Poppins";
+  font-weight: 600;
+  color: #7d9a99;
+  border-radius: 2px;
+  border: 1px solid #b3d0cf;
+
+  background: #fff;
+}
+
+#date-range option {
+  font-weight: 600;
+}
+
+.date-range-picker-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-range-container label,
+.date-range-picker-container label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #7d9a99;
+}
+
+#actual-date-range {
+  height: 36px;
+  min-width: 213px;
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 14px;
+  color: #7d9a99;
+  border-radius: 2px;
+  border: 1px solid #b3d0cf;
+
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  align-items: end;
+}
+
+.calendar-container .close-btn{
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border: none;
+}
+
+.calendar-container .close-btn:hover{
+  background-color: #b3d0cf;
+}
+
+.clickable#actual-date-range:hover{
+  cursor: pointer;
+  background-color: #77a6b6;
+  color: #fff;
+
+}

@@ -1,10 +1,21 @@
+.recomm-container {
+  width: 1080px;
+  height: 720px;
+  background-color: lightblue;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+}
 
-.recomm-container{
-    width: 1080px;
-    height: 720px;
-    background-color: lightblue;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-35%, -50%);
+.recomm-overlay {
+  position: fixed;
+  z-index: 1000;
+  background-color: rgba(1,1,1,0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
 }
