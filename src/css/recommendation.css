@@ -1,0 +1,10 @@
+
+.recomm-container{
+    width: 1080px;
+    height: 720px;
+    background-color: lightblue;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-35%, -50%);
+}

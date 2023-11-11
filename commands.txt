@@ -1,0 +1,6 @@
+To install dependencies:
+    npm install
+
+To use browserRouter:
+    npm install react-router-dom
+
