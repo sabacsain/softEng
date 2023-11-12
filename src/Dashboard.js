@@ -20,6 +20,8 @@ import {
   YAxis,
   Legend,
   Bar,
+  LineChart,
+  Line,
 } from "recharts";
 
 export default function Dashboard() {
@@ -469,11 +471,85 @@ function TotalKgWasteCard({ dataaa }) {
   );
 }
 
-function PriceEachMonthCard() {
+function PriceEachMonthCard({ dataaa }) {
+  //sample data you can pass
+  const data = [
+    {
+      name: "Jan",
+      price: 2400,
+    },
+    {
+      name: "Feb",
+      price: 1398,
+    },
+    {
+      name: "Mar",
+      price: 19800,
+    },
+    {
+      name: "Apr",
+      price: 3908,
+    },
+    {
+      name: "May",
+      price: 4800,
+    },
+    {
+      name: "Jun",
+      price: 3800,
+    },
+    {
+      name: "Jul",
+      price: 4300,
+    },
+    {
+      name: "Aug",
+      price: 9800,
+    },
+    {
+      name: "Sep",
+      price: 3908,
+    },
+    {
+      name: "Oct",
+      price: 4800,
+    },
+    {
+      name: "Nov",
+      price: 3800,
+    },
+    {
+      name: "Dec",
+      price: 4300,
+    },
+  ];
+
   return (
     <div class="card" id="card-periodic-price-each-month">
       <h3 class="h3-periodic">Total Price of Food Wastes for each Month</h3>
-      LINE
+      <LineChart
+      width={700}
+      height={250}
+      data={data}
+      margin={{
+        top: 5,
+        right: 30,
+        left: 20,
+        bottom: 5
+      }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Tooltip />
+      <Legend />
+      <Line
+        type="monotone"
+        dataKey="price"
+        stroke="#77A6B6"
+        activeDot={{ r: 8 }}
+      />
+    </LineChart>
     </div>
   );
 }
