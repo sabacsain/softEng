@@ -178,7 +178,7 @@
   border-radius: 2px;
   border: 1px solid #b3d0cf;
 
-  background: #fff;
+  background: #e7e7e7;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -203,6 +203,9 @@
   background-color: #b3d0cf;
 }
 
+.clickable#actual-date-range{
+  background-color: #fff;
+}
 .clickable#actual-date-range:hover{
   cursor: pointer;
   background-color: #77a6b6;
@@ -219,7 +222,7 @@
 .cards-section-periodic{
   margin-top: 10px;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 250px 250px;
+  grid-template-rows: 350px 350px;
   grid-template-areas: 
     "total-waste most-wasted kg-month kg-month"
     "accumulated price-month price-month expired"
@@ -272,4 +275,11 @@
 
 #card-periodic-expired{
   grid-area: expired;
+}
+
+.recharts-wrapper{
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

@@ -8,6 +8,8 @@ import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
+import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip } from "recharts";
+
 export default function Dashboard() {
   return (
     <main className="dashboard">
@@ -29,6 +31,8 @@ function CurrentDayWaste() {
     setRecommOpen(true);
   }
 
+  // INSERT CODE TO GET most wasted item by price, total price of all wastes, total kg of all wastes
+  // pass those values as props to CurrentDayCard below
   return (
     <div className="report-section" id="dashboard-current-day-report">
       {/*For heading*/}
@@ -63,7 +67,7 @@ function CurrentDayWaste() {
           <CurrentDayCard
             title={"Most Wasted Food Item"}
             subtitle={"(By Price)"}
-            value={"MEAT"}
+            value={`${"MEAT"}`}
             subvalue={`PHP ${500}`}
           />
           <CurrentDayCard
@@ -81,6 +85,7 @@ function CurrentDayWaste() {
   );
 }
 
+//Render cards in the current day section
 function CurrentDayCard({ title, subtitle, value, subvalue }) {
   return (
     <div className="card">
@@ -93,7 +98,11 @@ function CurrentDayCard({ title, subtitle, value, subvalue }) {
 }
 
 //PERIODIC WASTE SECTION
-function DateRangeForm() {
+
+function PeriodicWaste() {
+  //tracks if recomm modal is open
+  const [isRecommOpen, setRecommOpen] = useState(false);
+
   //either lastyear, last month, last week, or CUSTOM
   const [selectedRange, setSelectedRange] = useState("last-year");
 
@@ -106,6 +115,62 @@ function DateRangeForm() {
     },
   ]);
 
+  //opens recomm button
+  function handleClick() {
+    setRecommOpen((e) => (e = true));
+  }
+
+  // INSERT CODE HERE TO Get data based on selected range and date range(if custom)
+  // extract total_weight, array/object(most wasted items by price; ex. name: Meat, price: 120), array/object(total kg per month or day), accumulated_price, array/object(total price per month or day), expired_total_price
+  // then pass values as props to each card
+
+  return (
+    <div className="report-section" id="dashboard-periodic-report">
+      <div className="report-sec-heading">
+        {/* For heading */}
+        <div className="report-heading-container">
+          <span className="report-heading">Periodic Waste Report</span>
+          <button
+            class="button-recom"
+            id="button-periodic"
+            onClick={handleClick}
+          >
+            Recommendations
+          </button>
+          {/* If recomm button is clicked, open modal */}
+          {isRecommOpen && <Recommendation setRecommOpen={setRecommOpen} />}
+          {/*may pass data as prop to recomm.js*/}
+        </div>
+
+        <div id="report-date-range-container">
+          <DateRangeForm
+            setDateRange={setDateRange}
+            setSelectedRange={setSelectedRange}
+            selectedRange={selectedRange}
+            dateRange={dateRange}
+          />
+        </div>
+      </div>
+
+      <div className="cards-section-periodic">
+        <TotalWeightCard weight={0} />
+        <MostWastedCard />
+        <TotalKgWasteCard />
+        <AccumulatedPriceCard accumulated_price={11245} />
+        <PriceEachMonthCard />
+        <ExpiredCard expired_total_price={3425} />
+      </div>
+    </div>
+  );
+}
+
+//Rendering Date range dropdown and Calendar
+function DateRangeForm({
+  setDateRange, // function to change date range (ex. nov-dec)
+  setSelectedRange, // function to change range (ex. last year)
+  selectedRange, // actual value; selected range (last year)
+  dateRange, // actual value; selected date range (nov-dec)
+}) {
   //tracks if calendar is open
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
@@ -161,12 +226,14 @@ function DateRangeForm() {
     }
   }
 
+  //sets the date range specified by user using the calendar
   function handleDateRangeChange(range) {
     setDateRange([range.selection]);
   }
 
   return (
     <>
+      {/* {render dropdown to select range } */}
       <div className="main-range-container">
         <label for="date-range">Date range:</label>
         <select
@@ -180,6 +247,7 @@ function DateRangeForm() {
         </select>
       </div>
 
+      {/* {render the actual date range (ex. Nov 2 1990 - Nov 10 2023) } */}
       <div className="date-range-picker-container">
         <label for="actual-date-range">Start Date - End Date</label>
 
@@ -195,6 +263,7 @@ function DateRangeForm() {
           )}`}
         </div>
 
+        {/* {is user selected custom, open the date range picker (calendar) } */}
         {selectedRange === "custom" && !isCalendarOpen && (
           <div className="calendar-container">
             <DateRange
@@ -211,74 +280,110 @@ function DateRangeForm() {
   );
 }
 
-function PeriodicWaste() {
-  //tracks if recomm modal is open
-  const [isRecommOpen, setRecommOpen] = useState(false);
-
-  function handleClick() {
-    setRecommOpen(true);
-  }
-
-  return (
-    <div className="report-section" id="dashboard-periodic-report">
-      <div className="report-sec-heading">
-        {/* For heading */}
-        <div className="report-heading-container">
-          <span className="report-heading">Periodic Waste Report</span>
-          <button
-            class="button-recom"
-            id="button-periodic"
-            onClick={handleClick}
-          >
-            Recommendations
-          </button>
-
-          {/* If recomm button is clicked, open modal */}
-          {isRecommOpen && <Recommendation setRecommOpen={setRecommOpen} />}
-        </div>
-
-        <div id="report-date-range-container">
-          <DateRangeForm />
-        </div>
-      </div>
-
-      <div className="cards-section-periodic">
-        <TotalWeightCard />
-        <MostWastedCard />
-        <TotalKgWasteCard />
-        <AccumulatedPriceCard />
-        <PriceEachMonthCard />
-        <ExpiredCard />
-      </div>
-    </div>
-  );
-}
-
-function TotalWeightCard() {
+//PERIODIC WASTE CARDS ---------------
+function TotalWeightCard({ weight }) {
   return (
     <div class="card" id="card-periodic-total-waste">
       <h3 class="h3-periodic">Total Weight of Food Waste in Kgs</h3>
-      <h1 class="h1-periodic">INSERT KG</h1>
+      <h1 class="h1-periodic">INSERT KG {weight}</h1>
     </div>
   );
 }
 
-function MostWastedCard() {
+function MostWastedCard({ dataaa }) {
+  //sample data you can pass
+  const data = [
+    {
+      name: "Canned",
+      value: 400,
+    },
+    {
+      name: "Vegetable",
+      value: 300,
+    },
+    {
+      name: "Meat",
+      value: 300,
+    },
+    {
+      name: "Fish",
+      value: 200,
+    },
+    {
+      name: "Others",
+      value: 278,
+    },
+  ];
+
+  //set colors of pie chart
+  const COLORS = ["#D0EFB1", "#B3D89C", "#9DC3C2", "#77A6B6", "#4D7298"];
+
+  //for labels of piechart
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+    index,
+  }) => {
+    const radius = 25 + innerRadius + (outerRadius - innerRadius);
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="#4D7298"
+        textAnchor={x > cx ? "start" : "end"}
+        dominantBaseline="central"
+      >
+        {`${data[index].name}`}
+      </text>
+    );
+  };
+
   return (
     <div class="card" id="card-periodic-most-wasted">
-      <h3 class="h3-periodic">Most Wasted Food Item</h3>
-      PIE
+      <h3 class="h3-periodic">Most Wasted Food Item (By Price)</h3>
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart width={100} height={100}>
+          <Pie
+            data={data}
+            cx="50%"
+            cy="50%"
+            labelLine={true}
+            label={renderCustomizedLabel}
+            nameKey
+            innerRadius={40}
+            outerRadius={80}
+            fill="#8884d8"
+            dataKey="value"
+          >
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Pie>
+          <Tooltip />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   );
 }
 
-function AccumulatedPriceCard() {
+function AccumulatedPriceCard({ accumulated_price }) {
   return (
     <div class="card" id="card-periodic-accumulated">
       <h3 class="h3-periodic">Accumulated Price of Wastes</h3>
       <h1 class="h1-periodic">
         PHP <br />
-        INSERT PRICE
+        INSERT PRICE {accumulated_price}
       </h1>
     </div>
   );
@@ -302,13 +407,13 @@ function PriceEachMonthCard() {
   );
 }
 
-function ExpiredCard() {
+function ExpiredCard({ expired_total_price }) {
   return (
     <div class="card" id="card-periodic-expired">
       <h3 class="h3-periodic">Price of All Expired Items</h3>
       <h1 class="h1-periodic">
         PHP <br />
-        INSERT PRICE
+        INSERT PRICE {expired_total_price}
       </h1>
     </div>
   );

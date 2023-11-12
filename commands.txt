@@ -7,3 +7,6 @@ To use browserRouter:
 To use the calendar:
     npm install react-date-range
     npm install --save react date-fns
+
+To use charts:
+    npm install recharts

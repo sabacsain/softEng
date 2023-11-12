@@ -1,7 +1,10 @@
 import "./css/recommendation.css";
 import { createPortal } from "react-dom";
 
-export default function Recommendation({ setRecommOpen }) {
+//may pass data then set here the recommendations based on the data
+//pass data props to Recommendation component in Dashboard.js
+
+export default function Recommendation({ setRecommOpen , data }) {
   function handleClick() {
     setRecommOpen(false);
   }

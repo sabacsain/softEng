@@ -15,7 +15,6 @@ function App() {
       <BrowserRouter>
         {/* {Render sidebar} */}
         <Sidebar />
-        
         {/*Routes*/}
         <Routes>
           <Route path="/todaywaste" element={<TodayWaste />} />

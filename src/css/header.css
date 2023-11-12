@@ -1,27 +1,27 @@
 /*-----------HEADER---------------*/
 .date-header {
-    text-align: right;
-  }
-  
-  .date-header span {
-    margin-right: 8px;
-    font-weight: 600;
-    color: #77a6b6;
-    font-size: 14px;
-  }
-  
-  .header h1 {
-    color: #77a6b6;
-    font-size: 24px;
-  }
-  
-  hr {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    height: 2px;
-    flex-shrink: 0;
-    border-radius: 20px;
-    background: #e6e6e6;
-    border: none;
-  }
-  /*-----------HEADER---------------*/
+  text-align: right;
+}
+
+.date-header span {
+  margin-right: 8px;
+  font-weight: 600;
+  color: #77a6b6;
+  font-size: 14px;
+}
+
+.header h1 {
+  color: #77a6b6;
+  font-size: 24px;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height: 2px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: #e6e6e6;
+  border: none;
+}
+/*-----------HEADER---------------*/
