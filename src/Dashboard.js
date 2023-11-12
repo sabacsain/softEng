@@ -8,7 +8,19 @@ import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
-import { PieChart, Pie, ResponsiveContainer, Cell, Tooltip } from "recharts";
+import {
+  PieChart,
+  Pie,
+  ResponsiveContainer,
+  Cell,
+  Tooltip,
+  BarChart,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Legend,
+  Bar,
+} from "recharts";
 
 export default function Dashboard() {
   return (
@@ -389,11 +401,70 @@ function AccumulatedPriceCard({ accumulated_price }) {
   );
 }
 
-function TotalKgWasteCard() {
+function TotalKgWasteCard({ dataaa }) {
+  //sample data you can pass
+  const data = [
+    {
+      name: "Jan",
+      Kg: 2400,
+    },
+    {
+      name: "Feb",
+      Kg: 1398,
+    },
+    {
+      name: "Mar",
+      Kg: 9800,
+    },
+    {
+      name: "Apr",
+      Kg: 3908,
+    },
+    {
+      name: "May",
+      Kg: 4800,
+    },
+    {
+      name: "Jun",
+      Kg: 3800,
+    },
+    {
+      name: "Jul",
+      Kg: 4300,
+    },
+    {
+      name: "Aug",
+      Kg: 9800,
+    },
+    {
+      name: "Sep",
+      Kg: 3908,
+    },
+    {
+      name: "Oct",
+      Kg: 4800,
+    },
+    {
+      name: "Nov",
+      Kg: 3800,
+    },
+    {
+      name: "Dec",
+      Kg: 4300,
+    },
+  ];
+
   return (
     <div class="card" id="card-periodic-kg-each-month">
       <h3 class="h3-periodic">Total Kilograms of Waste for Each Month</h3>
-      BAR
+      <BarChart width={730} height={250} data={data}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="Kg" fill="#77A6B6" />
+      </BarChart>
     </div>
   );
 }

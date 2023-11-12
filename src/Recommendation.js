@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 //pass data props to Recommendation component in Dashboard.js
 
 export default function Recommendation({ setRecommOpen , data }) {
+  
   function handleClick() {
     setRecommOpen(false);
   }
