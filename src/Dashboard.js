@@ -54,7 +54,7 @@ function CurrentDayWaste() {
               {date.toLocaleString("default", { month: "short" }).toUpperCase()}
             </span>
             <span>
-              {date.getDay() < 10 ? "0" + date.getDay() : date.getDay()}
+              {date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}
             </span>
           </h1>
         </div>

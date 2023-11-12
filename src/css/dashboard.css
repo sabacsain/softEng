@@ -117,6 +117,7 @@
 #dashboard-periodic-report > div {
   display: flex;
   justify-content: space-between;
+  gap: 20px;
 }
 #report-date-range-container {
   height: auto;
@@ -159,7 +160,7 @@
 .date-range-picker-container label {
   font-weight: 600;
   font-size: 14px;
-  color: #7d9a99;
+  color: #77a6b6;
 }
 
 #actual-date-range {
