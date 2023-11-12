@@ -111,6 +111,24 @@
   margin-right: 100px;
   color: #7d9a99;
 }
+
+.horizontal-rule {
+  width: 100%;
+  max-width: 1460px;
+  height: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 25px 0;
+  opacity: 0.3;
+}
+
+.horizontal-rule span {
+  background-color: #b3d0cf;
+  height: 10px;
+  flex: 1;
+  border-radius: 20px;
+}
 /*-----------PERIODIC WASTE SECTION---------------*/
 /*-----------PERIODIC WASTE SECTION---------------*/
 
@@ -184,100 +202,91 @@
   align-items: center;
 }
 
-
-
-
-
 .calendar-container {
   border: #77a6b6 1px solid;
 }
 
-.calendar-container .close-btn{
+.calendar-container .close-btn {
   width: 30px;
   height: 30px;
   background-color: #fff;
   border: none;
 }
 
-.calendar-container .close-btn:hover{
+.calendar-container .close-btn:hover {
   background-color: #b3d0cf;
 }
 
-.clickable#actual-date-range{
+.clickable#actual-date-range {
   background-color: #fff;
 }
-.clickable#actual-date-range:hover{
+.clickable#actual-date-range:hover {
   cursor: pointer;
   background-color: #77a6b6;
   color: #fff;
-
 }
 
-.cards-section-periodic{
+.cards-section-periodic {
   display: grid;
   max-width: 1460px;
 }
 
-
-.cards-section-periodic{
+.cards-section-periodic {
   margin-top: 10px;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 350px 350px;
-  grid-template-areas: 
+  grid-template-areas:
     "total-waste most-wasted kg-month kg-month"
-    "accumulated price-month price-month expired"
-  ;
+    "accumulated price-month price-month expired";
   gap: 10px;
 }
 
-.cards-section-periodic .card{
+.cards-section-periodic .card {
   background-color: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
   border-radius: 5px;
   padding: 20px;
 }
 
-.cards-section-periodic .card .h3-periodic{
+.cards-section-periodic .card .h3-periodic {
   color: #77a6b6;
   font-weight: 600;
   text-align: center;
 }
 
-.cards-section-periodic .card .h1-periodic{
-  color: #7D9A99;
+.cards-section-periodic .card .h1-periodic {
+  color: #7d9a99;
   text-align: center;
   position: relative;
   top: 30%;
   left: 50%;
   transform: translate(-50%, -40%);
-
 }
-#card-periodic-total-waste{
+#card-periodic-total-waste {
   grid-area: total-waste;
-
 }
 
-#card-periodic-most-wasted{
+#card-periodic-most-wasted {
   grid-area: most-wasted;
 }
 
-#card-periodic-kg-each-month{
+#card-periodic-kg-each-month {
   grid-area: kg-month;
 }
 
-#card-periodic-accumulated{
+#card-periodic-accumulated {
   grid-area: accumulated;
 }
 
-#card-periodic-price-each-month{
+#card-periodic-price-each-month {
   grid-area: price-month;
 }
 
-#card-periodic-expired{
+#card-periodic-expired {
   grid-area: expired;
 }
 
-.recharts-wrapper{
+.recharts-wrapper {
   max-width: 95%;
   position: absolute;
   top: 40%;
@@ -285,7 +294,6 @@
   transform: translate(-50%, -50%);
 }
 
-.recharts-surface{
+.recharts-surface {
   width: 100%;
-
 }

@@ -30,10 +30,21 @@ export default function Dashboard() {
       <Header headerName={"Dashboard"} />
       <div className="body">
         <CurrentDayWaste />
+        <HorizontalRule />
         <PeriodicWaste />
       </div>
     </main>
   );
+}
+
+function HorizontalRule() {
+  return <div className="horizontal-rule">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>;
 }
 
 // CURRENT DAY WASTE SECTION
@@ -528,28 +539,28 @@ function PriceEachMonthCard({ dataaa }) {
     <div class="card" id="card-periodic-price-each-month">
       <h3 class="h3-periodic">Total Price of Food Wastes for each Month</h3>
       <LineChart
-      width={700}
-      height={250}
-      data={data}
-      margin={{
-        top: 5,
-        right: 30,
-        left: 20,
-        bottom: 5
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-      <Line
-        type="monotone"
-        dataKey="price"
-        stroke="#77A6B6"
-        activeDot={{ r: 8 }}
-      />
-    </LineChart>
+        width={700}
+        height={250}
+        data={data}
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line
+          type="monotone"
+          dataKey="price"
+          stroke="#77A6B6"
+          activeDot={{ r: 8 }}
+        />
+      </LineChart>
     </div>
   );
 }
