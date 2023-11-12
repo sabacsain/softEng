@@ -3,7 +3,7 @@ import './css/header.css';
 export default function Header({headerName}) {
     return (
       <div>
-        <div class="date-header">
+        <div className="date-header">
           <span>{new Date().toDateString()}</span>
           <svg
             width="13"
@@ -23,7 +23,7 @@ export default function Header({headerName}) {
           </svg>
         </div>
   
-        <div class="header">
+        <div className="header">
           <h1>{headerName}</h1>
           <hr />
         </div>

@@ -8,7 +8,6 @@ import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
-
 export default function Dashboard() {
   return (
     <main className="dashboard">
@@ -21,6 +20,7 @@ export default function Dashboard() {
   );
 }
 
+// CURRENT DAY WASTE SECTION
 function CurrentDayWaste() {
   const date = new Date();
   const [isRecommOpen, setRecommOpen] = useState(false);
@@ -84,48 +84,15 @@ function CurrentDayWaste() {
 function CurrentDayCard({ title, subtitle, value, subvalue }) {
   return (
     <div className="card">
-      {title && <h3 class="cd-card-title"> {title}</h3>}
-      {subtitle && <h4 class="cd-card-subtitle">{subtitle}</h4>}
-      {value && <h2 class="cd-card-value">{value}</h2>}
-      {subvalue && <h4 class="cd-card-subvalue">{subvalue}</h4>}
+      {title && <h3 className="cd-card-title"> {title}</h3>}
+      {subtitle && <h4 className="cd-card-subtitle">{subtitle}</h4>}
+      {value && <h2 className="cd-card-value">{value}</h2>}
+      {subvalue && <h4 className="cd-card-subvalue">{subvalue}</h4>}
     </div>
   );
 }
 
-function PeriodicWaste() {
-  //tracks if recomm modal is open
-  const [isRecommOpen, setRecommOpen] = useState(false);
-
-  function handleClick() {
-    setRecommOpen(true);
-  }
-
-  return (
-    <div className="report-section" id="dashboard-periodic-report">
-      <div>
-        {/* For heading */}
-        <div className="report-heading-container">
-          <span className="report-heading">Periodic Waste Report</span>
-          <button
-            class="button-recom"
-            id="button-periodic"
-            onClick={handleClick}
-          >
-            Recommendations
-          </button>
-
-          {/* If recomm button is clicked, open modal */}
-          {isRecommOpen && <Recommendation setRecommOpen={setRecommOpen} />}
-        </div>
-
-        <div id="report-date-range-container">
-          <DateRangeForm />
-        </div>
-      </div>
-    </div>
-  );
-}
-
+//PERIODIC WASTE SECTION
 function DateRangeForm() {
   //either lastyear, last month, last week, or CUSTOM
   const [selectedRange, setSelectedRange] = useState("last-year");
@@ -214,7 +181,7 @@ function DateRangeForm() {
       </div>
 
       <div className="date-range-picker-container">
-        <label for="actual-date-ranges">Start Date - End Date</label>
+        <label for="actual-date-range">Start Date - End Date</label>
 
         <div
           //if selected range is custom, make date clickable to open and close calendar
@@ -241,5 +208,108 @@ function DateRangeForm() {
         )}
       </div>
     </>
+  );
+}
+
+function PeriodicWaste() {
+  //tracks if recomm modal is open
+  const [isRecommOpen, setRecommOpen] = useState(false);
+
+  function handleClick() {
+    setRecommOpen(true);
+  }
+
+  return (
+    <div className="report-section" id="dashboard-periodic-report">
+      <div className="report-sec-heading">
+        {/* For heading */}
+        <div className="report-heading-container">
+          <span className="report-heading">Periodic Waste Report</span>
+          <button
+            class="button-recom"
+            id="button-periodic"
+            onClick={handleClick}
+          >
+            Recommendations
+          </button>
+
+          {/* If recomm button is clicked, open modal */}
+          {isRecommOpen && <Recommendation setRecommOpen={setRecommOpen} />}
+        </div>
+
+        <div id="report-date-range-container">
+          <DateRangeForm />
+        </div>
+      </div>
+
+      <div className="cards-section-periodic">
+        <TotalWeightCard />
+        <MostWastedCard />
+        <TotalKgWasteCard />
+        <AccumulatedPriceCard />
+        <PriceEachMonthCard />
+        <ExpiredCard />
+      </div>
+    </div>
+  );
+}
+
+function TotalWeightCard() {
+  return (
+    <div class="card" id="card-periodic-total-waste">
+      <h3 class="h3-periodic">Total Weight of Food Waste in Kgs</h3>
+      <h1 class="h1-periodic">INSERT KG</h1>
+    </div>
+  );
+}
+
+function MostWastedCard() {
+  return (
+    <div class="card" id="card-periodic-most-wasted">
+      <h3 class="h3-periodic">Most Wasted Food Item</h3>
+      PIE
+    </div>
+  );
+}
+
+function AccumulatedPriceCard() {
+  return (
+    <div class="card" id="card-periodic-accumulated">
+      <h3 class="h3-periodic">Accumulated Price of Wastes</h3>
+      <h1 class="h1-periodic">
+        PHP <br />
+        INSERT PRICE
+      </h1>
+    </div>
+  );
+}
+
+function TotalKgWasteCard() {
+  return (
+    <div class="card" id="card-periodic-kg-each-month">
+      <h3 class="h3-periodic">Total Kilograms of Waste for Each Month</h3>
+      BAR
+    </div>
+  );
+}
+
+function PriceEachMonthCard() {
+  return (
+    <div class="card" id="card-periodic-price-each-month">
+      <h3 class="h3-periodic">Total Price of Food Wastes for each Month</h3>
+      LINE
+    </div>
+  );
+}
+
+function ExpiredCard() {
+  return (
+    <div class="card" id="card-periodic-expired">
+      <h3 class="h3-periodic">Price of All Expired Items</h3>
+      <h1 class="h1-periodic">
+        PHP <br />
+        INSERT PRICE
+      </h1>
+    </div>
   );
 }

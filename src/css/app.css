@@ -1,9 +1,9 @@
 
 .App{
     height: 100vh;
-    max-height: 1080px;
+    min-height: 1080px;
     display: flex;
-    flex: 300px 1fr;
-    
+    /* width: fit-content; */
+    width: 100%;
 }
 
