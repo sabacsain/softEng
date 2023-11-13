@@ -1,0 +1,12 @@
+To install dependencies:
+    npm install
+
+To use browserRouter:
+    npm install react-router-dom
+
+To use the calendar:
+    npm install react-date-range
+    npm install --save react date-fns
+
+To use charts:
+    npm install recharts
