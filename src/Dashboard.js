@@ -241,7 +241,7 @@ function DateRangeForm({
         setDateRange([
           {
             startDate: new Date(
-              new Date().setFullYear(new Date().getFullYear()) //if chosen range is custom
+              new Date().setFullYear(new Date().getFullYear()-1) //if chosen range is custom
             ),
             endDate: new Date(),
             key: "selection",
