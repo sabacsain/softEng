@@ -2,15 +2,39 @@ import { useState } from "react";
 import "./css/inventory.css";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
+import Table from "./Table.js";
 
 //sample columns
 const columns = [
   "Ingredient",
   "Type",
-  "Price",
-  "Kgs",
   "Pcs",
+  "Kgs",
+    "Price",
+
   "Expiration Date",
+];
+
+//sample data
+const inventory_items = [
+  {
+    id: 23,
+    Ingredient: "Carrot",
+    Type: "Vegetable",
+    Kgs: 0,
+    Price: 250,
+    Pcs: 100,
+    Expiration: "12-02-2023",
+  },
+  {
+    id: 12,
+    Ingredient: "Ground Beef",
+    Type: "Meat",
+    Kgs: 25,
+    Price: 500,
+    Pcs: 100,
+    Expiration: "12-02-2023",
+  },
 ];
 
 export default function Inventory() {
@@ -18,7 +42,9 @@ export default function Inventory() {
     <div className="inventory">
       <InventoryHeader />
       <div className="body">
-        <TableSection />
+        <div id="inventory-table">
+          <TableSection />
+        </div>
         <FormSection />
       </div>
     </div>
@@ -32,7 +58,7 @@ function InventoryHeader() {
     setIsNotifOpen((prev) => !prev);
   };
 
-  console.log(isNotifOpen)
+  console.log(isNotifOpen);
   return (
     <>
       <div class="inventory-header">
@@ -102,8 +128,6 @@ function NotificationComponent({ handleOpenNotif }) {
           {/* <!-- DATABASE LIST --> */}
         </div>
 
-        {/* <!-- DATABASE LIST --> */}
-
         <button class="notif-close-btn" onClick={handleOpenNotif}>
           ✖
         </button>
@@ -119,6 +143,15 @@ function TableSection() {
   const [searchedColumn, setSearchedColumn] = useState("Ingredient");
   const [order, setOrder] = useState("ASC");
   const [isPerishable, setIsPerishable] = useState(true);
+
+  const [clickedRecord, setInventoryRecord] = useState({
+    id: 0,
+    ingredient: "",
+    type: "",
+    weight: 0,
+    pieces: 0,
+    price: 0,
+  });
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -138,11 +171,25 @@ function TableSection() {
     setIsPerishable((prevIsPerishable) => !prevIsPerishable);
   };
 
+  //this is after clicking the record, the data from each cell should be obtained  //LAGAY SA MGA textfields 👻 DITO MO KUKUNIN YUNG ILALAGAY SA TEXT FIELDS ALALAHANIN MO
+  const handleClickedRecord = (item) => {
+    setInventoryRecord({
+      id: item.id,
+      ingredient: item.Ingredient,
+      type: item.Type,
+      weight: item.Kgs,
+      pieces: item.Pcs,
+      price: item.Price,
+      expiration: item.Expiration
+    })
+  }
+
   //check mo kung nakuha mo nasa searchbox, at dropdowns !!!!!!
   console.log(searchValue);
   console.log(searchedColumn);
   console.log(order);
   console.log(isPerishable);
+  console.log(clickedRecord);
 
   return (
     <div>
@@ -156,7 +203,11 @@ function TableSection() {
         />
         <Filter handleIsPerishable={handleIsPerishable} />
       </div>
-      <Table />
+
+      {/* change column and data props */}
+      <div className="inventory-table-wrapper">
+        <Table columns={columns} data={inventory_items} handleClickedRecord={handleClickedRecord}/>
+      </div>
     </div>
   );
 }
@@ -212,10 +263,6 @@ function Filter({ handleIsPerishable }) {
       </select>
     </div>
   );
-}
-
-function Table() {
-  // baka gawing separate component
 }
 
 function FormSection() {
