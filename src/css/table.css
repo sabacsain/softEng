@@ -31,3 +31,8 @@ tr:hover{
 }
 
 
+tr.active-row{
+    background-color: rgba(179, 208, 207, 0.2);
+
+}
+
