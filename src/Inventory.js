@@ -10,7 +10,7 @@ const columns = [
   "Type",
   "Pcs",
   "Kgs",
-    "Price",
+  "Price",
 
   "Expiration Date",
 ];
@@ -171,7 +171,7 @@ function TableSection() {
     setIsPerishable((prevIsPerishable) => !prevIsPerishable);
   };
 
-  //this is after clicking the record, the data from each cell should be obtained  //LAGAY SA MGA textfields 👻 DITO MO KUKUNIN YUNG ILALAGAY SA TEXT FIELDS ALALAHANIN MO
+  //this is after clicking the record, the data from  each cell should be obtained  //LAGAY SA MGA textfields 👻 DITO MO KUKUNIN YUNG ILALAGAY SA TEXT FIELDS ALALAHANIN MO
   const handleClickedRecord = (item) => {
     setInventoryRecord({
       id: item.id,
@@ -180,9 +180,9 @@ function TableSection() {
       weight: item.Kgs,
       pieces: item.Pcs,
       price: item.Price,
-      expiration: item.Expiration
-    })
-  }
+      expiration: item.Expiration,
+    });
+  };
 
   //check mo kung nakuha mo nasa searchbox, at dropdowns !!!!!!
   console.log(searchValue);
@@ -192,7 +192,7 @@ function TableSection() {
   console.log(clickedRecord);
 
   return (
-    <div>
+    <>
       <div id="inventory-search-and-sorting">
         <SearchBar handleSearch={handleSearch} />
         <SortBy
@@ -206,9 +206,13 @@ function TableSection() {
 
       {/* change column and data props */}
       <div className="inventory-table-wrapper">
-        <Table columns={columns} data={inventory_items} handleClickedRecord={handleClickedRecord}/>
+        <Table
+          columns={columns}
+          data={inventory_items}
+          handleClickedRecord={handleClickedRecord}
+        />
       </div>
-    </div>
+    </>
   );
 }
 
@@ -266,5 +270,51 @@ function Filter({ handleIsPerishable }) {
 }
 
 function FormSection() {
-  return <div></div>;
+  return (
+    <div class="inventory-details-wrapper">
+      <h2>Details</h2>
+
+      <div id="inventory-details">
+        <div id="inv-fields-wrapper">
+          <div className="inv-det-row">
+            <div>
+              <label for="details-ingredient">Ingredient</label>
+              <input
+                type="text"
+                id="details-ingredient"
+                placeholder="Enter ingredient name"
+              />
+            </div>
+            <div>
+              <label for="details-type">Type</label>
+              <select id="details-type">
+                <option value="ingredient">Ingredient</option>
+                <option value="price">Price</option>
+              </select>
+            </div>
+          </div>
+          <div className="inv-det-row">
+            <div>
+              <label for="details-price">Price</label>
+              <input type="text" id="details-price" placeholder="Enter price (&#8369;)" />
+            </div>
+            <div>
+              <label for="details-qty">Quantity</label>
+              <div>
+                <input type="text" id="details-qty" />
+                <select id="details-qty-dropd">
+                  <option value="ingredient">Kg</option>
+                  <option value="price">Pcs</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="inv-expiration-wrapper">
+          <label for="expiration-date">Expiration-date</label>
+          <input type="date" id="expiration-date" />
+        </div>
+      </div>
+    </div>
+  );
 }

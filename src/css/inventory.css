@@ -155,12 +155,11 @@ label {
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 50px;
-  background-color: #273B4A;
+  background-color: #273b4a;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 1000;
   border-radius: 20px;
   color: #fff;
-
 }
 
 /* Styles for the overlay background */
@@ -174,88 +173,182 @@ label {
   z-index: 999;
 }
 
-
-.exp-notif-heading{
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: end;
-    margin-bottom: 40px;
+.exp-notif-heading {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 40px;
 }
 
-.notif-close-btn{
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    z-index: 2000;
-    border: none;
-    background-color:#fff;
-    color: #273B4A;
-    cursor: pointer;
+.notif-close-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  z-index: 2000;
+  border: none;
+  background-color: #fff;
+  color: #273b4a;
+  cursor: pointer;
 }
 
-.notif-close-btn:hover{
-    background-color: #bebebe;
+.notif-close-btn:hover {
+  background-color: #bebebe;
 }
 
-a{
-    color: white;
-    font-weight: 600;
+a {
+  color: white;
+  font-weight: 600;
 }
 
-a:hover{
-    color:#77a6b6;
-
+a:hover {
+  color: #77a6b6;
 }
 
-.modal hr{
-    color: #F7FAFB;
-    margin-top: 10px;
-    opacity: 10%;
+.modal hr {
+  color: #f7fafb;
+  margin-top: 10px;
+  opacity: 10%;
 }
 
-.h3-inventory{
-    margin-top: 20px;
+.h3-inventory {
+  margin-top: 20px;
 }
-.h3-inventory.tomorrow{
-    color: #ff756d;
+.h3-inventory.tomorrow {
+  color: #ff756d;
 }
-.h3-inventory.thisweek{
-    color: #B4C0FF;
+.h3-inventory.thisweek {
+  color: #b4c0ff;
 }
 
-.notif-entries-wrapper{
-    width: 100%;
-    height: 180px;
-    overflow-y: scroll;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;   
+.notif-entries-wrapper {
+  width: 100%;
+  height: 180px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .notif-entries-wrapper::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .notif-entries-wrapper {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
-
-.inventory-table-wrapper{
+.inventory-table-wrapper {
   /* border: 2px solid black; */
   max-width: 1920px;
   margin-top: 20px;
   height: 450px;
   background-color: #fff;
   border-radius: 5px;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 0px 2px 10px 2px;
 }
 
+.inventory-details-wrapper {
+  width: 100%;
+  max-width: 1460px;
+  height: 400px;
+  margin-top: 50px;
+  position: relative;
+  border-radius: 10px;
+  border: 2px solid rgba(179, 208, 207, 0.42);
+}
+
+.inventory-details-wrapper > h2 {
+  background-color: #f5f5f5;
+  display: inline;
+  position: absolute;
+  left: 50px;
+  top: -20px;
+  color: #7d9a99;
+  font-weight: 600;
+}
+
+#inventory-details {
+  width: 85%;
+  height: 70%;
+  /* background-color: white; */
+  display: flex;
+
+  margin: auto;
+  margin-top: 40px;
+  padding: 20px;
+  gap: 10px;
+}
+
+#inventory-details #inv-fields-wrapper {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+#inventory-details #inv-expiration-wrapper {
+  flex: 1;
+}
+
+.inv-det-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.inv-det-row > div {
+  flex: 1;
+}
+
+.inv-det-row label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#inventory-details input,
+#inventory-details #details-type {
+  width: 300px;
+  height: 40px;
+  font-family: "Poppins";
+  padding: 0px 10px 0px 10px;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
+}
+
+#details-qty {
+  width: 240px !important;
+}
+
+#details-qty-dropd {
+  width: 60px;
+  height: 40px;
+  font-family: "Poppins";
+  outline: none;
+  border: none;
+  border-radius: 0px 3px 3px 0px;
+  box-sizing: border-box;
+
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
+  background-color: rgba(179, 208, 207, 0.42);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#inv-expiration-wrapper label {
+  display: block;
+  margin-bottom: 10px;
+}
