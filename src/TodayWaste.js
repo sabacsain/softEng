@@ -246,10 +246,10 @@ function FormSection({
                 />
               </div>
               <div>
-                <label for="details-type">Type</label>
+                <label for="waste-type">Type</label>
                 {/* loops through each type of waste and being put as option */}
                 <select
-                  id="details-type"
+                  id="waste-type"
                   value={textfields.type_field}
                   onChange={(e) =>
                     handleFieldChanges("type_field", e.target.value)
@@ -263,10 +263,10 @@ function FormSection({
             </div>
             <div className="today-det-row">
               <div>
-                <label for="details-price">Price</label>
+                <label for="waste-price">Price</label>
                 <input
                   type="text"
-                  id="details-price"
+                  id="waste-price"
                   placeholder="Enter price (&#8369;)"
                   value={textfields.price_field}
                   onChange={(e) =>
@@ -275,11 +275,11 @@ function FormSection({
                 />
               </div>
               <div>
-                <label for="details-qty">Quantity</label>
+                <label for="waste-qty">Quantity</label>
                 <div>
                   <input
                     type="text"
-                    id="details-qty"
+                    id="waste-qty"
                     value={textfields.quantity_field}
                     onChange={(e) =>
                       handleFieldChanges("quantity_field", e.target.value)
