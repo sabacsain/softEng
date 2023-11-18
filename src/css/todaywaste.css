@@ -72,7 +72,7 @@
 }
 
 #today-waste-details input,
-#today-waste-details #details-type {
+#today-waste-details #waste-type {
   width: 300px;
   height: 40px;
   font-family: "Poppins";
