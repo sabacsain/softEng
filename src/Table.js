@@ -5,15 +5,14 @@ import "./css/table.css";
 export default function Table({ columns, data, handleClickedRecord }) {
   return (
     <table>
-      <TableHeader columns={columns} /> 
+      <TableHeader columns={columns} />
       {/* handleClickedRecord -> to track active records (record you clicked) */}
-      <TableData data={data} handleClickedRecord={handleClickedRecord} /> 
+      <TableData data={data} handleClickedRecord={handleClickedRecord} />
     </table>
   );
 }
 
-
-//this component uses columns array to render thead 
+//this component uses columns array to render thead
 function TableHeader({ columns }) {
   return (
     <thead className="thead">
@@ -31,12 +30,14 @@ function TableData({ data, handleClickedRecord }) {
   function handleClick(item) {
     const activeRow = item.id === activeRowId ? 0 : item.id;
     setActiveRowId(activeRow);
-    handleClickedRecord(item, activeRow !== 0);
+    if (handleClickedRecord != null) {
+      handleClickedRecord(item, activeRow !== 0);
+    }
   }
   //loop through each object in the data array. then for each array, render a table row  wherein each td corresponds to one attribute on an object (ex. id, ingredient, type, ..., expiration)
   return data.map((item, index) => (
     <tr
-    //apply active-row class to a tr which is active
+      //apply active-row class to a tr which is active
       className={`${activeRowId === item.id ? "active-row" : ""}`}
       onClick={() => handleClick(item)}
       id={`${item.id}`}

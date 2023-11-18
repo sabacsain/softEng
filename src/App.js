@@ -6,6 +6,7 @@ import TodayWaste from "./TodayWaste";
 import Inventory from "./Inventory";
 import PriceConversion from "./PriceConversion";
 import Settings from "./Settings";
+import Expiration from "./Expiration";
 
 import "./css/app.css";
 
@@ -22,6 +23,8 @@ function App() {
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/priceconversion" element={<PriceConversion />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/inventory/expiration-table" element={<Expiration />} />
+
         </Routes>
       </BrowserRouter>
     </div>
