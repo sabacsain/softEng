@@ -14,10 +14,7 @@ const columns = [
   
     "Expiration Date",
   ];
-  
-  //sample types
-  const types = ["Vegetable", "Meat", "A", "B", "C"];
-  
+
   //sample data
   const inventory_items = [
     {
