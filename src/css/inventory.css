@@ -375,6 +375,14 @@ a:hover {
   cursor: pointer;
 }
 
+.op-btn:hover{
+  opacity: 0.7;
+}
+
+.op-btn:active{
+  opacity: 1;
+}
+
 .op-btn.add-btn {
   background: #7d9a99;
 }
