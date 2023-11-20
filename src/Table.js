@@ -43,7 +43,7 @@ function TableData({ data, handleClickedRecord }) {
       id={`${item.id}`}
     >
       {Object.entries(item).map(([key, value]) =>
-        key === "id" ? null : <td>{value}</td>
+        <td>{value}</td>
       )}
     </tr>
   ));

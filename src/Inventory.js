@@ -8,6 +8,7 @@ import { format } from "date-fns";
 
 //sample columns
 const columns = [
+  "ID",
   "Ingredient",
   "Type",
   "Pcs",

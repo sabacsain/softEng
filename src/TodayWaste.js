@@ -6,15 +6,24 @@ import "./css/todaywaste.css";
 
 // sample data
 //sample columns
-const columns = ["Ingredient", "Type", "Pcs", "Kgs", "Price"];
+const columns = [
+  "Waste_ID",
+  "Inventory ID",
+  "Ingredient",
+  "Type",
+  "Pcs",
+  "Kgs",
+  "Price",
+];
 
 //sample types
 const types = ["Vegetable", "Meat", "A", "B", "C"];
 
 //sample data
-const inventory_items = [
+const waste_items = [
   {
-    id: 23,
+    id: 1,
+    inventory_id: 12,
     Ingredient: "Carrot",
     Type: "Vegetable",
     Pcs: 100,
@@ -23,12 +32,41 @@ const inventory_items = [
     Price: 250,
   },
   {
-    id: 12,
+    id: 2,
+    inventory_id: 23,
+
     Ingredient: "Ground Beef",
     Type: "Meat",
     Pcs: 0,
     Kgs: 25,
     Price: 500,
+  },
+  {
+    id: 3,
+    inventory_id: 43,
+
+    Ingredient: "Ground Beef",
+    Type: "Meat",
+    Pcs: 0,
+    Kgs: 12,
+    Price: 400,
+  },
+];
+
+//sample data for the dropdown
+const sample_inventory_items = [
+  {
+    inventory_id: 12,
+    Ingredient: "Carrot",
+  },
+  {
+    inventory_id: 23,
+    Ingredient: "Ground Beef",
+  },
+  {
+    inventory_id: 43,
+
+    Ingredient: "Ground Beef",
   },
 ];
 ////////////////////////////
@@ -48,6 +86,7 @@ function TableSection() {
   const [clickedRecord, setTodayWasteRecord] = useState({
     //holds attributes and values of the record u clicked from the table
     id: 0,
+    inv_id: 0,
     ingredient: "",
     type: "",
     weight: 0,
@@ -62,6 +101,7 @@ function TableSection() {
     if (isthereAnActiveRow) {
       setTodayWasteRecord({
         id: item.id,
+        inv_id: item.inventory_id,
         ingredient: item.Ingredient,
         type: item.Type,
         weight: item.Kgs,
@@ -74,6 +114,7 @@ function TableSection() {
     else {
       setTodayWasteRecord({
         id: 0,
+        inv_id: 0,
         ingredient: "",
         type: "",
         weight: 0,
@@ -87,6 +128,7 @@ function TableSection() {
   //currentFormRecord = dito ko nilagay yung values mula sa textboxes. bale dito, dineclare lang, not been used yet.
   const [currentFormRecord, setCurrentFormRecord] = useState({
     id: 0,
+    inv_id: 0,
     ingredient: "",
     type: "",
     weight: 0,
@@ -99,6 +141,7 @@ function TableSection() {
   const handleSetInventoryRecord = (textfieldsValues, operation, ID) => {
     setCurrentFormRecord(() => ({
       id: ID,
+      inv_id: textfieldsValues.inventory_id,
       ingredient: textfieldsValues.ingredient_field,
       type: textfieldsValues.type_field,
       weight:
@@ -160,7 +203,7 @@ function TableSection() {
       <div id="waste-table">
         <Table
           columns={columns}
-          data={inventory_items}
+          data={waste_items}
           handleClickedRecord={handleClickedRecord}
         />
       </div>
@@ -188,6 +231,7 @@ function FormSection({
 
   //variable for tracking the textfields, if may changes sa fields dito i-uupdate
   const [textfields, setTextFieldsValues] = useState({
+    inventory_id: 0,
     ingredient_field: "",
     type_field: "",
     price_field: 0,
@@ -200,6 +244,7 @@ function FormSection({
   useEffect(() => {
     //Runs only on the first render
     setTextFieldsValues(() => ({
+      inventory_id: clickedRecord.inv_id,
       ingredient_field: clickedRecord.ingredient,
       type_field: clickedRecord.type,
       price_field: clickedRecord.price,
@@ -210,11 +255,19 @@ function FormSection({
   }, [clickedRecord]);
 
   //pag inuupdate yung textfields (nagtatype sa fields or inuupdate yung dropdowns), naeexecute ito.
-  const handleFieldChanges = (attribute, value) => {
-    setTextFieldsValues((others) => ({
-      ...others,
-      [attribute]: value,
-    }));
+  const handleFieldChanges = (attribute1, value1, attribute2, value2) => {
+    if (attribute2 !== null) {
+      setTextFieldsValues((others) => ({
+        ...others,
+        [attribute1]: value1,
+        [attribute2]: value2,
+      }));
+    } else {
+      setTextFieldsValues((others) => ({
+        ...others,
+        [attribute1]: value1,
+      }));
+    }
   };
 
   //pag click ng add button, ipapasa yung values from text fields, along with the operation (add, update, or delete)
@@ -225,7 +278,7 @@ function FormSection({
 
   return (
     <form>
-      <div class="today-waste-details-wrapper">
+      <div className="today-waste-details-wrapper">
         <h2>Details</h2>
 
         <div id="today-waste-details">
@@ -233,17 +286,12 @@ function FormSection({
             <div className="today-det-row">
               <div>
                 <label for="waste-ingredient">Waste</label>
-                <input
-                  required
-                  type="text"
-                  id="waste-ingredient"
-                  placeholder="Enter ingredient name"
-                  value={textfields.ingredient_field}
-                  onChange={
-                    (e) =>
-                      handleFieldChanges("ingredient_field", e.target.value) //calls the function pag nagtatype...; same lang sa ibang oncahnge saibaba
-                  }
+                <Dropdown
+                  inventory_id={textfields.inventory_id}
+                  inventory_name={textfields.ingredient_field}
+                  handleFieldChanges={handleFieldChanges}
                 />
+
               </div>
               <div>
                 <label for="waste-type">Type</label>
@@ -333,5 +381,92 @@ function FormSection({
         </div>
       </div>
     </form>
+  );
+}
+
+function Dropdown({ inventory_id, inventory_name, handleFieldChanges }) {
+  const [searchedWord, setSearchedWord] = useState("");
+  const [isSearchOpen, setSearchOpen] = useState(true);
+
+  useEffect(() => {
+    setChosenItem({
+      ingredient: inventory_name,
+      inventory_id: inventory_id,
+    });
+  }, [inventory_id]);
+
+  const handleSearchOpen = () => {
+    setSearchOpen((prev) => !prev);
+  };
+
+  const handleSearch = (e) => {
+    setSearchedWord(() => e.target.value);
+  };
+
+  const [chosenItem, setChosenItem] = useState({
+    ingredient: "",
+    inventory_id: 0,
+  });
+
+  const handleDropDownss = (ingredient) => {
+    handleFieldChanges(
+      "inventory_id",
+      ingredient.inventory_id,
+      "ingredient_field",
+      ingredient.Ingredient
+    );
+  };
+
+  return (
+    <div className="dropdown-wrapper">
+      <div className="dropdown" onClick={handleSearchOpen}>
+        {chosenItem.ingredient !== ""
+          ? chosenItem.ingredient
+          : "Select ingredient"}
+        <i
+          className={`fa fa-angle-down ${isSearchOpen ? "up" : ""}`}
+          onClick={handleSearchOpen}
+        ></i>
+      </div>
+
+      {isSearchOpen && (
+        <div className="dropdown-search-wrapper">
+          <div className="dropdown-searchbox-wrapper">
+            <span className="search-icon">&#x2315;</span>
+            <input
+              required
+              type="text"
+              id="waste-ingredient"
+              placeholder="Inventory name or number"
+              onChange={handleSearch}
+              value={searchedWord}
+            />
+          </div>
+
+          <div className="dropdown-result-wrapper">
+            {isSearchOpen && (
+              <div id="ing-options-container">
+                {sample_inventory_items
+                  .filter(
+                    (ingredient) =>
+                      ingredient.Ingredient.toLowerCase().includes(
+                        searchedWord.toLocaleLowerCase()
+                      ) ||
+                      String(ingredient.inventory_id).includes(searchedWord)
+                  )
+                  .map((ingredient) => (
+                    <div
+                      className="dropdown-option"
+                      onClick={() => handleDropDownss(ingredient)}
+                    >
+                      {ingredient.inventory_id} - {ingredient.Ingredient}
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
