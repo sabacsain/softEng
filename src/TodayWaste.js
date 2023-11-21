@@ -3,6 +3,8 @@ import Header from "./Header";
 import Table from "./Table.js";
 
 import "./css/todaywaste.css";
+import { Link } from "react-router-dom";
+import CrudButtons from "./CrudButtons.js";
 
 // sample data
 //sample columns
@@ -88,7 +90,7 @@ function TableSection() {
     id: 0,
     inv_id: 0,
     ingredient: "",
-    type: "",
+    type: "Vegetable",
     weight: 0,
     pieces: 0,
     price: 0,
@@ -116,7 +118,7 @@ function TableSection() {
         id: 0,
         inv_id: 0,
         ingredient: "",
-        type: "",
+        type: "Vegetable",
         weight: 0,
         pieces: 0,
         price: 0,
@@ -130,7 +132,7 @@ function TableSection() {
     id: 0,
     inv_id: 0,
     ingredient: "",
-    type: "",
+    type: "Vegetable",
     weight: 0,
     pieces: 0,
     price: 0,
@@ -291,10 +293,14 @@ function FormSection({
                   inventory_name={textfields.ingredient_field}
                   handleFieldChanges={handleFieldChanges}
                 />
-
               </div>
               <div>
-                <label for="waste-type">Type</label>
+                <div className="label-wrapper">
+                  <label for="waste-type">Type</label>
+                  <Link to="/inventory/types-of-wastes">
+                    <span className="lbl-add-type">Add new type</span>
+                  </Link>
+                </div>
                 {/* loops through each type of waste and being put as option */}
                 <select
                   id="waste-type"
@@ -348,37 +354,12 @@ function FormSection({
             </div>
           </div>
         </div>
-        <div className="button-section">
-          <button
-            className="op-btn add-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              handleOperation(textfields, "add"); //calls handleOperation then ipapasa naman ng handleOperation yung values ng textfields pati "add" pati ID sa may handleSetInventoryRecord
-            }}
-          >
-            Add Record
-          </button>
 
-          <button
-            className="op-btn update-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              handleOperation(textfields, "update"); //calls handleOperation then ipapasa naman ng handleOperation yung values ng textfields pati "add" pati ID sa may handleSetInventoryRecord
-            }}
-          >
-            Update Record
-          </button>
-
-          <button
-            className="op-btn delete-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              handleOperation(textfields, "delete"); //calls handleOperation then ipapasa naman ng handleOperation yung values ng textfields pati "add" pati ID sa may handleSetInventoryRecord
-            }}
-          >
-            Delete Record
-          </button>
-        </div>
+        <CrudButtons
+          handleOperation={(operation) =>
+            handleOperation(textfields, operation)
+          }
+        />
       </div>
     </form>
   );
@@ -386,14 +367,14 @@ function FormSection({
 
 function Dropdown({ inventory_id, inventory_name, handleFieldChanges }) {
   const [searchedWord, setSearchedWord] = useState("");
-  const [isSearchOpen, setSearchOpen] = useState(true);
+  const [isSearchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
     setChosenItem({
       ingredient: inventory_name,
       inventory_id: inventory_id,
     });
-  }, [inventory_id]);
+  }, [inventory_id, inventory_name]);
 
   const handleSearchOpen = () => {
     setSearchOpen((prev) => !prev);
@@ -454,8 +435,9 @@ function Dropdown({ inventory_id, inventory_name, handleFieldChanges }) {
                       ) ||
                       String(ingredient.inventory_id).includes(searchedWord)
                   )
-                  .map((ingredient) => (
+                  .map((ingredient, key) => (
                     <div
+                      id={key}
                       className="dropdown-option"
                       onClick={() => handleDropDownss(ingredient)}
                     >

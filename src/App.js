@@ -8,6 +8,7 @@ import Inventory from "./Inventory";
 import PriceConversion from "./PriceConversion";
 import Settings from "./Settings";
 import Expiration from "./Expiration";
+import TypesOfWaste from "./TypesOfWastes";
 
 import "./css/app.css";
 
@@ -47,6 +48,7 @@ function App() {
             }
           />
           <Route path="/inventory/expiration-table" element={<Expiration />} />
+          <Route path="/inventory/types-of-wastes" element={<TypesOfWaste />} />
         </Routes>
       </BrowserRouter>
     </div>

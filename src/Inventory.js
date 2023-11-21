@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import "./css/inventory.css";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
-import {SearchBar, SortBy, Filter} from "./Search.js";
+import { SearchBar, SortBy, Filter } from "./Search.js";
 import Table from "./Table.js";
 import { format } from "date-fns";
+import CrudButtons from "./CrudButtons.js";
 
 //sample columns
 const columns = [
@@ -155,7 +156,7 @@ function TableSection() {
     //holds attributes and values of the record u clicked from the table
     id: 0,
     ingredient: "",
-    type: "",
+    type: "Vegetable",
     weight: 0,
     pieces: 0,
     price: 0,
@@ -207,7 +208,7 @@ function TableSection() {
       setInventoryRecord({
         id: 0,
         ingredient: "",
-        type: "",
+        type: "Vegetable",
         weight: 0,
         pieces: 0,
         price: 0,
@@ -228,7 +229,7 @@ function TableSection() {
   const [currentFormRecord, setCurrentFormRecord] = useState({
     id: 0,
     ingredient: "",
-    type: "",
+    type: "Vegetable",
     weight: 0,
     pieces: 0,
     price: 0,
@@ -319,9 +320,6 @@ function TableSection() {
       <FormSection
         clickedRecord={clickedRecord}
         handleSetInventoryRecord={handleSetInventoryRecord}
-        addRecord={addRecord}
-        updateRecord={updateRecord}
-        deleteRecord={deleteRecord}
       />
     </>
   );
@@ -334,7 +332,7 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
   //variable for tracking the textfields, if may changes sa fields dito i-uupdate
   const [textfields, setTextFieldsValues] = useState({
     ingredient_field: "",
-    type_field: "",
+    type_field: "Vegetable",
     price_field: 0,
     quantity_field: "",
     quantity_dropdown: "",
@@ -393,7 +391,12 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
                 />
               </div>
               <div>
-                <label for="details-type">Type</label>
+                <div className="label-wrapper">
+                  <label for="details-type">Type</label>
+                  <Link to="/inventory/types-of-wastes">
+                    <span className="lbl-add-type">Add new type</span>
+                  </Link>
+                </div>
                 {/* loops through each type of waste and being put as option */}
                 <select
                   id="details-type"
@@ -458,37 +461,12 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
             />
           </div>
         </div>
-        <div className="button-section">
-          <button
-            className="op-btn add-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              handleOperation(textfields, "add"); //calls handleOperation then ipapasa naman ng handleOperation yung values ng textfields pati "add" pati ID sa may handleSetInventoryRecord
-            }}
-          >
-            Add Record
-          </button>
 
-          <button
-            className="op-btn update-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              handleOperation(textfields, "update"); //calls handleOperation then ipapasa naman ng handleOperation yung values ng textfields pati "add" pati ID sa may handleSetInventoryRecord
-            }}
-          >
-            Update Record
-          </button>
-
-          <button
-            className="op-btn delete-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              handleOperation(textfields, "delete"); //calls handleOperation then ipapasa naman ng handleOperation yung values ng textfields pati "add" pati ID sa may handleSetInventoryRecord
-            }}
-          >
-            Delete Record
-          </button>
-        </div>
+        <CrudButtons
+          handleOperation={(operation) =>
+            handleOperation(textfields, operation)
+          }
+        />
       </div>
     </form>
   );

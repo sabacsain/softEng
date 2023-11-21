@@ -42,9 +42,9 @@ function TableData({ data, handleClickedRecord }) {
       onClick={() => handleClick(item)}
       id={`${item.id}`}
     >
-      {Object.entries(item).map(([key, value]) =>
+      {Object.entries(item).map(([key, value]) => (
         <td>{value}</td>
-      )}
+      ))}
     </tr>
   ));
 }

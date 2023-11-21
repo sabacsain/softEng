@@ -1,4 +1,5 @@
 import Header from "./Header";
+import Toggle from "./Toggle";
 import "./css/settings.css";
 
 export default function Settings({
@@ -44,20 +45,5 @@ export default function Settings({
         </div>
       </div>
     </div>
-  );
-}
-
-function Toggle({ value, handleToggleValue }) {
-  console.log(value);
-
-  return (
-    <label id="toggle-theme" className="switch">
-      <input
-        type="checkbox"
-        defaultChecked={value}
-        onChange={handleToggleValue}
-      />
-      <span className="slider" />
-    </label>
   );
 }
