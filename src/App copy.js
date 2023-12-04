@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
 
 import Sidebar from "./Sidebar";
@@ -16,7 +16,7 @@ import { AuthService } from "./AuthService";
 import "./css/app.css";
 
 function App() {
-  // Settings
+  //Settings
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currentFontSize, setFontSize] = useState("Medium");
 
@@ -31,15 +31,27 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        {/* Routes */}
+        {/* {Render sidebar} */}
+        <Sidebar />
+        {/*Routes*/}
         <Routes>
-          {/* Redirect to /login when the app starts */}
+          <Route path="/todaywaste" element={<TodayWaste />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/priceconversion" element={<PriceConversion />} />
           <Route
-            path="/"
-            element={<Navigate to="/login" />}
+            path="/settings"
+            element={
+              <Settings
+                handleMode={handleChangeTheme}
+                isDarkMode={isDarkMode}
+                handleFontSize={handleFontSize}
+                currentFontSize={currentFontSize}
+              />
+            }
           />
-          <Route path="/login" element={<Login />} />
-
+          <Route path="/inventory/expiration-table" element={<Expiration />} />
+          <Route path="/inventory/types-of-wastes" element={<TypesOfWaste />} />
         </Routes>
       </BrowserRouter>
     </div>
