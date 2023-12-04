@@ -1,14 +1,18 @@
+import { useState } from "react";
 import "./css/table.css";
 
+//needs column, data, and function to track active records
 export default function Table({ columns, data, handleClickedRecord }) {
   return (
     <table>
       <TableHeader columns={columns} />
+      {/* handleClickedRecord -> to track active records (record you clicked) */}
       <TableData data={data} handleClickedRecord={handleClickedRecord} />
     </table>
   );
 }
 
+//this component uses columns array to render thead
 function TableHeader({ columns }) {
   return (
     <thead className="thead">
@@ -20,12 +24,27 @@ function TableHeader({ columns }) {
 }
 
 function TableData({ data, handleClickedRecord }) {
+  const [activeRowId, setActiveRowId] = useState(0);
+
+  //if record was clicked, if it is not yet active -> make it active; else, remove its active state
+  function handleClick(item) {
+    const activeRow = item.id === activeRowId ? 0 : item.id;
+    setActiveRowId(activeRow);
+    if (handleClickedRecord != null) {
+      handleClickedRecord(item, activeRow !== 0);
+    }
+  }
   //loop through each object in the data array. then for each array, render a table row  wherein each td corresponds to one attribute on an object (ex. id, ingredient, type, ..., expiration)
   return data.map((item, index) => (
-    <tr onClick={() => handleClickedRecord(item)} id={`${item.id}`}>
-      {Object.entries(item).map(([key, value]) =>
-        key === "id" ? null : <td>{value}</td>
-      )}
+    <tr
+      //apply active-row class to a tr which is active
+      className={`${activeRowId === item.id ? "active-row" : ""}`}
+      onClick={() => handleClick(item)}
+      id={`${item.id}`}
+    >
+      {Object.entries(item).map(([key, value]) => (
+        <td>{value}</td>
+      ))}
     </tr>
   ));
 }

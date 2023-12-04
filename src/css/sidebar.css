@@ -3,6 +3,7 @@
   height: 820px;
   max-height: 90vh;
   width: 300px;
+  min-width:  300px;
   background-color: #ffffff;
   position: sticky;
   top: 5%;

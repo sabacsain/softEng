@@ -277,7 +277,7 @@ a:hover {
 
 #inventory-details {
   width: 85%;
-  height: 70%;
+  height: fit-content;
   /* background-color: white; */
   display: flex;
 
@@ -352,3 +352,4 @@ a:hover {
   display: block;
   margin-bottom: 10px;
 }
+
