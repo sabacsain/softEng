@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import "./css/inventory.css";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
+import { SearchBar, SortBy, Filter } from "./Search.js";
 import Table from "./Table.js";
 import { format } from "date-fns";
+import CrudButtons from "./CrudButtons.js";
 
 //sample columns
 const columns = [
+  "ID",
   "Ingredient",
   "Type",
   "Pcs",
@@ -95,7 +98,7 @@ function NotificationComponent({ handleOpenNotif }) {
       <div id="expiration-notification" class="modal">
         <div class="exp-notif-heading">
           <h2 class="h2-inventory">Expiring Items</h2>
-          <Link to="/dashboard">See all expired items</Link>
+          <Link to="/inventory/expiration-table">See all expired items</Link>
         </div>
 
         <h3 class="h3-inventory tomorrow">Tomorrow (10)</h3>
@@ -153,7 +156,7 @@ function TableSection() {
     //holds attributes and values of the record u clicked from the table
     id: 0,
     ingredient: "",
-    type: "",
+    type: "Vegetable",
     weight: 0,
     pieces: 0,
     price: 0,
@@ -205,7 +208,7 @@ function TableSection() {
       setInventoryRecord({
         id: 0,
         ingredient: "",
-        type: "",
+        type: "Vegetable",
         weight: 0,
         pieces: 0,
         price: 0,
@@ -226,7 +229,7 @@ function TableSection() {
   const [currentFormRecord, setCurrentFormRecord] = useState({
     id: 0,
     ingredient: "",
-    type: "",
+    type: "Vegetable",
     weight: 0,
     pieces: 0,
     price: 0,
@@ -317,64 +320,8 @@ function TableSection() {
       <FormSection
         clickedRecord={clickedRecord}
         handleSetInventoryRecord={handleSetInventoryRecord}
-        addRecord={addRecord}
-        updateRecord={updateRecord}
-        deleteRecord={deleteRecord}
       />
     </>
-  );
-}
-
-function SearchBar({ handleSearch }) {
-  return (
-    <div className="searchbox-wrapper">
-      <span className="search-icon">&#x2315;</span>
-      <input
-        type="text"
-        className="searchbox"
-        placeholder="Search item here"
-        onChange={handleSearch} //update searched word when you type
-      ></input>
-    </div>
-  );
-}
-
-function SortBy({ options, handleSortColumn, handleOrder, currentOrder }) {
-  return (
-    <div className="sort-by-wrapper">
-      <label for="sort-by">Sort by:</label>
-      <select id="sort-by" onChange={handleSortColumn}>
-        {options.map((option) => (
-          <option className="sort-option" value={option} key={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-
-      <button id="button-asc-desc" onClick={handleOrder}>
-        <i
-          className={`fa fa-long-arrow-up ${
-            currentOrder === "ASC" ? "" : "rotate"
-          }`}
-        ></i>
-      </button>
-    </div>
-  );
-}
-
-function Filter({ handleIsPerishable }) {
-  return (
-    <div className="sort-by-wrapper">
-      <label for="filter-perishable">Filter:</label>
-      <select id="filter-perishable" onChange={handleIsPerishable}>
-        <option className="sort-option" value="Perishable">
-          Perishable
-        </option>
-        <option className="sort-option" value="Non-perishable">
-          Non-Perishable
-        </option>
-      </select>
-    </div>
   );
 }
 
@@ -385,7 +332,7 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
   //variable for tracking the textfields, if may changes sa fields dito i-uupdate
   const [textfields, setTextFieldsValues] = useState({
     ingredient_field: "",
-    type_field: "",
+    type_field: "Vegetable",
     price_field: 0,
     quantity_field: "",
     quantity_dropdown: "",
@@ -407,7 +354,7 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
     }));
   }, [clickedRecord]);
 
-  //pag inuupdate yung textfields (nagtatype sa fields or inuupdate yung dropdowns), naeexecute ito. 
+  //pag inuupdate yung textfields (nagtatype sa fields or inuupdate yung dropdowns), naeexecute ito.
   const handleFieldChanges = (attribute, value) => {
     setTextFieldsValues((others) => ({
       ...others,
@@ -437,13 +384,19 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
                   id="details-ingredient"
                   placeholder="Enter ingredient name"
                   value={textfields.ingredient_field}
-                  onChange={(e) =>
-                    handleFieldChanges("ingredient_field", e.target.value)  //calls the function pag nagtatype...; same lang sa ibang oncahnge saibaba
+                  onChange={
+                    (e) =>
+                      handleFieldChanges("ingredient_field", e.target.value) //calls the function pag nagtatype...; same lang sa ibang oncahnge saibaba
                   }
                 />
               </div>
               <div>
-                <label for="details-type">Type</label>
+                <div className="label-wrapper">
+                  <label for="details-type">Type</label>
+                  <Link to="/inventory/types-of-wastes">
+                    <span className="lbl-add-type">Add new type</span>
+                  </Link>
+                </div>
                 {/* loops through each type of waste and being put as option */}
                 <select
                   id="details-type"
@@ -508,37 +461,12 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
             />
           </div>
         </div>
-        <div className="button-section">
-          <button
-            className="op-btn add-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              handleOperation(textfields, "add");  //calls handleOperation then ipapasa naman ng handleOperation yung values ng textfields pati "add" pati ID sa may handleSetInventoryRecord  
-            }}
-          >
-            Add Record
-          </button>
 
-          <button
-            className="op-btn update-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              handleOperation(textfields, "update"); //calls handleOperation then ipapasa naman ng handleOperation yung values ng textfields pati "add" pati ID sa may handleSetInventoryRecord  
-            }}
-          >
-            Update Record
-          </button>
-
-          <button
-            className="op-btn delete-btn"
-            onClick={(e) => {
-              e.preventDefault();
-              handleOperation(textfields, "delete"); //calls handleOperation then ipapasa naman ng handleOperation yung values ng textfields pati "add" pati ID sa may handleSetInventoryRecord  
-            }}
-          >
-            Delete Record
-          </button>
-        </div>
+        <CrudButtons
+          handleOperation={(operation) =>
+            handleOperation(textfields, operation)
+          }
+        />
       </div>
     </form>
   );
