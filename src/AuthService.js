@@ -1,9 +1,9 @@
 // AuthService.js
-
+const db = require("./db").default
 const API_URL = "http://localhost:3001"; // Replace with your server's API endpoint
 
-export const AuthService = {
-  login: async (username, password) => {
+class AuthService {
+  async login(username, password) {
     const response = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: {
@@ -18,9 +18,9 @@ export const AuthService = {
     }
 
     return response.json();
-  },
+  }
 
-  signup: async (username, password) => {
+  async signup(username, password) {
     const response = await fetch(`${API_URL}/signup`, {
       method: "POST",
       headers: {
@@ -35,5 +35,7 @@ export const AuthService = {
     }
 
     return response.json();
-  },
-};
+  }
+}
+
+export default new AuthService();
