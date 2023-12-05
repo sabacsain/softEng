@@ -11,7 +11,7 @@ import Expiration from "./Expiration";
 import TypesOfWaste from "./TypesOfWastes";
 import Login from "./Login";
 import Signup from "./Signup";
-import AuthService from "./AuthService";
+// import AuthService from "./AuthService";
 
 import "./css/app.css";
 
@@ -47,32 +47,32 @@ function App() {
     }
   };
 
-  const handleLogin = async (username, password) => {
-    try {
-      await AuthService.login(username, password);
-      setAuthenticated(true);
-    } catch (error) {
-      console.error("Login failed:", error.message);
-    }
-  };
+  // const handleLogin = async (username, password) => {
+  //   try {
+  //     await AuthService.login(username, password);
+  //     setAuthenticated(true);
+  //   } catch (error) {
+  //     console.error("Login failed:", error.message);
+  //   }
+  // };
 
-  const handleSignup = async (username, password) => {
-    try {
-      await AuthService.signup(username, password);
-      // Optionally, you can automatically login the user after signup
-      await handleLogin(username, password);
-    } catch (error) {
-      console.error("Signup failed:", error.message);
-    }
-  };
+  // const handleSignup = async (username, password) => {
+  //   try {
+  //     await AuthService.signup(username, password);
+  //     // Optionally, you can automatically login the user after signup
+  //     await handleLogin(username, password);
+  //   } catch (error) {
+  //     console.error("Signup failed:", error.message);
+  //   }
+  // };
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="/login" />} />
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route path="/signup" element={<Signup onSignup={handleSignup} />} />
+          {/* <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path="/signup" element={<Signup onSignup={handleSignup} />} /> */}
           {isAuthenticated ? (
             <>
               <Sidebar />
