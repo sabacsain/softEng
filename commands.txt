@@ -10,6 +10,3 @@ To use the calendar:
 
 To use charts:
     npm install recharts
-
-To use mysql:
-    npm install mysql

@@ -1,22 +1,12 @@
-// Signup.js
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import AuthService from "./AuthService"; // Note: Now using the instance of AuthService
 
-const Signup = () => {
+const Signup = ({ onSignup }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [signupMessage, setSignupMessage] = useState("");
 
-  const handleSignup = async (e) => {
+  const handleSignup = (e) => {
     e.preventDefault();
-    try {
-      // Call the signup method from the instance of AuthService
-      await AuthService.signup(username, password);
-      setSignupMessage("Signup successful! You can now login.");
-    } catch (error) {
-      setSignupMessage(`Signup failed. ${error.message}`);
-    }
+    onSignup(username, password);
   };
 
   return (
@@ -45,10 +35,6 @@ const Signup = () => {
         <br />
         <button type="submit">Sign Up</button>
       </form>
-      <p>{signupMessage}</p>
-      <p>
-        Already have an account? <Link to="/login">Login here</Link>.
-      </p>
     </div>
   );
 };
