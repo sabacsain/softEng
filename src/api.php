@@ -1,4 +1,10 @@
 <?php
+
+// Add these lines at the beginning of your API file
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+
 require_once 'db.php'; // Include your database connection class
 require_once 'Authentication.php'; // Include the Authentication class
 

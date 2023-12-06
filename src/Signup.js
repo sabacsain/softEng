@@ -1,23 +1,42 @@
 // Signup.js
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import AuthService from "./AuthService"; // Note: Now using the instance of AuthService
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const Signup = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [signupMessage, setSignupMessage] = useState("");
+  let history = useNavigate();
 
-  const handleSignup = async (e) => {
+  const [data, setData]=useState({
+    username:"",
+    password:""
+  })
+
+  const handleChange=(e)=>{
+    setData({ ...data, [e.target.name]: e.target.value});
+  }
+
+  const handleSignup=(e)=>{
     e.preventDefault();
-    try {
-      // Call the signup method from the instance of AuthService
-      await AuthService.signup(username, password);
-      setSignupMessage("Signup successful! You can now login.");
-    } catch (error) {
-      setSignupMessage(`Signup failed. ${error.message}`);
+    const sendData = {
+      username:data.username,
+      password:data.password
     }
-  };
+    console.log(sendData);
+
+    axios.post('http://localhost/foodwaste/login-signup/insert.php', sendData)
+    .then((result)=>{
+      if (result.data.Status =='Invalid'){
+        alert('Invalid User');
+      }
+      else{
+        history('/login');
+      }
+    })
+    .catch((error) => {
+      console.error('Error during signup:', error);
+      // Add additional error handling as needed
+    });
+  }
 
   return (
     <div>
@@ -27,8 +46,8 @@ const Signup = () => {
           Username:
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            onChange={handleChange} value={data.username}
             required
           />
         </label>
@@ -37,15 +56,15 @@ const Signup = () => {
           Password:
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            onChange={handleChange} value={data.password}
             required
           />
         </label>
         <br />
         <button type="submit">Sign Up</button>
       </form>
-      <p>{signupMessage}</p>
+      {/* <p>{signupMessage}</p> */}
       <p>
         Already have an account? <Link to="/login">Login here</Link>.
       </p>

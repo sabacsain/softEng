@@ -1,15 +1,41 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
-const Login = ({ onLogin }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const Login = () => {
+  let history = useNavigate();
 
-  const handleLogin = (e) => {
+  const [data, setData]=useState({
+    username:"",
+    password:""
+  })
+
+  const handleChange=(e)=>{
+    setData({ ...data, [e.target.name]: e.target.value});
+  }
+
+  const handleLogin=(e)=>{
     e.preventDefault();
-    onLogin(username, password);
-  };
+    const sendData = {
+      username:data.username,
+      password:data.password
+    }
+    console.log(sendData);
 
+    axios.post('http://localhost/foodwaste/login-signup/login.php', sendData)
+    .then((result)=>{
+      if (result.data.Status =='Invalid'){
+        alert('Invalid User');
+      }
+      else{
+        history('/dashboard');
+      }
+    })
+    .catch((error) => {
+      console.error('Error during signup:', error);
+      // Add additional error handling as needed
+    });
+  }
   return (
     <div>
       <h2>Login</h2>
@@ -18,8 +44,8 @@ const Login = ({ onLogin }) => {
           Username:
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            onChange={handleChange} value={data.username}
             required
           />
         </label>
@@ -28,8 +54,8 @@ const Login = ({ onLogin }) => {
           Password:
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            onChange={handleChange} value={data.password}
             required
           />
         </label>

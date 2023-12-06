@@ -28,75 +28,17 @@ function App() {
         setFontSize(() => e.target.value);
     };
 
-    useEffect(() => {
-        // Fetch dashboard data when the component mounts
-        if (isAuthenticated) {
-            fetchDashboardData();
-        }
-    }, [isAuthenticated]);
-
-    const fetchDashboardData = async () => {
-        try {
-            // Make a request to the server to fetch dashboard data
-            const response = await fetch("/api/dashboard-data");
-            const data = await response.json();
-            setDashboardData(data);
-        } catch (error) {
-            console.error("Error fetching dashboard data:", error.message);
-        }
-    };
-
-    const handleLogin = async (username, password) => {
-        try {
-            const response = await fetch("/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username, password }),
-            });
-
-            if (response.ok) {
-                setAuthenticated(true);
-            } else {
-                console.error("Login failed:", await response.text());
-            }
-        } catch (error) {
-            console.error("Login failed:", error.message);
-        }
-    };
-
-    const handleSignup = async (username, password) => {
-        try {
-            const response = await fetch("/api/signup", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ username, password }),
-            });
-
-            if (response.ok) {
-                // Optionally, you can automatically login the user after signup
-                await handleLogin(username, password);
-            } else {
-                console.error("Signup failed:", await response.text());
-            }
-        } catch (error) {
-            console.error("Signup failed:", error.message);
-        }
-    };
-
     return (
         <div className="App">
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Navigate to="/login" />} />
-                    <Route path="/login" element={<Login onLogin={handleLogin} />} />
-                    <Route path="/signup" element={<Signup onSignup={handleSignup} />} />
-                    {isAuthenticated ? (
-                        <>
-                            <Sidebar />
+                    <Route path="/login" element={<Login  />} />
+                    <Route path="/signup" element={<Signup  />} />
+                    <Route path="/dashboard" element={<Dashboard data={dashboardData} />} />
+                    {/* {isAuthenticated ? (
+                        <> */}
+                            {/* <Sidebar />
                             <Route path="/todaywaste" element={<TodayWaste />} />
                             <Route path="/dashboard" element={<Dashboard data={dashboardData} />} />
                             <Route path="/inventory" element={<Inventory />} />
@@ -113,9 +55,9 @@ function App() {
                                 }
                             />
                             <Route path="/inventory/expiration-table" element={<Expiration />} />
-                            <Route path="/inventory/types-of-wastes" element={<TypesOfWaste />} />
-                        </>
-                    ) : null}
+                            <Route path="/inventory/types-of-wastes" element={<TypesOfWaste />} /> */}
+                        {/* </> */}
+                    {/* ) : null} */}
                 </Routes>
             </BrowserRouter>
         </div>
