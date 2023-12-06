@@ -11,14 +11,14 @@ import Expiration from "./Expiration";
 import TypesOfWaste from "./TypesOfWastes";
 import Login from "./Login";
 import Signup from "./Signup";
-import { AuthProvider, useAuth } from './AuthContext';
+import { AuthProvider } from './AuthContext';
 
 import "./css/app.css";
 
 function App() {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [currentFontSize, setFontSize] = useState("Medium");
-    const { authenticated } = useAuth();
+    const [isAuthenticated, setAuthenticated] = useState(false);
     const [dashboardData, setDashboardData] = useState([]);
 
     const handleChangeTheme = () => {
@@ -32,15 +32,16 @@ function App() {
     return (
         <div className="App">
             <BrowserRouter>
-                {authenticated && <Sidebar />} {/* Render Sidebar only if authenticated */}
                 <Routes>
                     <Route path="/" element={<Navigate to="/login" />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/signup" element={<Signup />} />
-                    {authenticated && (
-                        <>
+                    <Route path="/login" element={<Login  />} />
+                    <Route path="/signup" element={<Signup  />} />
+                    <Route path="/dashboard" element={<Dashboard data={dashboardData} />} />
+                    {/* {isAuthenticated ? (
+                        <> */}
+                            {/* <Sidebar />
                             <Route path="/todaywaste" element={<TodayWaste />} />
-                            <Route path="/dashboard" element={<Dashboard />} />
+                            <Route path="/dashboard" element={<Dashboard data={dashboardData} />} />
                             <Route path="/inventory" element={<Inventory />} />
                             <Route path="/priceconversion" element={<PriceConversion />} />
                             <Route
@@ -55,9 +56,9 @@ function App() {
                                 }
                             />
                             <Route path="/inventory/expiration-table" element={<Expiration />} />
-                            <Route path="/inventory/types-of-wastes" element={<TypesOfWaste />} />
-                        </>
-                    )}
+                            <Route path="/inventory/types-of-wastes" element={<TypesOfWaste />} /> */}
+                        {/* </> */}
+                    {/* ) : null} */}
                 </Routes>
             </BrowserRouter>
         </div>
