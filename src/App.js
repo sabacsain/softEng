@@ -1,5 +1,5 @@
 // App.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import Dashboard from "./Dashboard";
@@ -11,7 +11,7 @@ import Expiration from "./Expiration";
 import TypesOfWaste from "./TypesOfWastes";
 import Login from "./Login";
 import Signup from "./Signup";
-import { AuthProvider, useAuth } from './AuthContext';
+import {useAuth } from './AuthContext';
 
 import "./css/app.css";
 
@@ -19,8 +19,7 @@ function App() {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [currentFontSize, setFontSize] = useState("Medium");
     const { authenticated } = useAuth();
-    const [dashboardData, setDashboardData] = useState([]);
-
+    
     const handleChangeTheme = () => {
         setIsDarkMode((prevMode) => !prevMode);
     };
@@ -34,9 +33,12 @@ function App() {
             <BrowserRouter>
                 {authenticated && <Sidebar />} {/* Render Sidebar only if authenticated */}
                 <Routes>
+                    {/* If not authenticated */}
                     <Route path="/" element={<Navigate to="/login" />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Signup />} />
+
+                    {/* If authenticated */}
                     {authenticated && (
                         <>
                             <Route path="/todaywaste" element={<TodayWaste />} />
