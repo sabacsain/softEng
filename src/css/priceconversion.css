@@ -1,0 +1,152 @@
+* {
+  margin: 0;
+}
+
+.priceconversion {
+  margin: 40px 80px;
+  flex: 1;
+}
+
+#price-ingredient-wrapper,
+#price-weight-wrapper {
+  width: 400px;
+  height: max-content;
+  max-height: 100px;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 10px;
+
+  flex-direction: column;
+}
+
+#price-ingredient,
+#price-weight {
+  height: 40px;
+  width: 300px;
+  font-size: 16px;
+  font-family: "Poppins";
+  display: inline-block;
+  border: none;
+  outline: none;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+#price-search-wrapper i {
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  cursor: pointer;
+  transition: all 0.75s ease;
+}
+
+#price-search-wrapper i.up {
+  transform: rotate(180deg);
+}
+
+#price-search-wrapper {
+  width: 380px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.ing-option {
+  background-color: white;
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: "Poppins";
+  font-size: 14px;
+  border: none;
+  outline: none;
+}
+
+.ing-option:hover {
+  background-color: #d0dcdc;
+}
+
+#ing-options-container {
+  max-height: 200px;
+  z-index: 2;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 100px;
+}
+
+.converter-main-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.converter-main-wrapper label {
+  color: #7d9a99;
+  font-weight: 600;
+}
+
+.compute-btn {
+  width: 780px;
+  height: 40px;
+  background-color: #77a6b6;
+  border: none;
+  font-family: "Poppins";
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  border-radius: 5px;
+  /* position: absolute;
+
+  top:  300px;
+  left: 390px; */
+  cursor: pointer;
+}
+
+.compute-btn:hover {
+  background-color: #7d9a99;
+}
+
+#price-price-label {
+  margin-top: 100px;
+  display: block;
+  text-align: center;
+}
+
+#price-price-value {
+  display: block;
+  width: fit-content;
+  min-width: 340px;
+  border-radius: 10px;
+  text-align: center;
+  margin: auto;
+  background-color: white;
+  font-size: 30px;
+  color: #77a6b6;
+  font-weight: 600;
+}
