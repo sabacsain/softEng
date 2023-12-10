@@ -41,6 +41,7 @@ function App() {
                     {/* If authenticated */}
                     {authenticated && (
                         <>
+                            <Route path="/" element={<Navigate to="/dashboard" />}  />
                             <Route path="/todaywaste" element={<TodayWaste />} />
                             <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/inventory" element={<Inventory />} />

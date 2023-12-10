@@ -4,12 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 const Signup = () => {
-  let history = useNavigate();
 
   const [data, setData]=useState({
     username:"",
     password:""
   })
+
+  const navigate = useNavigate()
 
   const handleChange=(e)=>{
     setData({ ...data, [e.target.name]: e.target.value});
@@ -21,15 +22,15 @@ const Signup = () => {
       username:data.username,
       password:data.password
     }
-    console.log(sendData);
 
-    axios.post('http://localhost/foodwaste/login-signup/insert.php', sendData)
-    .then((result)=>{
-      if (result.data.Status =='Invalid'){
-        alert('Invalid User');
+    axios.post('http://localhost:8081/signup', sendData)
+    .then((res)=>{
+      if (res.data === 'Failed'){
+      alert('Username is already taken.');
       }
       else{
-        history('/login');
+      alert('Registered Successfully.');
+      navigate('/login');
       }
     })
     .catch((error) => {
@@ -62,7 +63,7 @@ const Signup = () => {
           />
         </label>
         <br />
-        <button type="submit">Sign Up</button>
+        <button type="submit" onClick={handleSignup}>Sign Up</button>
       </form>
       {/* <p>{signupMessage}</p> */}
       <p>

@@ -22,16 +22,16 @@ const Login = () => {
       username: data.username,
       password: data.password
     }
-
-    axios.post('http://localhost/foodwaste/login-signup/login.php', sendData)
-      .then((result) => {
-        if (result.data.Status === 'Invalid') {
-          alert('Invalid User');
-        } else {
+    axios.post('http://localhost:8081/login', sendData)
+      .then((res) => {
+        console.log("data:", res.data)
+        if(res.data === "Success") {
           // Call the login method to set authentication status
           login();
           // Redirect to dashboard after successful login
           history('/dashboard');
+        } else {
+          alert('Invalid User');
         }
       })
       .catch((error) => {
@@ -64,7 +64,7 @@ const Login = () => {
           />
         </label>
         <br />
-        <button type="submit">Login</button>
+        <button type="submit" onClick={handleLogin}>Login</button>
       </form>
 
       <p>
