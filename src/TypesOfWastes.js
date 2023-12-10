@@ -3,24 +3,13 @@ import { SecondHeader } from "./Header";
 import Table from "./Table";
 import "./css/typesOfWastes.css";
 import Toggle from "./Toggle";
+import axios from 'axios';
 import CrudButtons from "./CrudButtons";
 
 const columns = ["ID", "Type Name", "Is Perishable"];
-const types = [
-  {
-    id: 1,
-    type_name: "Vegetable",
-    perishable: "true",
-  },
-
-  {
-    id: 2,
-    type_name: "Canned",
-    perishable: "false",
-  },
-];
 
 export default function TypesOfWaste() {
+  
   return (
     <div className="typesOfWastes">
       <SecondHeader title={"Types of Wastes"} />
@@ -32,6 +21,22 @@ export default function TypesOfWaste() {
 }
 
 function TableSection() {
+  const [types, setTypes] = useState(
+    [
+    { 
+      id: 1,
+      type_name: "Vegetable",
+      perishable: "false",
+    },
+  
+    {
+      id: 2,
+      type_name: "Canned",
+      perishable: "true",
+    }
+    ]
+  );
+
   const [clickedRecord, setTodayWasteRecord] = useState({
     //holds attributes and values of the record u clicked from the table
     clicked_ID: 0,
@@ -64,7 +69,7 @@ function TableSection() {
   //use this to add, update, delete
   //currentFormRecord = dito ko nilagay yung values mula sa textboxes. bale dito, dineclare lang, not been used yet.
   const [currentFormRecord, setCurrentFormRecord] = useState({
-    current_ID: 0,
+    current_ID: null,
     current_TYPENAME: "",
     current_ISPERISHABLE: "false",
   });
@@ -96,12 +101,42 @@ function TableSection() {
     }
   }, [currentFormRecord, operation]);
 
+  //display list of type of wastes
+  useEffect(()=>{
+    const fetchAllTypes = async () => {
+      try{
+        const res = await axios.get("http://localhost:8081/types")
+        setTypes(res.data)
+      } catch(err){
+        console.log(err)
+      }
+    };
+
+    fetchAllTypes();
+  });
+
   //function for adding the currentFormRecord to the database
   //no need ng id
-  const addRecord = (record) => {
-    //insert code to add record to database
-    console.log("ADD TO DATABASE ->  ", record);
-  };
+
+  const addRecord = (currentFormRecord) => {
+
+    // const sendData = {
+    //   type: currentFormRecord.current_TYPENAME,
+    //   isPerishable: currentFormRecord.current_ISPERISHABLE
+    // }
+    axios.post('http://localhost:8081/addType', currentFormRecord)
+      .then((res) => {
+        if(res.data === "Failed") {
+          alert("This type of waste already exists.")
+        } else {
+          console.log("Successfully Added New Type of Waste.")
+        }
+      })
+      .catch((error) => {
+        console.log('Error during adding record:', error);
+        // Add additional error handling as needed
+      });
+  }
 
   //function for updating the currentFormRecord to the database
   const updateRecord = (record) => {
@@ -117,7 +152,7 @@ function TableSection() {
     console.log("DELETE THIS RECORD:", record);
   };
 
-  console.log("RECORD U CLICKED: ", clickedRecord);
+  //console.log("RECORD U CLICKED: ", clickedRecord);
 
   return (
     <>

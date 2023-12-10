@@ -24,14 +24,13 @@ const Login = () => {
     }
     axios.post('http://localhost:8081/login', sendData)
       .then((res) => {
-        console.log("data:", res.data)
-        if(res.data === "Success") {
+        if(res.data === "Failed") {
+          alert("Invalid User.")
+        } else {
           // Call the login method to set authentication status
           login();
           // Redirect to dashboard after successful login
           history('/dashboard');
-        } else {
-          alert('Invalid User');
         }
       })
       .catch((error) => {

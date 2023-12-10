@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Header from "./Header";
 import Table from "./Table.js";
-
+import axios from 'axios';
 import "./css/todaywaste.css";
 import { Link } from "react-router-dom";
 import CrudButtons from "./CrudButtons.js";
@@ -20,40 +20,6 @@ const columns = [
 
 //sample types
 const types = ["Vegetable", "Meat", "A", "B", "C"];
-
-//sample data
-const waste_items = [
-  {
-    id: 1,
-    inventory_id: 12,
-    Ingredient: "Carrot",
-    Type: "Vegetable",
-    Pcs: 100,
-
-    Kgs: 0,
-    Price: 250,
-  },
-  {
-    id: 2,
-    inventory_id: 23,
-
-    Ingredient: "Ground Beef",
-    Type: "Meat",
-    Pcs: 0,
-    Kgs: 25,
-    Price: 500,
-  },
-  {
-    id: 3,
-    inventory_id: 43,
-
-    Ingredient: "Ground Beef",
-    Type: "Meat",
-    Pcs: 0,
-    Kgs: 12,
-    Price: 400,
-  },
-];
 
 //sample data for the dropdown
 const sample_inventory_items = [
@@ -85,6 +51,22 @@ export default function TodayWaste() {
 }
 
 function TableSection() {
+
+  //for waste
+  const[waste_items, setWasteItems] = useState(
+    [
+      {
+      id: 0,
+      ingredient: "",
+      type: "Vegetable",
+      weight: 0,
+      pieces: 0,
+      price: 0,
+      expiration:""
+      }
+    ]
+  );
+
   const [clickedRecord, setTodayWasteRecord] = useState({
     //holds attributes and values of the record u clicked from the table
     id: 0,
@@ -97,6 +79,20 @@ function TableSection() {
   });
 
   const [operation, setOperation] = useState(""); //operation = checks if operation chosen is either add, update, or delete
+
+  //display ingredients from inventory
+  useEffect(()=>{
+    const fetchAllWaste = async () => {
+      try{
+        const res = await axios.get("http://localhost:8081/wastes")
+        setWasteItems(res.data)
+      } catch(err){
+        console.log(err)
+      }
+    };
+
+    fetchAllWaste();
+  }, []);
 
   const handleClickedRecord = (item, isthereAnActiveRow) => {
     //this if is used to check if there is an active row (or may naka-click). if meron, store the values sa clickedRecord variable using setInvetoryRecord function

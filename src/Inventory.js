@@ -6,6 +6,7 @@ import { SearchBar, SortBy, Filter } from "./Search.js";
 import Table from "./Table.js";
 import { format } from "date-fns";
 import CrudButtons from "./CrudButtons.js";
+import axios from 'axios';
 
 //sample columns
 const columns = [
@@ -21,29 +22,6 @@ const columns = [
 
 //sample types
 const types = ["Vegetable", "Meat", "A", "B", "C"];
-
-//sample data
-const inventory_items = [
-  {
-    id: 23,
-    Ingredient: "Carrot",
-    Type: "Vegetable",
-    Pcs: 100,
-
-    Kgs: 0,
-    Price: 250,
-    Expiration: "2023-12-02",
-  },
-  {
-    id: 12,
-    Ingredient: "Ground Beef",
-    Type: "Meat",
-    Pcs: 0,
-    Kgs: 25,
-    Price: 500,
-    Expiration: "2023-01-02",
-  },
-];
 
 export default function Inventory() {
   return (
@@ -146,6 +124,22 @@ function NotificationComponent({ handleOpenNotif }) {
 
 function TableSection() {
   //table section with form section
+
+  //for ingredients
+  const[inventory_items, setInventoryItems] = useState(
+    [
+      {
+      id: 0,
+      ingredient: "",
+      type: "Vegetable",
+      weight: 0,
+      pieces: 0,
+      price: 0,
+      expiration:""
+      }
+    ]
+  );
+
   //for query
   const [searchValue, setSearchValue] = useState(""); //holds the value you type in the searchbox
   const [searchedColumn, setSearchedColumn] = useState("Ingredient"); //hold the chosen column beside the sortby
@@ -160,8 +154,22 @@ function TableSection() {
     weight: 0,
     pieces: 0,
     price: 0,
-    expiration: format(new Date(), "yyyy-MM-dd"),
+    expiration: ""
   });
+
+  //display ingredients from inventory
+  useEffect(()=>{
+    const fetchAllIngredients = async () => {
+      try{
+        const res = await axios.get("http://localhost:8081/ingredients")
+        setInventoryItems(res.data)
+      } catch(err){
+        console.log(err)
+      }
+    };
+
+    fetchAllIngredients();
+  }, []);
 
   const handleSearch = (e) => {
     //updates the searchValue variable when you type in the searcbox

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2023 at 05:00 AM
+-- Generation Time: Dec 10, 2023 at 12:00 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,13 +43,22 @@ CREATE TABLE `inventory` (
   `User_id` int(11) NOT NULL,
   `Inventory_ID` int(11) NOT NULL,
   `Name_inventory` varchar(25) NOT NULL,
-  `Kg_inventory` decimal(8,2) NOT NULL,
-  `Pcs_inventory` int(11) NOT NULL,
+  `Kg_inventory` decimal(8,2) NOT NULL DEFAULT 0.00,
+  `Pcs_inventory` int(11) NOT NULL DEFAULT 0,
   `Is_expired` tinyint(1) NOT NULL DEFAULT 0,
   `Is_deleted` tinyint(1) NOT NULL DEFAULT 0,
   `Type_ID` int(11) NOT NULL,
-  `Price` decimal(8,2) NOT NULL
+  `Price` decimal(8,2) NOT NULL,
+  `Expiration_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`User_id`, `Inventory_ID`, `Name_inventory`, `Kg_inventory`, `Pcs_inventory`, `Is_expired`, `Is_deleted`, `Type_ID`, `Price`, `Expiration_date`) VALUES
+(1000, 0, 'kalabasa', 1.50, 0, 0, 0, 1, 51.00, '2023-12-24'),
+(1000, 1, 'sitaw', 2.00, 0, 0, 0, 1, 29.00, '2023-12-30');
 
 -- --------------------------------------------------------
 
@@ -58,10 +67,18 @@ CREATE TABLE `inventory` (
 --
 
 CREATE TABLE `type` (
+  `User_id` int(11) NOT NULL,
   `Type_ID` int(11) NOT NULL,
   `Is_perishable` tinyint(1) NOT NULL DEFAULT 0,
   `Type_name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `type`
+--
+
+INSERT INTO `type` (`User_id`, `Type_ID`, `Is_perishable`, `Type_name`) VALUES
+(1001, 1, 0, 'Vegetable');
 
 -- --------------------------------------------------------
 
@@ -102,6 +119,13 @@ CREATE TABLE `waste` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `waste`
+--
+
+INSERT INTO `waste` (`User_id`, `Waste_ID`, `Kg_waste`, `Pcs_waste`, `Date_waste`, `Inventory_ID`) VALUES
+(1000, 1, 2.00, 0, '2023-12-10', 1);
+
+--
 -- Indexes for dumped tables
 --
 
@@ -124,7 +148,8 @@ ALTER TABLE `inventory`
 -- Indexes for table `type`
 --
 ALTER TABLE `type`
-  ADD PRIMARY KEY (`Type_ID`);
+  ADD PRIMARY KEY (`Type_ID`),
+  ADD KEY `User_id` (`User_id`);
 
 --
 -- Indexes for table `user`
@@ -145,10 +170,22 @@ ALTER TABLE `waste`
 --
 
 --
+-- AUTO_INCREMENT for table `type`
+--
+ALTER TABLE `type`
+  MODIFY `Type_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
   MODIFY `User_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1005;
+
+--
+-- AUTO_INCREMENT for table `waste`
+--
+ALTER TABLE `waste`
+  MODIFY `Waste_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -166,6 +203,12 @@ ALTER TABLE `expired`
 ALTER TABLE `inventory`
   ADD CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`Type_ID`) REFERENCES `type` (`Type_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `inventory_ibfk_2` FOREIGN KEY (`User_id`) REFERENCES `user` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `type`
+--
+ALTER TABLE `type`
+  ADD CONSTRAINT `type_ibfk_1` FOREIGN KEY (`User_id`) REFERENCES `user` (`User_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `waste`
