@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import "./css/signup.css";
 
 const Signup = () => {
 
@@ -40,12 +41,13 @@ const Signup = () => {
   }
 
   return (
-    <div>
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSignup}>
+    <div class="main">
+      <h2 class="signup">Sign Up</h2>
+      <form class="form1" onSubmit={handleSignup}>
         <label>
-          Username:
+          Username
           <input
+          class="username"
             type="text"
             name="username"
             onChange={handleChange} value={data.username}
@@ -54,8 +56,9 @@ const Signup = () => {
         </label>
         <br />
         <label>
-          Password:
+          Password<br></br>
           <input
+          class="pass"
             type="password"
             name="password"
             onChange={handleChange} value={data.password}
@@ -63,11 +66,12 @@ const Signup = () => {
           />
         </label>
         <br />
-        <button type="submit" onClick={handleSignup}>Sign Up</button>
+        
       </form>
       {/* <p>{signupMessage}</p> */}
+      <button type="submit" class="submit" onClick={handleSignup}>Sign Up</button>
       <p>
-        Already have an account? <Link to="/login">Login here</Link>.
+        Already have an account? <Link to="/login"><p style={{color: "#77A6B6"}}>Login here</p></Link>
       </p>
     </div>
   );
