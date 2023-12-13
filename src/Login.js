@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from './AuthContext';  // Import the useAuth hook
+import "./css/login.css";
 
 const Login = () => {
   let history = useNavigate();
@@ -40,12 +41,13 @@ const Login = () => {
   }
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
+    <div class="main">
+      <h2 class="login">Login</h2>
+      <form class="form1" onSubmit={handleLogin}>
         <label>
-          Username:
+          Username
           <input
+            class="username"
             type="text"
             name="username"
             onChange={handleChange} value={data.username}
@@ -54,8 +56,9 @@ const Login = () => {
         </label>
         <br />
         <label>
-          Password:
+          Password<br />
           <input
+            class="pass"
             type="password"
             name="password"
             onChange={handleChange} value={data.password}
@@ -63,11 +66,11 @@ const Login = () => {
           />
         </label>
         <br />
-        <button type="submit" onClick={handleLogin}>Login</button>
+        
       </form>
-
+      <button type="submit" class="submit" onClick={handleLogin}>Login</button>
       <p>
-        Don't have an account? <Link to="/signup">Sign up here</Link>.
+        Don't have an account? <Link to="/signup"><p style={{color: "#77A6B6"}}>Sign up here</p></Link>
       </p>
     </div>
   );
