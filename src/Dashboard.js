@@ -52,7 +52,7 @@ function CurrentDayWaste() {
   const date = new Date();
   const [isRecommOpen, setRecommOpen] = useState(false);
 
-  function handleClick() {
+  function HandleClick() {
     setRecommOpen(true);
   }
 
@@ -66,7 +66,7 @@ function CurrentDayWaste() {
         <button
           class="button-recom"
           id="button-current-day"
-          onClick={handleClick}
+          onClick={HandleClick}
         >
           Recommendations
         </button>

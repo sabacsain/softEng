@@ -6,7 +6,7 @@ import "./css/todaywaste.css";
 import { Link } from "react-router-dom";
 import CrudButtons from "./CrudButtons.js";
 
-// sample data
+//sample data
 //sample columns
 const columns = [
   "Waste_ID",
@@ -135,7 +135,7 @@ function TableSection() {
   });
 
   //if clicked ng buttons (add, update, or delete), this function will be executed.
-  // we are setting the currentFormRecord (the record to be updated/added sa database) based sa pinasang values mula sa form
+  //we are setting the currentFormRecord (the record to be updated/added sa database) based sa pinasang values mula sa form
   const handleSetInventoryRecord = (textfieldsValues, operation, ID) => {
     setCurrentFormRecord(() => ({
       id: ID,

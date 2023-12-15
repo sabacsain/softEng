@@ -17,7 +17,7 @@ const columns = [
 ];
 
 //sample data
-const inventory_items = [
+const inventoryItems = [
   {
     id: 23,
     Ingredient: "Carrot",
@@ -93,7 +93,7 @@ function TableSection() {
         {/* null - even if record is clicked, no data will be received from the table unlike in inventory and today's waste */}
         <Table
           columns={columns}
-          data={inventory_items}
+          data={inventoryItems}
           handleClickedRecord={null}
         />
       </div>

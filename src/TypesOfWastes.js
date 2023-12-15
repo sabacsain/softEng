@@ -183,7 +183,7 @@ function FormSection({ clickedRecord, handleCurrentTypeRecord }) {
   });
 
   //if clickedRecord changes (nagclick ka ng iba or inunclick mo yung record), this will execute
-  // inuupdate lang nito yung values sa textfields based on the clickedRecord
+  //inuupdate lang nito yung values sa textfields based on the clickedRecord
   useEffect(() => {
     //Runs only on the first render
     setTextFieldsValues(() => ({

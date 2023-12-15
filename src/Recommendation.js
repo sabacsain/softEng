@@ -1,5 +1,5 @@
 import "./css/recommendation.css";
-import { createPortal } from "react-dom";
+import { createPortal as CreatePortal } from "react-dom";
 
 //may pass data then set here the recommendations based on the data
 //pass data props to Recommendation component in Dashboard.js
@@ -12,7 +12,7 @@ export default function Recommendation({ setRecommOpen, data }) {
     setRecommOpen(false);
   }
 
-  return createPortal(
+  return CreatePortal(
     <>
       <div class="recomm-overlay"></div>
       <div className="recomm-container">
