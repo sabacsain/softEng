@@ -37,7 +37,21 @@ function TableSection() {
     ]
   );
 
-  const [clickedRecord, setTodayWasteRecord] = useState({
+  //display list of type of wastes
+  useEffect(()=>{
+    const fetchAllTypes = async () => {
+      try{
+        const res = await axios.get("http://localhost:8081/types")
+        setTypes(res.data)
+      } catch(err){
+        console.log(err)
+      }
+    };
+
+    fetchAllTypes();
+  });
+
+  const [clickedRecord, setTypeRecord] = useState({
     //holds attributes and values of the record u clicked from the table
     clicked_ID: 0,
     clicked_TYPENAME: "",
@@ -49,7 +63,7 @@ function TableSection() {
   const handleClickedRecord = (item, isthereAnActiveRow) => {
     //this if is used to check if there is an active row (or may naka-click). if meron, store the values sa clickedRecord variable using setInvetoryRecord function
     if (isthereAnActiveRow) {
-      setTodayWasteRecord({
+      setTypeRecord({
         clicked_ID: item.id,
         clicked_TYPENAME: item.type_name,
         clicked_ISPERISHABLE: item.perishable,
@@ -58,7 +72,7 @@ function TableSection() {
 
     //if no record is active(di naka-click), these are the default values for clickedRecord variable
     else {
-      setTodayWasteRecord({
+      setTypeRecord({
         clicked_ID: 0,
         clicked_TYPENAME: "",
         clicked_ISPERISHABLE: "false",
@@ -101,19 +115,6 @@ function TableSection() {
     }
   }, [currentFormRecord, operation]);
 
-  //display list of type of wastes
-  useEffect(()=>{
-    const fetchAllTypes = async () => {
-      try{
-        const res = await axios.get("http://localhost:8081/types")
-        setTypes(res.data)
-      } catch(err){
-        console.log(err)
-      }
-    };
-
-    fetchAllTypes();
-  });
 
   //function for adding the currentFormRecord to the database
   //no need ng id
