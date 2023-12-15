@@ -97,6 +97,35 @@ app.get("/wastes", (req,res)=>{
 
 });
 
+app.post("/addInventory", (req,res)=>{
+  const q1 = "SELECT * FROM `inventory` WHERE `Name_inventory` = ?"
+  const q2 = "INSERT INTO `inventory` (`User_id`, `Type_ID`, `Name_inventory`,`Kg_inventory`, `Pcs_inventory`, `Price`, `Expiration_date`) VALUES (?)"
+
+  const values = [
+    1000,
+    1,
+    req.body.ingredient,
+    req.body.weight,
+    req.body.pieces,
+    req.body.price,
+    req.body.expiration,
+  ];
+
+  //Check if waste type already exists.
+  db.query(q1, req.body.ingredient, (err,data)=>{
+    if(data.length>0){
+      return res.json("Failed")
+    }else{
+      //Insert new type.
+      db.query(q2, [values], (err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+      })
+
+    }
+  })
+
+});
 
 app.post("/addType", (req,res)=>{
   const q1 = "SELECT `Type_name` FROM `type` WHERE `User_id` = ? and `Type_name` = ? "

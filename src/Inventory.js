@@ -286,8 +286,18 @@ function TableSection() {
   //function for adding the currentFormRecord to the database
   //no need ng id
   const addRecord = (record) => {
-    //insert code to add record to database
-    console.log("ADD TO DATABASE ->  ", record);
+    axios.post('http://localhost:8081/addInventory', record)
+    .then((res) => {
+      if(res.data === "Failed") {
+        alert("This type of ingredient already exists.")
+      } else{
+        console.log(res.data)
+      }
+    })
+    .catch((error) => {
+      console.log('Error during adding record:', error);
+      // Add additional error handling as needed
+    });
   };
 
   //function for updating the currentFormRecord to the database
