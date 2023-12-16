@@ -8,7 +8,7 @@
 }
 
 .display-settings-wrapper {
-  background-color: #fff;
+  background-color: var(--second_background)  ;
   height: 340px;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
@@ -57,5 +57,10 @@
   gap: 20px;
 }
 
+#settings-font{
+  background-color: var(--body_background)  ;
+  color:  var(--text-color-primary)  ;
 
+
+}
 

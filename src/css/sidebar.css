@@ -4,7 +4,7 @@
   max-height: 90vh;
   width: 300px;
   min-width:  300px;
-  background-color: #ffffff;
+  background-color:  var(--second_background);
   position: sticky;
   top: 5%;
   border-radius: 0 20px 20px 0;
@@ -32,10 +32,15 @@
   text-align: center;
 }
 
+.sidebarOption{
+  color: var(--text-color-primary)
+}
+
 .sidebarOption:hover {
   background-color: #b3d0cf;
   border-radius: 10px 0 0 10px;
   text-decoration: none;
+  color: black;
 }
 /*gamitin pag click ng navbar*/
 /* .sidebarOption:hover {

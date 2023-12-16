@@ -21,4 +21,12 @@ code {
   width: 100vw;
 }
 
+/* DARK MODE */
+.dark-mode {
+  /* Add styles for dark mode */
+  background-color: #1a1a1a;
+  color: #ffffff;
+}
+
+
 

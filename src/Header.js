@@ -62,7 +62,7 @@ function SecondHeader({ title, color }) {
             <i class="fa fa-long-arrow-left"></i>
           </button>
         </Link>
-        <span>Go Back to Inventory</span>
+        <span style={{color: "var(--text-color-primary)"}}>Go Back to Inventory</span>
       </div>
 
       <div className="second-header">

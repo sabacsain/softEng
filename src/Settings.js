@@ -9,7 +9,7 @@ export default function Settings({
   currentFontSize,
 }) {
   return (
-    <div class="settings">
+    <div className={'settings'}>
       <Header headerName={"Settings"} />
       <div className="body">
         <div className="display-settings-wrapper">

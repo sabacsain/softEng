@@ -14,7 +14,6 @@ import Signup from "./Signup";
 import {useAuth } from './AuthContext';
 
 import "./css/app.css";
-import { useEffect } from "react";
 
 function App() {
     const [isDarkMode, setIsDarkMode] = useState(false);
@@ -29,11 +28,6 @@ function App() {
         setFontSize(() => e.target.value);
     };
 
-    useEffect(() => {
-        if (isDarkMode) document.querySelector("body").setAttribute("data-theme","dark")
-        else document.querySelector("body").setAttribute("data-theme","light")
-    }, [isDarkMode])
-    
     return (
         <div className="App">
             <BrowserRouter>

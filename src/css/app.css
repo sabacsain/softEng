@@ -1,3 +1,31 @@
+:root{
+    --body_background: #F5F5F5;
+    --second_background: white;
+    --text-color-primary: #040506;
+    --sidebar-icon-color: #7d9a99;
+
+    --text-color-secondary: #27464A;
+
+    --button-color-primary: #77a6b6;
+
+}
+
+[data-theme="dark"] {
+
+    /*background*/
+    --body_background: #040506;
+    --second_background: #0A0D10;
+
+    --sidebar-icon-color: white;
+
+    /*text colors*/
+    --text-color-primary: #e8eaed;
+    --text-color-secondary: #77a6b6;
+
+    --button-color-primary: black;
+
+    
+}
 
 .App{
     height: 100vh;
@@ -5,9 +33,12 @@
     display: flex;
     /* width: fit-content; */
     width: 100%;
+    background-color: var(--body_background);
 }
 
 .body{
     max-width: 1460px;
 }
+
+
 

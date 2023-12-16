@@ -32,6 +32,8 @@
   padding-left: 20px;
   padding-right: 20px;
   box-sizing: border-box;
+  background-color:  var(--second_background);
+  color: var(--text-color-primary);
 }
 
 #price-search-wrapper i {
@@ -42,6 +44,8 @@
   height: 30px;
   cursor: pointer;
   transition: all 0.75s ease;
+  color: var(--text-color-secondary);
+
 }
 
 #price-search-wrapper i.up {
@@ -54,7 +58,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background-color: white;
+  background-color:  var(--second_background);
   border-radius: 5px;
 }
 
@@ -114,7 +118,7 @@ input[type="number"] {
 .compute-btn {
   width: 780px;
   height: 40px;
-  background-color: #77a6b6;
+  background-color:  var(--button-color-primary);
   border: none;
   font-family: "Poppins";
   font-size: 16px;
@@ -145,7 +149,7 @@ input[type="number"] {
   border-radius: 10px;
   text-align: center;
   margin: auto;
-  background-color: white;
+  background-color:  var(--second_background);
   font-size: 30px;
   color: #77a6b6;
   font-weight: 600;
