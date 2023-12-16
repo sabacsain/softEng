@@ -165,7 +165,7 @@ export default function Sidebar() {
 //for each option in the sidebar
 function SidebarOption({ currentTab, page, text, icon, changeCurrentTab }) {
   /*set tab as active */
-  function handleClick() {
+  function HandleClick() {
     changeCurrentTab((current) => (current = page));
   }
 
@@ -173,7 +173,7 @@ function SidebarOption({ currentTab, page, text, icon, changeCurrentTab }) {
     <Link
       to={page}
       style={{ textDecoration: "none", color: "#272C37" }}
-      onClick={handleClick}
+      onClick={HandleClick}
     >
       <li className={`sidebarOption ${currentTab === page ? "hovered" : ""}`}>
         <span>{icon}</span> {text}
