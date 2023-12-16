@@ -13,31 +13,13 @@ const columns = [
   "Inventory ID",
   "Ingredient",
   "Type",
+  "Type ID",
   "Pcs",
   "Kgs",
   "Price",
 ];
 
-//sample types
-const types = ["Vegetable", "Meat", "A", "B", "C"];
-
-//sample data for the dropdown
-const sample_inventory_items = [
-  {
-    inventory_id: 12,
-    Ingredient: "Carrot",
-  },
-  {
-    inventory_id: 23,
-    Ingredient: "Ground Beef",
-  },
-  {
-    inventory_id: 43,
-
-    Ingredient: "Ground Beef",
-  },
-];
-////////////////////////////
+//////////////////////
 
 export default function TodayWaste() {
   return (
@@ -56,35 +38,37 @@ function TableSection() {
   const[waste_items, setWasteItems] = useState(
     [
       {
-      id: 0,
-      ingredient: "",
-      type: "Vegetable",
-      weight: 0,
-      pieces: 0,
-      price: 0,
-      expiration:""
+        id: 1,
+        inventory_id: 12,
+        Ingredient: "Carrot",
+        Type: "Vegetable",
+        TypeId: 2,
+        Pcs: 100,
+        Kgs: 0,
+        price: 0,
       }
     ]
-  );
+  ); 
 
-  const [clickedRecord, setTodayWasteRecord] = useState({
-    //holds attributes and values of the record u clicked from the table
-    id: 0,
-    inv_id: 0,
-    ingredient: "",
-    type: "Vegetable",
-    weight: 0,
-    pieces: 0,
-    price: 0,
-  });
-
-  const [operation, setOperation] = useState(""); //operation = checks if operation chosen is either add, update, or delete
-
-  //display ingredients from inventory
+  //Display all waste
   useEffect(()=>{
     const fetchAllWaste = async () => {
       try{
         const res = await axios.get("http://localhost:8081/wastes")
+        
+        //Rename the keys of the data object
+        res.data.forEach(Rename);
+        function Rename(item){
+          delete Object.assign(item, { id: item.Waste_ID })['Waste_ID'];
+          delete Object.assign(item, { inventory_id: item.Inventory_ID })['Inventory_ID'];
+          delete Object.assign(item, { Ingredient: item.Name_inventory })['Name_inventory'];
+          delete Object.assign(item, { Type: item.Type_name })['Type_name'];
+          delete Object.assign(item, { TypeId: item.Type_ID })['Type_ID'];
+          delete Object.assign(item, { Pcs: item.Pcs_waste })['Pcs_waste'];
+          delete Object.assign(item, { Kgs: item.Kg_waste })['Kg_waste'];
+          delete Object.assign(item, { price: item.Price })['Price'];
+        }
+        
         setWasteItems(res.data)
       } catch(err){
         console.log(err)
@@ -94,6 +78,21 @@ function TableSection() {
     fetchAllWaste();
   }, []);
 
+
+  const [clickedRecord, setTodayWasteRecord] = useState({
+    //holds attributes and values of the record u clicked from the table
+    id: 0,
+    inv_id: 0,
+    ingredient: "",
+    type: "Vegetable",
+    typeId: 0,
+    weight: 0,
+    pieces: 0,
+    price: 0,
+  });
+
+  const [operation, setOperation] = useState(""); //operation = checks if operation chosen is either add, update, or delete
+
   const handleClickedRecord = (item, isthereAnActiveRow) => {
     //this if is used to check if there is an active row (or may naka-click). if meron, store the values sa clickedRecord variable using setInvetoryRecord function
     if (isthereAnActiveRow) {
@@ -102,9 +101,10 @@ function TableSection() {
         inv_id: item.inventory_id,
         ingredient: item.Ingredient,
         type: item.Type,
+        typeId: item.TypeId,
         weight: item.Kgs,
         pieces: item.Pcs,
-        price: item.Price,
+        price: item.price,
       });
     }
 
@@ -115,6 +115,7 @@ function TableSection() {
         inv_id: 0,
         ingredient: "",
         type: "Vegetable",
+        typeId: 1,
         weight: 0,
         pieces: 0,
         price: 0,
@@ -129,11 +130,13 @@ function TableSection() {
     inv_id: 0,
     ingredient: "",
     type: "Vegetable",
+    typeId: 1,
     weight: 0,
     pieces: 0,
     price: 0,
   });
 
+  console.log(currentFormRecord)
   //if clicked ng buttons (add, update, or delete), this function will be executed.
   // we are setting the currentFormRecord (the record to be updated/added sa database) based sa pinasang values mula sa form
   const handleSetInventoryRecord = (textfieldsValues, operation, ID) => {
@@ -142,6 +145,7 @@ function TableSection() {
       inv_id: textfieldsValues.inventory_id,
       ingredient: textfieldsValues.ingredient_field,
       type: textfieldsValues.type_field,
+      typeId: textfieldsValues.type_id,
       weight:
         textfieldsValues.quantity_dropdown === "Kg" //if kg yung nasa dropdown, 0 na value ng PCS
           ? textfieldsValues.quantity_field
@@ -177,14 +181,34 @@ function TableSection() {
   //no need ng id
   const addRecord = (record) => {
     //insert code to add record to database
-    console.log("ADD TO DATABASE ->  ", record);
+    axios.post('http://localhost:8081/addWaste', record)
+    .then((res) => {
+      if(res.data === "Failed") {
+        alert("This ingredient is already in the waste list.")
+      } else{
+        alert("Successfully added new waste.")
+      }
+    })
+    .catch((error) => {
+      console.log('Error during adding record:', error);
+      // Add additional error handling as needed
+    });
   };
 
   //function for updating the currentFormRecord to the database
   const updateRecord = (record) => {
-    //insert code to update record from database
-    console.log("UPDATE THIS ID ->", record.id);
-    console.log("UPDATED DETAILS:", record);
+    axios.post('http://localhost:8081/updateWaste', record)
+      .then((res) => {
+        if(res.data === "Failed") {
+          alert("This ingredient is already in the waste list.")
+        } else{
+          alert("Successfully Updated Record")
+        }
+      })
+      .catch((error) => {
+        alert('Error during updating record:', error);
+        // Add additional error handling as needed
+      });
   };
 
   //function for deleting the currentFormRecord to the database
@@ -194,7 +218,7 @@ function TableSection() {
     console.log("DELETE THIS RECORD:", record);
   };
 
-  console.log("RECORD U CLICKED: ", clickedRecord);
+  //console.log("RECORD U CLICKED: ", clickedRecord);
 
   return (
     <>
@@ -217,13 +241,7 @@ function TableSection() {
   );
 }
 
-function FormSection({
-  clickedRecord,
-  handleSetInventoryRecord,
-  addRecord,
-  updateRecord,
-  deleteRecord,
-}) {
+function FormSection({clickedRecord,handleSetInventoryRecord}) {
   //if not 0, use this for updating and deleting record; else, add new record
   const currentID = clickedRecord.id;
 
@@ -232,9 +250,35 @@ function FormSection({
     inventory_id: 0,
     ingredient_field: "",
     type_field: "",
+    type_id: 1,
     price_field: 0,
     quantity_field: "",
     quantity_dropdown: "",
+  });
+
+  //for types
+  const[types, setTypes] = useState([]);
+
+  //display list of type of wastes
+  useEffect(()=>{
+    const fetchAllTypes = async () => {
+      try{
+        const res = await axios.get("http://localhost:8081/types")
+        //Rename the keys of the data object
+        res.data.forEach(Rename);
+        function Rename(item){
+          delete Object.assign(item, { id: item.Type_ID })['Type_ID'];
+          delete Object.assign(item, { type_name: item.Type_name })['Type_name'];
+          delete Object.assign(item, { perishable: (item.Is_perishable == 0) ? "false": "true" })['Is_perishable'];
+        }
+
+        setTypes(res.data)
+      } catch(err){
+        console.log(err)
+      }
+    };
+
+    fetchAllTypes();
   });
 
   //if clickedRecord changes (nagclick ka ng iba or inunclick mo yung record), this will execute
@@ -245,6 +289,7 @@ function FormSection({
       inventory_id: clickedRecord.inv_id,
       ingredient_field: clickedRecord.ingredient,
       type_field: clickedRecord.type,
+      type_id: clickedRecord.typeId,
       price_field: clickedRecord.price,
       quantity_field:
         clickedRecord.weight > 0 ? clickedRecord.weight : clickedRecord.pieces,
@@ -300,13 +345,13 @@ function FormSection({
                 {/* loops through each type of waste and being put as option */}
                 <select
                   id="waste-type"
-                  value={textfields.type_field}
+                  value={textfields.type_id}
                   onChange={(e) =>
-                    handleFieldChanges("type_field", e.target.value)
+                    handleFieldChanges("type_id", e.target.value)
                   }
                 >
                   {types.map((type) => (
-                    <option value={`${type}`}>{type}</option>
+                    <option value={`${type.id}`}>{type.type_name}</option>
                   ))}
                 </select>
               </div>
@@ -364,6 +409,38 @@ function FormSection({
 function Dropdown({ inventory_id, inventory_name, handleFieldChanges }) {
   const [searchedWord, setSearchedWord] = useState("");
   const [isSearchOpen, setSearchOpen] = useState(false);
+
+  //for ingredients
+  const[inventory_items, setInventoryItems] = useState(
+    [
+      {
+        inventory_id: 0,
+        Ingredient: "Vegetable",
+      }
+    ]
+  ); 
+
+  //Display ingredients from inventory
+  useEffect(()=>{
+    const fetchAllIngredients = async () => {
+      try{
+        const res = await axios.get("http://localhost:8081/ingredientsDropdown")
+        
+        //Rename the keys of the data object
+        res.data.forEach(Rename);
+        function Rename(item){
+          delete Object.assign(item, { inventory_id: item.Inventory_ID })['Inventory_ID'];
+          delete Object.assign(item, { Ingredient: item.Name_inventory })['Name_inventory'];
+        }
+        setInventoryItems(res.data)
+      } catch(err){
+        console.log(err)
+      }
+    };
+
+    fetchAllIngredients();
+  }, []);
+
 
   useEffect(() => {
     setChosenItem({
@@ -423,7 +500,7 @@ function Dropdown({ inventory_id, inventory_name, handleFieldChanges }) {
           <div className="dropdown-result-wrapper">
             {isSearchOpen && (
               <div id="ing-options-container">
-                {sample_inventory_items
+                {inventory_items
                   .filter(
                     (ingredient) =>
                       ingredient.Ingredient.toLowerCase().includes(

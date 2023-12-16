@@ -25,7 +25,7 @@ function TableSection() {
     [
     { 
       id: 1,
-      type_name: "Vegetable",
+      type_name: "Meat",
       perishable: "false",
     },
   
@@ -42,6 +42,14 @@ function TableSection() {
     const fetchAllTypes = async () => {
       try{
         const res = await axios.get("http://localhost:8081/types")
+        //Rename the keys of the data object
+        res.data.forEach(Rename);
+        function Rename(item){
+          delete Object.assign(item, { id: item.Type_ID })['Type_ID'];
+          delete Object.assign(item, { type_name: item.Type_name })['Type_name'];
+          delete Object.assign(item, { perishable: (item.Is_perishable == 0) ? "false": "true" })['Is_perishable'];
+        }
+
         setTypes(res.data)
       } catch(err){
         console.log(err)
@@ -73,7 +81,7 @@ function TableSection() {
     //if no record is active(di naka-click), these are the default values for clickedRecord variable
     else {
       setTypeRecord({
-        clicked_ID: 0,
+        clicked_ID: null,
         clicked_TYPENAME: "",
         clicked_ISPERISHABLE: "false",
       });
@@ -97,7 +105,7 @@ function TableSection() {
 
     setOperation(() => operation); // updates the operatiion variable above. inassign ko dito either "add", "update", "delete"
   };
-
+ 
   //not sure; once the currentFormRecord has been updated(which means nagpasa ng record mula sa textfields tapos nagclick ng button), choose which operation to execute
   useEffect(() => {
     switch (operation) {
@@ -119,38 +127,44 @@ function TableSection() {
   //function for adding the currentFormRecord to the database
   //no need ng id
 
-  const addRecord = (currentFormRecord) => {
-
-    // const sendData = {
-    //   type: currentFormRecord.current_TYPENAME,
-    //   isPerishable: currentFormRecord.current_ISPERISHABLE
-    // }
-    axios.post('http://localhost:8081/addType', currentFormRecord)
+  const addRecord = (record) => {
+    axios.post('http://localhost:8081/addType', record)
       .then((res) => {
         if(res.data === "Failed") {
           alert("This type of waste already exists.")
         } else {
-          console.log("Successfully Added New Type of Waste.")
+          alert("Successfully Added New Type of Waste.")
         }
       })
       .catch((error) => {
-        console.log('Error during adding record:', error);
+        alert('Error during adding record:', error);
         // Add additional error handling as needed
       });
   }
 
   //function for updating the currentFormRecord to the database
   const updateRecord = (record) => {
-    //insert code to update record from database
-    console.log("UPDATE THIS ID ->", record.current_ID);
-    console.log("UPDATED DETAILS:", record);
+    axios.post('http://localhost:8081/updateType', record)
+      .then((res) => {
+        alert("Successfully Updated Record.")
+        console.log(res.data)
+      })
+      .catch((error) => {
+        alert('Error during updating record:', error);
+        // Add additional error handling as needed
+      });
   };
 
   //function for deleting the currentFormRecord to the database
   const deleteRecord = (record) => {
-    //insert code to update record from database
-    console.log("DELETE THIS ID:", record.current_ID);
-    console.log("DELETE THIS RECORD:", record);
+    axios.post('http://localhost:8081/deleteType', record)
+      .then((res) => {
+        alert("Successfully Deleted Record.")
+      })
+      .catch((error) => {
+        alert('Error during deleting record:', error);
+        // Add additional error handling as needed
+      });
   };
 
   //console.log("RECORD U CLICKED: ", clickedRecord);
