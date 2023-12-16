@@ -1,0 +1,15 @@
+FRONTEND:
+
+cd /src
+npm install (pag first time lang irarun)
+npm start
+
+
+BACKEND:
+- install xampp
+- sa localhost/phpymyadmin create ng database na 'foodwastedb'
+- tapos import yung foodwastedb.sql sa folder na import
+
+cd /src/backend
+npm install (pag first time lang irarun)
+npm start
