@@ -72,7 +72,7 @@ app.get("/types", (req,res)=>{
 });
 
 app.get("/ingredients", (req,res)=>{
-  const q = "SELECT `Inventory_ID`, `Name_inventory`, `Type_name`, `Pcs_inventory`, `Kg_inventory`, `Price`, `Expiration_date`, inventory.Type_ID FROM inventory WHERE User_Id = ? INNER JOIN type ON inventory.Type_ID = type.Type_ID;"
+  const q = "SELECT `Inventory_ID`, `Name_inventory`, `Type_name`, `Pcs_inventory`, `Kg_inventory`, `Price`, `Expiration_date`, inventory.Type_ID FROM inventory INNER JOIN type ON inventory.Type_ID = type.Type_ID WHERE inventory.User_ID = ?"
   const userID = 1000 
   db.query(q,userID,(err,data)=>{
     if(err) return res.json(err)
