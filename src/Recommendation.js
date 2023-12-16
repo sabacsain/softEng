@@ -8,7 +8,7 @@ export default function Recommendation({ setRecommOpen, data }) {
   //sample
   const exceededThreshold = true;
 
-  function handleClick() {
+  function HandleClick() {
     setRecommOpen(false);
   }
 
@@ -48,7 +48,7 @@ export default function Recommendation({ setRecommOpen, data }) {
           </>
         )}
 
-        <button className="recomm-close-btn" onClick={handleClick}>
+        <button className="recomm-close-btn" onClick={HandleClick}>
           {" "}
           ✖
         </button>

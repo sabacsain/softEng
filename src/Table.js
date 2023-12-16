@@ -27,7 +27,7 @@ function TableData({ data, handleClickedRecord }) {
   const [activeRowId, setActiveRowId] = useState(0);
 
   //if record was clicked, if it is not yet active -> make it active; else, remove its active state
-  function handleClick(item) {
+  function HandleClick(item) {
     const activeRow = item.id === activeRowId ? 0 : item.id;
     setActiveRowId(activeRow);
     if (handleClickedRecord != null) {
@@ -39,7 +39,7 @@ function TableData({ data, handleClickedRecord }) {
     <tr
       //apply active-row class to a tr which is active
       className={`${activeRowId === item.id ? "active-row" : ""}`}
-      onClick={() => handleClick(item)}
+      onClick={() => HandleClick(item)}
       id={`${item.id}`}
     >
       {Object.entries(item).map(([key, value]) => (

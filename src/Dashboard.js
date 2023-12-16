@@ -52,7 +52,7 @@ function CurrentDayWaste() {
   const date = new Date();
   const [isRecommOpen, setRecommOpen] = useState(false);
 
-  function handleClick() {
+  function HandleClick() {
     setRecommOpen(true);
   }
 
@@ -66,7 +66,7 @@ function CurrentDayWaste() {
         <button
           class="button-recom"
           id="button-current-day"
-          onClick={handleClick}
+          onClick={HandleClick}
         >
           Recommendations
         </button>
@@ -141,7 +141,7 @@ function PeriodicWaste() {
   ]);
 
   //opens recomm button
-  function handleClick() {
+  function HandleClick() {
     setRecommOpen((e) => (e = true));
   }
 
@@ -158,7 +158,7 @@ function PeriodicWaste() {
           <button
             class="button-recom"
             id="button-periodic"
-            onClick={handleClick}
+            onClick={HandleClick}
           >
             Recommendations
           </button>
@@ -200,7 +200,7 @@ function DateRangeForm({
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   //sets the date ranges for last year, last month, last week
-  function handleSelectedRangeChange(selectedRange) {
+  function HandleSelectedRangeChange(selectedRange) {
     setSelectedRange((s) => selectedRange);
 
     //sets the initial date range depending on the chosen range (last yr, month, week, custom)
@@ -252,7 +252,7 @@ function DateRangeForm({
   }
 
   //sets the date range specified by user using the calendar
-  function handleDateRangeChange(range) {
+  function HandleDateRangeChange(range) {
     setDateRange([range.selection]);
   }
 
@@ -263,7 +263,7 @@ function DateRangeForm({
         <label for="date-range">Date range:</label>
         <select
           id="date-range"
-          onChange={(e) => handleSelectedRangeChange(e.target.value)}
+          onChange={(e) => HandleSelectedRangeChange(e.target.value)}
         >
           <option value="last-year">Last Year</option>
           <option value="last-month">Last Month</option>
@@ -293,7 +293,7 @@ function DateRangeForm({
           <div className="calendar-container">
             <DateRange
               editableDateInputs={true}
-              onChange={handleDateRangeChange}
+              onChange={HandleDateRangeChange}
               moveRangeOnFirstSelection={false}
               ranges={dateRange}
               maxDate={new Date()}
