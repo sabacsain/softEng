@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 10, 2023 at 12:00 PM
+-- Generation Time: Dec 16, 2023 at 10:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -57,8 +57,9 @@ CREATE TABLE `inventory` (
 --
 
 INSERT INTO `inventory` (`User_id`, `Inventory_ID`, `Name_inventory`, `Kg_inventory`, `Pcs_inventory`, `Is_expired`, `Is_deleted`, `Type_ID`, `Price`, `Expiration_date`) VALUES
-(1000, 0, 'kalabasa', 1.50, 0, 0, 0, 1, 51.00, '2023-12-24'),
-(1000, 1, 'sitaw', 2.00, 0, 0, 0, 1, 29.00, '2023-12-30');
+(1000, 1, 'sitaw', 25.50, 0, 0, 0, 3, 54.00, '2023-12-28'),
+(1000, 2, 'kalabasa', 0.00, 2, 0, 0, 3, 102.00, '2023-12-21'),
+(1000, 5, 'manga', 0.00, 2, 0, 0, 2, 25.00, '2024-01-03');
 
 -- --------------------------------------------------------
 
@@ -78,7 +79,9 @@ CREATE TABLE `type` (
 --
 
 INSERT INTO `type` (`User_id`, `Type_ID`, `Is_perishable`, `Type_name`) VALUES
-(1001, 1, 0, 'Vegetable');
+(1001, 1, 0, 'Vegetable'),
+(1000, 2, 1, 'Fruits'),
+(1000, 3, 1, 'Vegetable');
 
 -- --------------------------------------------------------
 
@@ -123,7 +126,8 @@ CREATE TABLE `waste` (
 --
 
 INSERT INTO `waste` (`User_id`, `Waste_ID`, `Kg_waste`, `Pcs_waste`, `Date_waste`, `Inventory_ID`) VALUES
-(1000, 1, 2.00, 0, '2023-12-10', 1);
+(1000, 2, 25.50, 0, '2023-12-16', 1),
+(1000, 3, 0.00, 0, '2023-12-16', 2);
 
 --
 -- Indexes for dumped tables
@@ -170,10 +174,16 @@ ALTER TABLE `waste`
 --
 
 --
+-- AUTO_INCREMENT for table `inventory`
+--
+ALTER TABLE `inventory`
+  MODIFY `Inventory_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `type`
 --
 ALTER TABLE `type`
-  MODIFY `Type_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Type_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -185,7 +195,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `waste`
 --
 ALTER TABLE `waste`
-  MODIFY `Waste_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Waste_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
