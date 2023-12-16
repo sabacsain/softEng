@@ -2,6 +2,7 @@ import express from 'express';
 import mysql from 'mysql';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import moment from 'moment';
 
 const app = express()
 app.use(express.json());
@@ -67,6 +68,31 @@ app.get("/types", (req,res)=>{
   db.query(q,userID,(err,data)=>{
     if(err) return res.json(err)
     return res.json(data)
+  })
+
+});
+
+app.get("/dayWaste", (req,res)=>{
+  const q = "SELECT `Name_inventory`, `Kg_waste`, `Pcs_waste`, `Price` FROM `waste` INNER JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID WHERE waste.User_id = ? AND Date_waste = CURRENT_DATE"
+  const userID = 1000 //to be changed
+
+  db.query(q,userID,(err,data)=>{
+    if(err) return res.json(err)
+    return res.json(data)
+  })
+
+});
+
+
+app.post("/periodicWaste", (req,res)=>{
+  const q = "SELECT `Name_inventory`, `Kg_inventory`, `Price` FROM `waste` INNER JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID WHERE waste.User_id = ? AND ( Date_waste BETWEEN ? AND ? )"
+  const userID = 1000 //to be changed
+  const startDate = moment.utc(req.body.startDate).format('YYYY/MM/DD')
+  const endDate = moment.utc(req.body.endDate).format('YYYY/MM/DD')
+  console.log([userID, req.body.endDate, req.body.startDate])
+  db.query(q,[userID, startDate, endDate],(err,data)=>{
+    if(err) console.log(err)
+    console.log(data)
   })
 
 });

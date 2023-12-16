@@ -9,10 +9,12 @@ const sampleIngredients = [
     Price: "120", //per kilo
   },
   {
-    Name: "Bcde"
+    Name: "Bcde",
+    Price: "120", 
   },
   {
-    Name: "cdfghi"
+    Name: "cdfghi",
+    Price: "120", 
   },
 ];
 
