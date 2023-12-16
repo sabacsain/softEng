@@ -83,6 +83,29 @@ app.get("/dayWaste", (req,res)=>{
 
 });
 
+app.get("/expiringToday", (req,res)=>{
+  const q = "SELECT `Name_inventory`FROM inventory WHERE User_Id = ? AND Expiration_date = CURRENT_DATE"
+  const userID = 1000 //to be changed
+
+  db.query(q,userID,(err,data)=>{
+    if(err) return res.json(err)
+    return res.json(data)
+  })
+
+});
+
+app.get("/expiringWeek", (req,res)=>{
+  const q = "SELECT `Name_inventory`FROM inventory WHERE User_Id = ? AND Expiration_date BETWEEN ? AND ?"
+  const userID = 1000 //to be changed
+  var startOfWeek = moment().startOf('week').toDate();
+  var endOfWeek   = moment().endOf('week').toDate();
+
+  db.query(q,[userID, startOfWeek, endOfWeek],(err,data)=>{
+    if(err) return res.json(err)
+    return res.json(data)
+  })
+
+});
 
 app.post("/periodicWaste", (req,res)=>{
   const q = "SELECT `Name_inventory`, `Kg_inventory`, `Price` FROM `waste` INNER JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID WHERE waste.User_id = ? AND ( Date_waste BETWEEN ? AND ? )"

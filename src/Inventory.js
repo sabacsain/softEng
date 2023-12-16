@@ -66,6 +66,38 @@ function InventoryHeader() {
 }
 
 function NotificationComponent({ handleOpenNotif }) {
+  const [expiringThisDay, setExpiringThisDay] = useState([]);
+  const [expiringThisWeek, setExpiringThisWeek] = useState([]);
+  
+  //get the ingredients expiring today
+  useEffect(()=>{
+    const fetchExpiringToday = async () => {
+      try{
+        const res = await axios.get("http://localhost:8081/expiringToday")
+        setExpiringThisDay(res.data)
+      } catch(err){
+        console.log(err)
+      }
+    };
+
+    fetchExpiringToday();
+  }, []);
+
+
+  //get the ingredients expiring week
+  useEffect(()=>{
+    const fetchExpiringWeek = async () => {
+      try{
+        const res = await axios.get("http://localhost:8081/expiringWeek")
+        setExpiringThisWeek(res.data)
+      } catch(err){
+        console.log(err)
+      }
+    };
+
+    fetchExpiringWeek();
+  }, []);
+
   return createPortal(
     <>
       {/* <!-- Overlay background --> */}
@@ -78,38 +110,20 @@ function NotificationComponent({ handleOpenNotif }) {
           <Link to="/inventory/expiration-table">See all expired items</Link>
         </div>
 
-        <h3 class="h3-inventory tomorrow">Tomorrow (10)</h3>
+        <h3 class="h3-inventory tomorrow">Tomorrow ({expiringThisDay.length})</h3>
         <hr></hr>
         <div className="notif-entries-wrapper">
-          <div>Strawberryf jkdljfksf</div>
-          <div>Strawberry fsdfsdf</div>
-          <div>Strawberr f dfsfy</div>
-          <div>Strawberry fdfsf</div>
-          <div>Strawberry</div>
-          <div>Strawberry</div>
-          <div>Strawberry</div>
-          <div>Strawberry</div>
-          <div>Strawberrdfsdfdsfy</div>
-          <div>Strawbersfsdry</div>
-
-          {/* <!-- DATABASE LIST --> */}
+          {expiringThisDay.map((expiringThisDay) => (
+            <div>{expiringThisDay.Name_inventory}</div>
+          ))}
         </div>
 
         <h3 class="h3-inventory thisweek">This Week</h3>
         <hr></hr>
         <div className="notif-entries-wrapper">
-          <div>Strawberryf jkdljfksf</div>
-          <div>Strawberry fsdfsdf</div>
-          <div>Strawberr f dfsfy</div>
-          <div>Strawberry fdfsf</div>
-          <div>Strawberry</div>
-          <div>Strawberry</div>
-          <div>Strawberry</div>
-          <div>Strawberry</div>
-          <div>Strawberrdfsdfdsfy</div>
-          <div>Strawbersfsdry</div>
-
-          {/* <!-- DATABASE LIST --> */}
+        {expiringThisWeek.map((expiringThisWeek) => (
+            <div>{expiringThisWeek.Name_inventory}</div>
+          ))}
         </div>
 
         <button class="notif-close-btn" onClick={handleOpenNotif}>
