@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import "./css/header.css";
 
+//first type of header
 export default function Header({ headerName }) {
   return (
     <>
@@ -33,6 +34,7 @@ export default function Header({ headerName }) {
   );
 }
 
+//second type of header
 function SecondHeader({ title, color }) {
   return (
     <>

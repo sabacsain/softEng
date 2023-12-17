@@ -15,29 +15,6 @@ const columns = [
   "Expiration Date"
 ];
 
-// //sample data
-// const inventory_items = [
-//   {
-//     id: 23,
-//     Ingredient: "Carrot",
-//     Type: "Vegetable",
-//     Pcs: 100,
-
-//     Kgs: 0,
-//     Price: 250,
-//     Expiration: "2023-12-02",
-//   },
-//   {
-//     id: 12,
-//     Ingredient: "Ground Beef",
-//     Type: "Meat",
-//     Pcs: 0,
-//     Kgs: 25,
-//     Price: 500,
-//     Expiration: "2023-01-02",
-//   },
-// ];
-
 export default function Expiration() {
   return (
     <div className="expiration">
@@ -52,7 +29,6 @@ export default function Expiration() {
 function TableSection() {
   //table section with form section
   //for query
-    //for waste
     const[expired_items, setExpiredItems] = useState(
       [
         {

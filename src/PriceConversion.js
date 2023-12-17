@@ -43,7 +43,7 @@ function IngredientSearch() {
   };
 
   const handlePriceCalc = () => {
-    // dito ata pwede ilagay how to compute for the price of the searched ingredient
+    // insert how to compute for the price of the searched ingredient
     setPrice(1000); //sample value
   }
 
