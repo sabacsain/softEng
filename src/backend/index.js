@@ -350,6 +350,15 @@ app.post("/updateWaste", (req,res)=>{
 
 });
 
+app.get("/expiration-table", (req,res)=>{
+    const q = "SELECT `Exp_ID`, `Name_inventory`, `Pcs_inventory`, `Kg_inventory`, expired.Price, `Expiration_date` FROM expired LEFT JOIN inventory ON expired.Inventory_ID = inventory.Inventory_ID;"
+    db.query(q,(err,data)=>{
+      if(err) return res.json(err)
+      return res.json(data)
+    })
+  
+  });
+
 
 app.listen(8081, () => {
   console.log("Connected to backend");

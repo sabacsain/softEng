@@ -358,8 +358,9 @@ function TableSection() {
 
   return (
     <>
-      <div id="inventory-search-and-sorting">
-        <SearchBar handleSearch={handleSearch} />
+<div id="inventory-search-and-sorting">
+        <SearchBar handleSearch={handleSearch} 
+        listOfData = {inventory_items}/>
         <SortBy
           options={columns}
           handleSortColumn={handleSortColumn}
