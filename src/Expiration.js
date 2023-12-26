@@ -1,42 +1,20 @@
 import { useEffect, useState } from "react";
 import "./css/expiration.css";
 import axios from 'axios';
-import { SearchBar, SortBy } from "./Search";
+import { SearchBar, SortBy, Filter } from "./Search";
 import Table from "./Table";
 import { SecondHeader  } from "./Header";
 
 //sample columns
 const columns = [
-  "Exp_ID",
+  "ID",
   "Ingredient",
+  "Type Name",
   "Pcs",
   "Kgs",
   "Price",
   "Expiration Date"
 ];
-
-// //sample data
-// const inventory_items = [
-//   {
-//     id: 23,
-//     Ingredient: "Carrot",
-//     Type: "Vegetable",
-//     Pcs: 100,
-
-//     Kgs: 0,
-//     Price: 250,
-//     Expiration: "2023-12-02",
-//   },
-//   {
-//     id: 12,
-//     Ingredient: "Ground Beef",
-//     Type: "Meat",
-//     Pcs: 0,
-//     Kgs: 25,
-//     Price: 500,
-//     Expiration: "2023-01-02",
-//   },
-// ];
 
 export default function Expiration() {
   return (
@@ -53,31 +31,34 @@ function TableSection() {
   //table section with form section
   //for query
     //for waste
-    const[expired_items, setExpiredItems] = useState(
+    const[inventory_items, setInventoryItems] = useState(
       [
         {
-        id: 0,
-        ingredient: "",     
-        pieces: 0,
-        weight: 0,
-        price: 0,
-        expiration:""
+          id: 0,
+          ingredient: "",
+          type: "",
+          pieces: 0,
+          weight: 0,
+          price: 0,
+          expiration:""
         
         }
       ]
     );
+    const [filteredItems, setFilteredItems] = useState([]);
+
   //display ingredients from inventory
   useEffect(()=>{
-    const fetchAllExpired = async () => {
+    const fetchAllIngredients = async () => {
       try{
-        const res = await axios.get("http://localhost:8081/expiration-table")
-        setExpiredItems(res.data)
+        const res = await axios.get("http://localhost:8081/inventory/expiration-table")
+        setInventoryItems(res.data)
       } catch(err){
         console.log(err)
       }
     };
 
-    fetchAllExpired();
+    fetchAllIngredients();
   }, []);
 
   const [searchValue, setSearchValue] = useState(""); //holds the value you type in the searchbox
@@ -107,9 +88,10 @@ function TableSection() {
   return (
     <>
       <div className="expiration-search-wrapper">
-        <SearchBar handleSearch={handleSearch} />
+        <SearchBar handleSearch={handleSearch} inventory_items={inventory_items} setFilteredItems={setFilteredItems}/>
         <SortBy
           options={columns}
+          data={filteredItems}
           handleSortColumn={handleSortColumn}
           handleOrder={handleOrder}
           currentOrder={order}
@@ -119,8 +101,8 @@ function TableSection() {
       <div className="expiration-table-wrapper">
         {/* null - even if record is clicked, no data will be received from the table unlike in inventory and today's waste */}
         <Table
-          columns={columns}
-          data={expired_items}
+          columns={Object.keys(inventory_items[0])}
+          data={filteredItems || []}
           handleClickedRecord={null}
         />
       </div>
