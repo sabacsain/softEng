@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./css/dashboard.css";
 import Header from "./Header";
 import Recommendation from "./Recommendation";
 import { DateRange } from "react-date-range";
 import { format } from "date-fns";
-
+import axios from 'axios';
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 
@@ -51,10 +51,52 @@ function HorizontalRule() {
 function CurrentDayWaste() {
   const date = new Date();
   const [isRecommOpen, setRecommOpen] = useState(false);
+  const [dayWaste, setDayWaste] = useState({
+    foodItem: "No waste",
+    foodItemPrice: "No waste",
+    totalPrice: "No waste",
+    totalKilo: "No waste",
+  })
 
-  function handleClick() {
+  //get the current day waste statistics
+  useEffect(()=>{
+    const fetchDayWaste = async () => {
+      try{
+        const res = await axios.get("http://localhost:8081/dayWaste")
+        
+        //Compute today's statistics
+        const priceSum = res.data.reduce((accumulator, object) => {
+          return accumulator + object.Price;
+        }, 0);
+
+        const priceKilo = res.data.reduce((accumulator, object) => {
+          return accumulator + object.Kg_waste;
+        }, 0);
+
+        const mostWasted = res.data.reduce(function(prev, current) {
+          return (prev && prev.Price * prev.Kg_waste > current.Price * current.Kg_waste) ? prev : current
+        })
+      
+
+        setDayWaste({
+          foodItem: mostWasted.Name_inventory,
+          foodItemPrice: mostWasted.Price * mostWasted.Kg_waste,
+          totalPrice: priceSum,
+          totalKilo: priceKilo
+        })
+      } catch(err){
+        console.log(err)
+      }
+    };
+
+    fetchDayWaste();
+  }, []);
+  
+  function HandleClick() {
     setRecommOpen(true);
   }
+
+
 
   // INSERT CODE TO GET most wasted item by price, total price of all wastes, total kg of all wastes
   // pass those values as props to CurrentDayCard below
@@ -66,7 +108,7 @@ function CurrentDayWaste() {
         <button
           class="button-recom"
           id="button-current-day"
-          onClick={handleClick}
+          onClick={HandleClick}
         >
           Recommendations
         </button>
@@ -92,17 +134,17 @@ function CurrentDayWaste() {
           <CurrentDayCard
             title={"Most Wasted Food Item"}
             subtitle={"(By Price)"}
-            value={`${"MEAT"}`}
-            subvalue={`PHP ${500}`}
+            value={`${dayWaste.foodItem}`}
+            subvalue={`PHP ${dayWaste.foodItemPrice}`}
           />
           <CurrentDayCard
             title={"Total Price of all Food Wastes"}
-            value={`PHP ${1234}`}
+            value={`PHP ${dayWaste.totalPrice}`}
           />
 
           <CurrentDayCard
             title={"Total Kilograms of Food Wastes"}
-            value={`${4.5}`}
+            value={`${dayWaste.totalKilo}`}
           />
         </div>
       </div>
@@ -140,14 +182,63 @@ function PeriodicWaste() {
     },
   ]);
 
+  const [periodicWaste, setPeriodicWaste] = useState(
+    {
+      foodItem: "apple",
+      foodItemPrice: 54,
+      totalPrice: 25,
+      totalKilo: 23
+    }
+  )
+
   //opens recomm button
-  function handleClick() {
+  function HandleClick() {
     setRecommOpen((e) => (e = true));
   }
 
   // INSERT CODE HERE TO Get data based on selected range and date range(if custom)
   // extract total_weight, array/object(most wasted items by price; ex. name: Meat, price: 120), array/object(total kg per month or day), accumulated_price, array/object(total price per month or day), expired_total_price
   // then pass values as props to each card
+
+  //get the periodic waste statistics
+  useEffect(()=>{
+    const fetchPeriodicWaste = (dateRange) => {
+      axios.post('http://localhost:8081/periodicWaste', dateRange)
+      .then((res) => {
+        const priceSum = res.data.reduce((accumulator, object) => {
+          return accumulator + object.Price;
+        }, 0);
+
+        const priceKilo = res.data.reduce((accumulator, object) => {
+          return accumulator + object.Kg_inventory;
+        }, 0);
+
+        const mostWasted = res.data.reduce(function(prev, current) {
+          return (prev && prev.Price * prev.Kg_inventory > current.Price * current.Kg_inventory) ? prev : current
+        })
+
+        console.log("Sum",priceSum)
+        console.log("Kilo",priceKilo)
+        console.log("Most",mostWasted)
+      
+        setPeriodicWaste({
+          foodItem: mostWasted.Name_inventory,
+          foodItemPrice: mostWasted.Price * mostWasted.Kg_inventory,
+          totalPrice: priceSum,
+          totalKilo: priceKilo
+        })
+
+      })
+      .catch((error) => {
+        console.log('Error during adding record:', error);
+        // Add additional error handling as needed
+      });
+    }
+
+    fetchPeriodicWaste(dateRange);
+  },[dateRange]);
+
+  console.log("Date Range:",dateRange)
 
   return (
     <div className="report-section" id="dashboard-periodic-report">
@@ -158,7 +249,7 @@ function PeriodicWaste() {
           <button
             class="button-recom"
             id="button-periodic"
-            onClick={handleClick}
+            onClick={HandleClick}
           >
             Recommendations
           </button>
@@ -178,10 +269,10 @@ function PeriodicWaste() {
       </div>
 
       <div className="cards-section-periodic">
-        <TotalWeightCard weight={0} />
+        <TotalWeightCard weight={periodicWaste.totalKilo} />
         <MostWastedCard />
         <TotalKgWasteCard />
-        <AccumulatedPriceCard accumulated_price={11245} />
+        <AccumulatedPriceCard accumulated_price={periodicWaste.totalPrice} />
         <PriceEachMonthCard />
         <ExpiredCard expired_total_price={3425} />
       </div>
@@ -200,7 +291,7 @@ function DateRangeForm({
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   //sets the date ranges for last year, last month, last week
-  function handleSelectedRangeChange(selectedRange) {
+  function HandleSelectedRangeChange(selectedRange) {
     setSelectedRange((s) => selectedRange);
 
     //sets the initial date range depending on the chosen range (last yr, month, week, custom)
@@ -252,7 +343,7 @@ function DateRangeForm({
   }
 
   //sets the date range specified by user using the calendar
-  function handleDateRangeChange(range) {
+  function HandleDateRangeChange(range) {
     setDateRange([range.selection]);
   }
 
@@ -263,7 +354,7 @@ function DateRangeForm({
         <label for="date-range">Date range:</label>
         <select
           id="date-range"
-          onChange={(e) => handleSelectedRangeChange(e.target.value)}
+          onChange={(e) => HandleSelectedRangeChange(e.target.value)}
         >
           <option value="last-year">Last Year</option>
           <option value="last-month">Last Month</option>
@@ -293,7 +384,7 @@ function DateRangeForm({
           <div className="calendar-container">
             <DateRange
               editableDateInputs={true}
-              onChange={handleDateRangeChange}
+              onChange={HandleDateRangeChange}
               moveRangeOnFirstSelection={false}
               ranges={dateRange}
               maxDate={new Date()}
@@ -310,7 +401,7 @@ function TotalWeightCard({ weight }) {
   return (
     <div class="card" id="card-periodic-total-waste">
       <h3 class="h3-periodic">Total Weight of Food Waste in Kgs</h3>
-      <h1 class="h1-periodic">INSERT KG {weight}</h1>
+      <h1 class="h1-periodic">{weight} Kgs</h1>
     </div>
   );
 }
@@ -408,7 +499,7 @@ function AccumulatedPriceCard({ accumulated_price }) {
       <h3 class="h3-periodic">Accumulated Price of Wastes</h3>
       <h1 class="h1-periodic">
         PHP <br />
-        INSERT PRICE {accumulated_price}
+        {accumulated_price}
       </h1>
     </div>
   );
@@ -571,7 +662,7 @@ function ExpiredCard({ expired_total_price }) {
       <h3 class="h3-periodic">Price of All Expired Items</h3>
       <h1 class="h1-periodic">
         PHP <br />
-        INSERT PRICE {expired_total_price}
+        {expired_total_price}
       </h1>
     </div>
   );
