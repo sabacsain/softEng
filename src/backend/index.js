@@ -142,7 +142,7 @@ app.get("/ingredientsDropdown", (req,res)=>{
 });
 
 app.get("/wastes", (req,res)=>{
-  const q = "SELECT `Waste_ID`, `Name_inventory`, waste.Inventory_ID,  `Type_name`, `Kg_waste`, `Pcs_waste`, `Price`, inventory.Type_ID FROM waste INNER JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID INNER JOIN type ON inventory.Inventory_ID = type.Type_ID"
+  const q = "SELECT `Waste_ID`, `Name_inventory`, waste.Inventory_ID,  `Type_name`, `Kg_waste`, `Pcs_waste`, `Price`, inventory.Type_ID FROM waste LEFT JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID LEFT JOIN type ON inventory.Inventory_ID = type.Type_ID"
 
   db.query(q,(err,data)=>{
     if(err) console.log(err)
