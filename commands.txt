@@ -1,0 +1,31 @@
+# Front-end:
+To install dependencies:
+    npm install
+
+To use browserRouter:
+    npm install react-router-dom
+
+To use the calendar:
+    npm install react-date-range
+    npm install --save react date-fns
+
+To use charts:
+    npm install recharts
+
+To fetch php data:
+    npm install axios
+
+# Back-end:
+- Install XAMPP (MySQL, Apache, and PHP)
+- Create a database in MySQL name 'foodwastedb'
+- Create a 'user' table containing [User_ID, Username, Password]
+- Refer to the 'database' folder. Copy the 'insert.php' and login.php to XAMPP's folder [htdocs].
+- Preferrably, create a folder called 'foodwastedb' and another folder inside it 'login-signup'
+    - This is the path for login and signup php files 'http:localhost/foodwastedb/login-signup/'
+## Not sure: Explicitly run the php files (insert.php and login.php) on the command-line interface
+    - Command needed: php -S localhost:8080 <name>.php
+    - //Not sure sa windows pero ganto sa system ko.//
+- Test authentication 
+
+# Issues:
+- Di ma-import 'yugn waste table.
