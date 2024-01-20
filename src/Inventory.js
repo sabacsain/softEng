@@ -334,6 +334,7 @@ function TableSection() {
 
   //function for updating the currentFormRecord to the database
   const updateRecord = (record) => {
+
     axios.post('http://localhost:8081/updateInventory', record)
       .then((res) => {
         alert("Successfully Updated Record.")
