@@ -102,7 +102,10 @@ function TableSection() {
         {/* null - even if record is clicked, no data will be received from the table unlike in inventory and today's waste */}
         <Table
           columns={Object.keys(inventory_items[0])}
-          data={filteredItems || []}
+          data={filteredItems.map(item => ({
+            ...item,
+            Expiration_date: new Date(item.Expiration_date).toLocaleDateString("en-US")
+          })) || []}
           handleClickedRecord={null}
         />
       </div>

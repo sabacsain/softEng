@@ -172,7 +172,7 @@ function TableSection() {
           delete Object.assign(item, { weight: item.Kg_inventory })['Kg_inventory'];
           delete Object.assign(item, { pieces: item.Pcs_inventory })['Pcs_inventory'];
           delete Object.assign(item, { price: item.Price })['Price'];
-          delete Object.assign(item, { expiration: moment.utc(item.Expiration_date).format('YYYY/MM/DD') })['Expiration_date'];
+          delete Object.assign(item, { expiration: moment.utc(item.Expiration_date).utc().format('YYYY/MM/DD') })['Expiration_date'];
         }
         setInventoryItems(res.data)
       } catch(err){
@@ -181,7 +181,7 @@ function TableSection() {
     };
 
     fetchAllIngredients();
-  }, []);
+  }, [inventory_items]);
 
   //for query
   const [searchValue, setSearchValue] = useState(""); //holds the value you type in the searchbox
@@ -323,6 +323,7 @@ function TableSection() {
       if(res.data === "Failed") {
         alert("This type of ingredient already exists.")
       } else{
+        setInventoryItems((prevItems) => [...prevItems, res.data]);
         alert("Successfully added new ingedient.")
       }
     })

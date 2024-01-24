@@ -76,7 +76,7 @@ function TableSection() {
     };
 
     fetchAllWaste();
-  }, []);
+  }, [waste_items]);
 
 
   const [clickedRecord, setTodayWasteRecord] = useState({
@@ -186,6 +186,7 @@ function TableSection() {
       if(res.data === "Failed") {
         alert("This ingredient is already in the waste list.")
       } else{
+        setWasteItems((prevItems) => [...prevItems, res.data]);
         alert("Successfully added new waste.")
       }
     })
@@ -202,6 +203,7 @@ function TableSection() {
         if(res.data === "Failed") {
           alert("This ingredient is already in the waste list.")
         } else{
+          
           alert("Successfully Updated Record")
         }
       })
@@ -213,12 +215,15 @@ function TableSection() {
 
   //function for deleting the currentFormRecord to the database
   const deleteRecord = (record) => {
-    //insert code to update record from database
-    console.log("DELETE THIS ID:", record.id);
-    console.log("DELETE THIS RECORD:", record);
+    axios.post('http://localhost:8081/deleteWaste', record)
+      .then((res) => {
+        alert("Successfully Deleted Record.")
+      })
+      .catch((error) => {
+        alert('Error during deleting a record:', error);
+        // Add additional error handling as needed
+      });
   };
-
-  //console.log("RECORD U CLICKED: ", clickedRecord);
 
   return (
     <>

@@ -121,7 +121,7 @@ app.post("/periodicWaste", (req,res)=>{
 });
 
 app.get("/ingredients", (req,res)=>{
-  const q = "SELECT `Inventory_ID`, `Name_inventory`, `Type_name`, `Pcs_inventory`, `Kg_inventory`, `Price`, `Expiration_date`, inventory.Type_ID FROM inventory INNER JOIN type ON inventory.Type_ID = type.Type_ID WHERE inventory.User_ID = ?"
+  const q = "SELECT `Inventory_ID`, `Name_inventory`, `Type_name`, `Pcs_inventory`, `Kg_inventory`, `Price`, DATE_FORMAT(`Expiration_date`, '%Y-%m-%d') AS `Expiration_date`, inventory.Type_ID FROM inventory INNER JOIN type ON inventory.Type_ID = type.Type_ID WHERE inventory.User_ID = ?"
   const userID = 1000 
   db.query(q,userID,(err,data)=>{
     if(err) return res.json(err)
@@ -142,7 +142,7 @@ app.get("/ingredientsDropdown", (req,res)=>{
 });
 
 app.get("/wastes", (req,res)=>{
-  const q = "SELECT `Waste_ID`, `Name_inventory`, waste.Inventory_ID,  `Type_name`, `Kg_waste`, `Pcs_waste`, `Price`, inventory.Type_ID FROM waste LEFT JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID LEFT JOIN type ON inventory.Inventory_ID = type.Type_ID"
+  const q = "SELECT `Waste_ID`, `Name_inventory`, waste.Inventory_ID,  type.Type_name, `Kg_waste`, `Pcs_waste`, `Price`, inventory.Type_ID FROM waste LEFT JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID LEFT JOIN type ON inventory.Type_ID = type.Type_ID"
 
   db.query(q,(err,data)=>{
     if(err) console.log(err)
@@ -347,15 +347,30 @@ app.post("/updateInventory", (req,res)=>{
 app.post("/updateWaste", (req,res)=>{
   const q = "UPDATE waste SET ? WHERE User_id = ? AND Waste_ID = ?"
   const userID =  1000
+  const inv_id = req.body.inv_id;
 
   const values = {
     User_id: userID,
-    Waste_ID: req.body.weight,
     Kg_waste: req.body.weight,
     Pcs_waste: req.body.pieces,
     Inventory_ID: inv_id
   };
 
+  app.post("/deleteWaste", (req,res)=>{
+    const q = "DELETE FROM waste WHERE User_id = ? AND Waste_ID = ?";
+    const userID =  1000
+
+    //Delete type of waste
+    db.query(q, [userID, req.body.id], (err,data)=>{
+      if(err){
+        return res.json(err)
+      }else{
+        console.log("Deletion successful. Rows affected:", data.affectedRows);
+      return res.json(data);
+      }
+    })
+  
+  });
 
   //Update selected type of waste
   db.query(q, [values, userID, req.body.id], (err,data)=>{

@@ -1,11 +1,28 @@
 import { useState } from "react";
+import { useAuth } from './AuthContext'; // Update the path accordingly
+import LogoutModal from './Logout';
 import "./css/sidebar.css";
-
-import { Link } from "react-router-dom";
+import "./css/logout.css";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
   const [currentTab, setCurrentTab] = useState("/dashboard");
+  const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
+  let history = useNavigate();
+  const { logout } = useAuth();
 
+  const handleLogout = () => {
+    setLogoutModalOpen(true);
+  };
+
+  const handleConfirmLogout = () => {
+    logout();
+    history('/login');
+  };
+
+  const handleCloseModal = () => {
+    setLogoutModalOpen(false);
+  };
   return (
     <nav className="sidebar">
       <div className="logo-container">
@@ -162,7 +179,7 @@ export default function Sidebar() {
           </li>
           <div>
             <hr></hr>
-            <li className="sidebar-logout">
+            <li className="sidebar-logout" onClick={handleLogout}>
               <span>
                 <svg
                   width="50"
@@ -184,9 +201,13 @@ export default function Sidebar() {
           </div>
         </ul>
       </div>
+      <LogoutModal
+        isOpen={isLogoutModalOpen}
+        onConfirm={handleConfirmLogout}
+        onClose={handleCloseModal}
+      />
     </nav>
-  );
-}
+  )
 
 //for each option in the sidebar
 function SidebarOption({ currentTab, page, text, icon, changeCurrentTab }) {
@@ -206,4 +227,5 @@ function SidebarOption({ currentTab, page, text, icon, changeCurrentTab }) {
       </li>
     </Link>
   );
+}
 }
