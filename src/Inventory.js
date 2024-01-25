@@ -37,29 +37,32 @@ export default function Inventory() {
 }
 
 function InventoryHeader() {
+  const [hasUnseenNotifications, setHasUnseenNotifications] = useState(true);
   const [isNotifOpen, setIsNotifOpen] = useState(false);
 
   const handleOpenNotif = () => {
-    setIsNotifOpen((prev) => !prev);
+    setIsNotifOpen(!isNotifOpen);
+
+    if (hasUnseenNotifications) {
+      setHasUnseenNotifications(false);
+    }
   };
 
   console.log(isNotifOpen);
+
   return (
     <>
-      <div class="inventory-header">
+      <div className="inventory-header">
         <h1>Inventory</h1>
-        <div class="inventory-notif-wrapper">
-          <div class="notif">
-            {/* {render span only when there are new notif that user has not seen yet} */}
-            <span></span>
-
-            <i class="fa fa-bell fa-2xs" onClick={handleOpenNotif}></i>
+        <div className="inventory-notif-wrapper">
+          <div className="notif" onClick={handleOpenNotif}>
+            {hasUnseenNotifications && <span></span>}
+            <i className="fa fa-bell fa-2xs"></i>
           </div>
         </div>
       </div>
       <hr></hr>
-
-      {isNotifOpen === true && (
+      {isNotifOpen && (
         <NotificationComponent handleOpenNotif={handleOpenNotif} />
       )}
     </>
@@ -462,7 +465,12 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
   //pag click ng add button, ipapasa yung values from text fields, along with the operation (add, update, or delete)
   //check the  handleSetInventoryRecord sa TableSection(), dito galing yung values
   const handleOperation = (textfields, operation) => {
-    handleSetInventoryRecord(textfields, operation, currentID);
+    if (operation === 'add' || (clickedRecord.id !== null && clickedRecord.id !== undefined && clickedRecord.id !== 0)) {
+      handleSetInventoryRecord(textfields, operation, currentID);
+    } else {
+      // Display an error message when no record is selected
+      alert("No record was selected.");
+    }
   };
 
   return (

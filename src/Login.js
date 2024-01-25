@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from './AuthContext';  // Import the useAuth hook
 import "./css/login.css";
+import Cookies from 'js-cookie';  // Import Cookies
 
 const Login = () => {
   let history = useNavigate();
@@ -67,21 +68,22 @@ const Login = () => {
 
     axios.post('http://localhost:8081/login', sendData)
       .then((res) => {
-        if(res.data === "Failed") {
+        if (res.data === "Failed") {
           alert("Invalid User.")
         } else {
-          // Call the login method to set authentication status
+          
           login();
-          // Redirect to dashboard after successful login
+          
+          Cookies.set('authenticated', 'true');
+          
           history('/dashboard');
         }
       })
       .catch((error) => {
         console.error('Error during login:', error);
-        // Add additional error handling as needed
+        
       });
   }
-
   return (
     <div className="main">
       <h2 className="login">Login</h2>

@@ -321,8 +321,14 @@ function FormSection({clickedRecord,handleSetInventoryRecord}) {
   //pag click ng add button, ipapasa yung values from text fields, along with the operation (add, update, or delete)
   //check the  handleSetInventoryRecord sa TableSection(), dito galing yung values
   const handleOperation = (textfields, operation) => {
-    handleSetInventoryRecord(textfields, operation, currentID);
+    if (operation === 'add' || (clickedRecord.id !== null && clickedRecord.id !== undefined && clickedRecord.id !== 0)) {
+      handleSetInventoryRecord(textfields, operation, currentID);
+    } else {
+      // Display an error message when no record is selected
+      alert("No record was selected.");
+    }
   };
+  
 
   return (
     <form>
