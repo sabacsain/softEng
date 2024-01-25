@@ -220,15 +220,23 @@ function FormSection({ clickedRecord, handleCurrentTypeRecord }) {
   };
 
   //if crud button is clicked, pass the values from text fields, along with the operation (add, update, or delete)
-  const handleOperation = (textfields, operation) => {
-    if (operation === 'add' || (clickedRecord.clicked_ID !== null && clickedRecord.clicked_ID !== undefined && clickedRecord.clicked_ID !== 0)) {
+ const handleOperation = (textfields, operation) => {
+  const isEmpty = Object.values(textfields).some(value => {
+      return typeof value === 'string' && value.trim() === '';
+    });  
+  
+    if (operation === 'add') {
+      if (!isEmpty) {
+        handleCurrentTypeRecord(textfields, operation, currentID);
+      } else {
+        alert("Please fill in the textfields.");
+      }
+    } else if (clickedRecord.clicked_ID !== null && clickedRecord.clicked_ID !== undefined && clickedRecord.clicked_ID !== 0) {
       handleCurrentTypeRecord(textfields, operation, currentID);
     } else {
-      // Display an error message when no record is selected
       alert("No record was selected.");
     }
   };
-
   return (
     <>
       <div class="inventory-details-wrapper">

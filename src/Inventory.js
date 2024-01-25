@@ -50,12 +50,12 @@ function InventoryHeader() {
 
   return (
     <>
-      <div class="inventory-header">
+      <div className="inventory-header">
         <h1>Inventory</h1>
-        <div class="inventory-notif-wrapper">
-          <div classN="notif" onClick={handleOpenNotif}>
+        <div className="inventory-notif-wrapper">
+          <div className="notif" onClick={handleOpenNotif}>
             {hasUnseenNotifications && <span></span>}
-            <i class="fa fa-bell fa-2xs"></i>
+            <i className="fa fa-bell fa-2xs"></i>
           </div>
         </div>
       </div>
@@ -454,10 +454,19 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
 
   //if crud button is clicked, pass the values from text fields, along with the operation (add, update, or delete)
   const handleOperation = (textfields, operation) => {
-    if (operation === 'add' || (clickedRecord.id !== null && clickedRecord.id !== undefined && clickedRecord.id !== 0)) {
+    const isEmpty = Object.values(textfields).some(value => {
+      return typeof value === 'string' && value.trim() === '';
+    });  
+  
+    if (operation === 'add') {
+      if (!isEmpty) {
+        handleSetInventoryRecord(textfields, operation, currentID);
+      } else {
+        alert("Please fill in the textfields.");
+      }
+    } else if (clickedRecord.id !== null && clickedRecord.id !== undefined && clickedRecord.id !== 0) {
       handleSetInventoryRecord(textfields, operation, currentID);
     } else {
-      // Display an error message when no record is selected
       alert("No record was selected.");
     }
   };
