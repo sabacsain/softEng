@@ -50,12 +50,12 @@ function InventoryHeader() {
 
   return (
     <>
-      <div className="inventory-header">
+      <div class="inventory-header">
         <h1>Inventory</h1>
-        <div className="inventory-notif-wrapper">
-          <div className="notif" onClick={handleOpenNotif}>
+        <div class="inventory-notif-wrapper">
+          <div classN="notif" onClick={handleOpenNotif}>
             {hasUnseenNotifications && <span></span>}
-            <i className="fa fa-bell fa-2xs"></i>
+            <i class="fa fa-bell fa-2xs"></i>
           </div>
         </div>
       </div>
