@@ -75,7 +75,7 @@ function TableSection() {
     };
 
     fetchAllWaste();
-  }, []);
+  }, [waste_items]);
 
 
   const [clickedRecord, setTodayWasteRecord] = useState({
@@ -210,14 +210,16 @@ function TableSection() {
       });
   };
 
-  //function for deleting the currentFormRecord to the database
   const deleteRecord = (record) => {
-    //insert code to update record from database
-    console.log("DELETE THIS ID:", record.id);
-    console.log("DELETE THIS RECORD:", record);
+    axios.post('http://localhost:8081/deleteWaste', record)
+      .then((res) => {
+        alert("Successfully Deleted Record.")
+      })
+      .catch((error) => {
+        alert('Error during deleting record:', error);
+        // Add additional error handling as needed
+      });
   };
-
-  //console.log("RECORD U CLICKED: ", clickedRecord);
 
   return (
     <>
@@ -314,14 +316,22 @@ function FormSection({clickedRecord,handleSetInventoryRecord}) {
 
   //if crud button is clicked, pass the values from text fields, along with the operation (add, update, or delete)
   const handleOperation = (textfields, operation) => {
-    if (operation === 'add' || (clickedRecord.id !== null && clickedRecord.id !== undefined && clickedRecord.id !== 0)) {
+    const isEmpty = Object.values(textfields).some(value => {
+      return typeof value === 'string' && value.trim() === '';
+    });  
+  
+    if (operation === 'add') {
+      if (!isEmpty) {
+        handleSetInventoryRecord(textfields, operation, currentID);
+      } else {
+        alert("Please fill in the textfields.");
+      }
+    } else if (clickedRecord.id !== null && clickedRecord.id !== undefined && clickedRecord.id !== 0) {
       handleSetInventoryRecord(textfields, operation, currentID);
     } else {
-      // Display an error message when no record is selected
       alert("No record was selected.");
     }
   };
-  
 
   return (
     <form>
