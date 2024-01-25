@@ -69,7 +69,7 @@ function TableSection() {
   const [operation, setOperation] = useState(""); //operation = checks if operation chosen is either add, update, or delete
 
   const handleClickedRecord = (item, isthereAnActiveRow) => {
-    //this if is used to check if there is an active row (or may naka-click). if meron, store the values sa clickedRecord variable using setInvetoryRecord function
+    //check if there is an active row (clicked record). then store the values to the clickedRecord variable using setInvetoryRecord function
     if (isthereAnActiveRow) {
       setTypeRecord({
         clicked_ID: item.id,
@@ -78,7 +78,7 @@ function TableSection() {
       });
     }
 
-    //if no record is active(di naka-click), these are the default values for clickedRecord variable
+    //if no record is active, these are the default values for clickedRecord variable
     else {
       setTypeRecord({
         clicked_ID: null,
@@ -89,7 +89,7 @@ function TableSection() {
   };
 
   //use this to add, update, delete
-  //currentFormRecord = dito ko nilagay yung values mula sa textboxes. bale dito, dineclare lang, not been used yet.
+  //currentFormRecord = stores values from textboxes
   const [currentFormRecord, setCurrentFormRecord] = useState({
     current_ID: null,
     current_TYPENAME: "",
@@ -103,10 +103,10 @@ function TableSection() {
       current_ISPERISHABLE: textfieldsValues.tf_ISPERISHABLE,
     }));
 
-    setOperation(() => operation); // updates the operatiion variable above. inassign ko dito either "add", "update", "delete"
+    setOperation(() => operation); // updates the operation variable; either "add", "update", "delete"
   };
  
-  //not sure; once the currentFormRecord has been updated(which means nagpasa ng record mula sa textfields tapos nagclick ng button), choose which operation to execute
+  // once the currentFormRecord has been updated(record has been passed from textfields and crud button has been clicked), choose which operation to execute
   useEffect(() => {
     switch (operation) {
       case "add":
@@ -126,7 +126,6 @@ function TableSection() {
 
   //function for adding the currentFormRecord to the database
   //no need ng id
-
   const addRecord = (record) => {
     axios.post('http://localhost:8081/addType', record)
       .then((res) => {
@@ -142,7 +141,7 @@ function TableSection() {
       });
   }
 
-  //function for updating the currentFormRecord to the database
+  //function for updating the currentFormRecord from the database
   const updateRecord = (record) => {
     axios.post('http://localhost:8081/updateType', record)
       .then((res) => {
@@ -155,7 +154,7 @@ function TableSection() {
       });
   };
 
-  //function for deleting the currentFormRecord to the database
+  //function for deleting the currentFormRecord from the database
   const deleteRecord = (record) => {
     axios.post('http://localhost:8081/deleteType', record)
       .then((res) => {
@@ -166,8 +165,6 @@ function TableSection() {
         // Add additional error handling as needed
       });
   };
-
-  //console.log("RECORD U CLICKED: ", clickedRecord);
 
   return (
     <>
@@ -191,14 +188,14 @@ function FormSection({ clickedRecord, handleCurrentTypeRecord }) {
   //if not 0, use this for updating and deleting record; else, add new record
   const currentID = clickedRecord.clicked_ID;
 
-  //variable for tracking the textfields, if may changes sa fields dito i-uupdate
+  //variable for tracking the textfields, if there are changes in the texfields this will be updated
   const [textfields, setTextFieldsValues] = useState({
     tf_TYPENAME: "",
     tf_ISPERISHABLE: false,
   });
 
-  //if clickedRecord changes (nagclick ka ng iba or inunclick mo yung record), this will execute
-  // inuupdate lang nito yung values sa textfields based on the clickedRecord
+  //if clickedRecord changes, this will execute
+  //updates the values of textfields based on the clickedRecord
   useEffect(() => {
     //Runs only on the first render
     setTextFieldsValues(() => ({
@@ -214,7 +211,7 @@ function FormSection({ clickedRecord, handleCurrentTypeRecord }) {
     }));
   };
 
-  //pag inuupdate yung textfields (nagtatype sa fields or inuupdate yung dropdowns), naeexecute ito.
+  //while textfields are being updated (while typing or changing dropdown values), this will execute
   const handleTypeFieldChanges = (value) => {
     setTextFieldsValues((others) => ({
       ...others,
@@ -222,8 +219,7 @@ function FormSection({ clickedRecord, handleCurrentTypeRecord }) {
     }));
   };
 
-  //pag click ng add button, ipapasa yung values from text fields, along with the operation (add, update, or delete)
-  //check the  handleSetInventoryRecord sa TableSection(), dito galing yung values
+  //if crud button is clicked, pass the values from text fields, along with the operation (add, update, or delete)
   const handleOperation = (textfields, operation) => {
     if (operation === 'add' || (clickedRecord.clicked_ID !== null && clickedRecord.clicked_ID !== undefined && clickedRecord.clicked_ID !== 0)) {
       handleCurrentTypeRecord(textfields, operation, currentID);

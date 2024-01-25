@@ -48,35 +48,3 @@ function TableData({ data, handleClickedRecord }) {
     </tr>
   ));
 }
-
-//sample columns NA PINASA FROM INVENTORY to TABLE
-// const columns = [
-//     "Ingredient",
-//     "Type",
-//     "Price",
-//     "Kgs",
-//     "Pcs",
-//     "Expiration Date",
-//   ];
-
-//   //sample data
-//   const inventory_items = [
-//     {
-//       id: 23,
-//       Ingredient: "Carrot",
-//       Type: "Vegetable",
-//       Kgs: 0,
-//       Price: 250,
-//       Pcs: 100,
-//       Expiration: "12-02-2023",
-//     },
-//     {
-//       id: 12,
-//       Ingredient: "Ground Beef",
-//       Type: "Meat",
-//       Kgs: 25,
-//       Price: 500,
-//       Pcs: 100,
-//       Expiration: "12-02-2023",
-//     },
-//   ];

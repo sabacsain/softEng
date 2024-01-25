@@ -16,7 +16,7 @@ export default function Recommendation({ setRecommOpen, data }) {
     <>
       <div class="recomm-overlay"></div>
       <div className="recomm-container">
-        {/* if nag-exceed, add 'exceeded' class */}
+        {/* if exceeded, add 'exceeded' class */}
         <p className={`recomm-result ${exceededThreshold ? "exceeded" : ""}`}>
           Threshold Not Exceeded
         </p>

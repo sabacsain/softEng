@@ -6,8 +6,7 @@ import "./css/todaywaste.css";
 import { Link } from "react-router-dom";
 import CrudButtons from "./CrudButtons.js";
 
-// sample data
-//sample columns
+//columns
 const columns = [
   "Waste_ID",
   "Inventory ID",
@@ -76,11 +75,11 @@ function TableSection() {
     };
 
     fetchAllWaste();
-  }, [waste_items]);
+  }, []);
 
 
   const [clickedRecord, setTodayWasteRecord] = useState({
-    //holds attributes and values of the record u clicked from the table
+    //holds attributes and values of the record you clicked from the table
     id: 0,
     inv_id: 0,
     ingredient: "",
@@ -94,7 +93,7 @@ function TableSection() {
   const [operation, setOperation] = useState(""); //operation = checks if operation chosen is either add, update, or delete
 
   const handleClickedRecord = (item, isthereAnActiveRow) => {
-    //this if is used to check if there is an active row (or may naka-click). if meron, store the values sa clickedRecord variable using setInvetoryRecord function
+    //this if is used to check if there is an active row (clicked record). then store the values to the clickedRecord variable using setInvetoryRecord function
     if (isthereAnActiveRow) {
       setTodayWasteRecord({
         id: item.id,
@@ -108,7 +107,7 @@ function TableSection() {
       });
     }
 
-    //if no record is active(di naka-click), these are the default values for clickedRecord variable
+    //if no record is active, these are the default values for clickedRecord variable
     else {
       setTodayWasteRecord({
         id: 0,
@@ -124,7 +123,7 @@ function TableSection() {
   };
 
   //use this to add, update, delete
-  //currentFormRecord = dito ko nilagay yung values mula sa textboxes. bale dito, dineclare lang, not been used yet.
+  //currentFormRecord = values from textboxes
   const [currentFormRecord, setCurrentFormRecord] = useState({
     id: 0,
     inv_id: 0,
@@ -137,8 +136,8 @@ function TableSection() {
   });
 
   console.log(currentFormRecord)
-  //if clicked ng buttons (add, update, or delete), this function will be executed.
-  // we are setting the currentFormRecord (the record to be updated/added sa database) based sa pinasang values mula sa form
+   //if crud button is clicked, this function will be executed.
+  // we are setting the currentFormRecord (the record to be updated/added sa database) based on values passed from the form
   const handleSetInventoryRecord = (textfieldsValues, operation, ID) => {
     setCurrentFormRecord(() => ({
       id: ID,
@@ -147,20 +146,20 @@ function TableSection() {
       type: textfieldsValues.type_field,
       typeId: textfieldsValues.type_id,
       weight:
-        textfieldsValues.quantity_dropdown === "Kg" //if kg yung nasa dropdown, 0 na value ng PCS
+        textfieldsValues.quantity_dropdown === "Kg" //if value of dropdown kg,  PCS'value = 0
           ? textfieldsValues.quantity_field
           : 0,
       pieces:
-        textfieldsValues.quantity_dropdown === "Pcs" //if pcs yung nasa dropdown, 0 na value ng Kg
+        textfieldsValues.quantity_dropdown === "Pcs" //if value of dropdown is pcs, Kg value = 0
           ? textfieldsValues.quantity_field
           : 0,
       price: textfieldsValues.price_field,
     }));
 
-    setOperation(() => operation); // updates the operatiion variable above. inassign ko dito either "add", "update", "delete"
+    setOperation(() => operation); // updates the operation variable; either "add", "update", "delete"
   };
 
-  //not sure; once the currentFormRecord has been updated(which means nagpasa ng record mula sa textfields tapos nagclick ng button), choose which operation to execute
+  // once the currentFormRecord has been updated(record has been passed from textfields and crud button has been clicked), choose which operation to execute
   useEffect(() => {
     switch (operation) {
       case "add":
@@ -186,7 +185,6 @@ function TableSection() {
       if(res.data === "Failed") {
         alert("This ingredient is already in the waste list.")
       } else{
-        setWasteItems((prevItems) => [...prevItems, res.data]);
         alert("Successfully added new waste.")
       }
     })
@@ -203,7 +201,6 @@ function TableSection() {
         if(res.data === "Failed") {
           alert("This ingredient is already in the waste list.")
         } else{
-          
           alert("Successfully Updated Record")
         }
       })
@@ -215,15 +212,12 @@ function TableSection() {
 
   //function for deleting the currentFormRecord to the database
   const deleteRecord = (record) => {
-    axios.post('http://localhost:8081/deleteWaste', record)
-      .then((res) => {
-        alert("Successfully Deleted Record.")
-      })
-      .catch((error) => {
-        alert('Error during deleting a record:', error);
-        // Add additional error handling as needed
-      });
+    //insert code to update record from database
+    console.log("DELETE THIS ID:", record.id);
+    console.log("DELETE THIS RECORD:", record);
   };
+
+  //console.log("RECORD U CLICKED: ", clickedRecord);
 
   return (
     <>
@@ -286,8 +280,8 @@ function FormSection({clickedRecord,handleSetInventoryRecord}) {
     fetchAllTypes();
   });
 
-  //if clickedRecord changes (nagclick ka ng iba or inunclick mo yung record), this will execute
-  // inuupdate lang nito yung values sa textfields based on the clickedRecord
+  //if clickedRecord changes, this will execute
+  //updates the values of textfields based on the clickedRecord
   useEffect(() => {
     //Runs only on the first render
     setTextFieldsValues(() => ({
@@ -302,7 +296,7 @@ function FormSection({clickedRecord,handleSetInventoryRecord}) {
     }));
   }, [clickedRecord]);
 
-  //pag inuupdate yung textfields (nagtatype sa fields or inuupdate yung dropdowns), naeexecute ito.
+  //while textfields are being updates (while typing or changing dropdown values), this will execute
   const handleFieldChanges = (attribute1, value1, attribute2, value2) => {
     if (attribute2 !== null) {
       setTextFieldsValues((others) => ({
@@ -318,8 +312,7 @@ function FormSection({clickedRecord,handleSetInventoryRecord}) {
     }
   };
 
-  //pag click ng add button, ipapasa yung values from text fields, along with the operation (add, update, or delete)
-  //check the  handleSetInventoryRecord sa TableSection(), dito galing yung values
+  //if crud button is clicked, pass the values from text fields, along with the operation (add, update, or delete)
   const handleOperation = (textfields, operation) => {
     if (operation === 'add' || (clickedRecord.id !== null && clickedRecord.id !== undefined && clickedRecord.id !== 0)) {
       handleSetInventoryRecord(textfields, operation, currentID);

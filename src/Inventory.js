@@ -20,8 +20,6 @@ const columns = [
   "Price",
   "Expiration Date",
 ];
-//sample types
-const types = ["Vegetable", "Meat", "A", "B", "C"];
 
 export default function Inventory() {
   return (
@@ -156,7 +154,7 @@ function TableSection() {
       expiration:""
       }
     ]
-  );
+  ); 
 
   const [filteredItems, setFilteredItems] = useState([]);
   //Display ingredients from inventory
@@ -215,7 +213,7 @@ function TableSection() {
   };
 
   const handleOrder = (e) => {
-    //updates when u click the arrow
+    //updates when you click the arrow
     e.preventDefault();
     setOrder((previousOrder) => (previousOrder === "ASC" ? "DESC" : "ASC"));
   };
@@ -227,10 +225,10 @@ function TableSection() {
 
   const [operation, setOperation] = useState(""); //operation = checks if operation chosen is either add, update, or delete
 
-  //handleClickedRecord function -> sets the details for the clickedRecord function sa itaas.
-  //pag click ng record sa table, kukunin nito values tapos ilalagay sa clickedRecord variable tapos gagamitin to populate the textfields
+  //handleClickedRecord function -> sets the details for the clickedRecord function 
+  //once a record is clicked, get the values to populate the textfields
   const handleClickedRecord = (item, isthereAnActiveRow) => {
-    //this if is used to check if there is an active row (or may naka-click). if meron, store the values sa clickedRecord variable using setInvetoryRecord function
+    //check if there is an active row (clicked record). then store the values to the clickedRecord variable using setInvetoryRecord function
     if (isthereAnActiveRow) {
       setInventoryRecord({
         id: item.id,
@@ -243,7 +241,7 @@ function TableSection() {
         expiration: item.expiration,
       });
     }
-    //if no record is active(di naka-click), these are the default values for clickedRecord variable
+    //if no record is active, these are the default values for clickedRecord variable
     else {
       setInventoryRecord({
         id: 0,
@@ -258,15 +256,8 @@ function TableSection() {
     }
   };
 
-  //check mo kung nakuha mo nasa searchbox, at dropdowns !!!!!!
-  // console.log("WORD YOU SEARCHED FOR: ", searchValue);
-  // console.log("COLUMN YOU CHOSE TO SEARCH IN:", searchedColumn);
-  // console.log("ORDER OF RECORDS U CHOSE (ASC OR DESC): ", order);
-  // console.log("PERISHABLE OR NAH? ", isPerishable);
-  // console.log("RECORD U CLICKED: ", clickedRecord);
-
-  //use this to add, update, delete
-  //currentFormRecord = dito ko nilagay yung values mula sa textboxes. bale dito, dineclare lang, not been used yet.
+ 
+  //currentFormRecord = stores values from textboxes
   const [currentFormRecord, setCurrentFormRecord] = useState({
     id: 0,
     ingredient: "",
@@ -278,8 +269,8 @@ function TableSection() {
     expiration: format(new Date(), "yyyy-MM-dd"),
   });
 
-  //if clicked ng buttons (add, update, or delete), this function will be executed.
-  // we are setting the currentFormRecord (the record to be updated/added sa database) based sa pinasang values mula sa form
+  //if crud button is clicked, this function will be executed.
+  // we are setting the currentFormRecord (the record to be updated/added sa database) based on values passed from the form
   const handleSetInventoryRecord = (textfieldsValues, operation, ID) => {
     setCurrentFormRecord(() => ({
       id: ID,
@@ -287,21 +278,21 @@ function TableSection() {
       type: textfieldsValues.type_field,
       typeId: textfieldsValues.type_id,
       weight:
-        textfieldsValues.quantity_dropdown === "Kg" //if kg yung nasa dropdown, 0 na value ng PCS
+        textfieldsValues.quantity_dropdown === "Kg" //if value of dropdown kg,  PCS'value = 0
           ? textfieldsValues.quantity_field
           : 0,
       pieces:
-        textfieldsValues.quantity_dropdown === "Pcs" //if pcs yung nasa dropdown, 0 na value ng Kg
+        textfieldsValues.quantity_dropdown === "Pcs" //if value of dropdown is pcs, Kg value = 0
           ? textfieldsValues.quantity_field
           : 0,
       price: textfieldsValues.price_field,
       expiration: textfieldsValues.expiration_picker,
     }));
 
-    setOperation(() => operation); // updates the operatiion variable above. inassign ko dito either "add", "update", "delete"
+    setOperation(() => operation); // updates the operation variable; either "add", "update", "delete"
   };
 
-  //not sure; once the currentFormRecord has been updated(which means nagpasa ng record mula sa textfields tapos nagclick ng button), choose which operation to execute
+  // once the currentFormRecord has been updated(record has been passed from textfields and crud button has been clicked), choose which operation to execute
   useEffect(() => {
     switch (operation) {
       case "add":
@@ -326,7 +317,6 @@ function TableSection() {
       if(res.data === "Failed") {
         alert("This type of ingredient already exists.")
       } else{
-        setInventoryItems((prevItems) => [...prevItems, res.data]);
         alert("Successfully added new ingedient.")
       }
     })
@@ -338,7 +328,6 @@ function TableSection() {
 
   //function for updating the currentFormRecord to the database
   const updateRecord = (record) => {
-
     axios.post('http://localhost:8081/updateInventory', record)
       .then((res) => {
         alert("Successfully Updated Record.")
@@ -405,7 +394,7 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
     ]
   );
 
-  //variable for tracking the textfields, if may changes sa fields dito i-uupdate
+  //variable for tracking the textfields, if there are changes in the texfields this will be updated
   const [textfields, setTextFieldsValues] = useState({
     ingredient_field: "",
     type_field: "Vegetable",
@@ -415,6 +404,7 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
     quantity_dropdown: "",
     expiration_picker: format(new Date(), "yyyy-MM-dd"),
   });
+  
 
   //display list of type of wastes
   useEffect(()=>{
@@ -438,8 +428,8 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
     fetchAllTypes();
   });
 
-  //if clickedRecord changes (nagclick ka ng iba or inunclick mo yung record), this will execute
-  // inuupdate lang nito yung values sa textfields based on the clickedRecord
+  //if clickedRecord changes, this will execute
+  //updates the values of textfields based on the clickedRecord
   useEffect(() => {
     //Runs only on the first render
     setTextFieldsValues(() => ({
@@ -454,7 +444,7 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
     }));
   }, [clickedRecord]);
 
-  //pag inuupdate yung textfields (nagtatype sa fields or inuupdate yung dropdowns), naeexecute ito.
+  //while textfields are being updated (while typing or changing dropdown values), this will execute
   const handleFieldChanges = (attribute, value) => {
     setTextFieldsValues((others) => ({
       ...others,
@@ -462,8 +452,7 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
     }));
   };
 
-  //pag click ng add button, ipapasa yung values from text fields, along with the operation (add, update, or delete)
-  //check the  handleSetInventoryRecord sa TableSection(), dito galing yung values
+  //if crud button is clicked, pass the values from text fields, along with the operation (add, update, or delete)
   const handleOperation = (textfields, operation) => {
     if (operation === 'add' || (clickedRecord.id !== null && clickedRecord.id !== undefined && clickedRecord.id !== 0)) {
       handleSetInventoryRecord(textfields, operation, currentID);
@@ -491,7 +480,7 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
                   value={textfields.ingredient_field}
                   onChange={
                     (e) =>
-                      handleFieldChanges("ingredient_field", e.target.value) //calls the function pag nagtatype...; same lang sa ibang oncahnge saibaba
+                      handleFieldChanges("ingredient_field", e.target.value) //calls the function as textfield is modified...
                   }
                 />
               </div>

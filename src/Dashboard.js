@@ -98,7 +98,7 @@ function CurrentDayWaste() {
 
 
 
-  // INSERT CODE TO GET the most wasted item by price, total price of all wastes, total kg of all wastes
+  // INSERT CODE TO GET most wasted item by price, total price of all wastes, total kg of all wastes
   // pass those values as props to CurrentDayCard below
   return (
     <div className="report-section" id="dashboard-current-day-report">
