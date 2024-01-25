@@ -21,7 +21,6 @@ const columns = [
   "Expiration Date",
 ];
 
-
 export default function Inventory() {
   return (
     <div className="inventory">
@@ -154,7 +153,7 @@ function TableSection() {
     ]
   ); 
 
-  
+  const [filteredItems, setFilteredItems] = useState([]);
   //Display ingredients from inventory
   useEffect(()=>{
     const fetchAllIngredients = async () => {
@@ -171,7 +170,7 @@ function TableSection() {
           delete Object.assign(item, { weight: item.Kg_inventory })['Kg_inventory'];
           delete Object.assign(item, { pieces: item.Pcs_inventory })['Pcs_inventory'];
           delete Object.assign(item, { price: item.Price })['Price'];
-          delete Object.assign(item, { expiration: moment.utc(item.Expiration_date).format('YYYY/MM/DD') })['Expiration_date'];
+          delete Object.assign(item, { expiration: moment.utc(item.Expiration_date).utc().format('YYYY/MM/DD') })['Expiration_date'];
         }
         setInventoryItems(res.data)
       } catch(err){
@@ -180,7 +179,7 @@ function TableSection() {
     };
 
     fetchAllIngredients();
-  }, []);
+  }, [inventory_items]);
 
   //for query
   const [searchValue, setSearchValue] = useState(""); //holds the value you type in the searchbox
@@ -205,7 +204,6 @@ function TableSection() {
     e.preventDefault(); //prevents page from loading after submit or enter
     setSearchValue((currentWord) => (currentWord = e.target.value));
   };
-
   const handleSortColumn = (e) => {
     //updates the searchedColumn variable when you choose from sortby dropdown
     setSearchedColumn((selectedOption) => (selectedOption = e.target.value));
@@ -351,11 +349,11 @@ function TableSection() {
 
   return (
     <>
-<div id="inventory-search-and-sorting">
-        <SearchBar handleSearch={handleSearch} 
-        listOfData = {inventory_items}/>
+      <div id="inventory-search-and-sorting">
+        <SearchBar handleSearch={handleSearch} inventory_items={inventory_items} setFilteredItems={setFilteredItems}/>
         <SortBy
           options={columns}
+          data={filteredItems}
           handleSortColumn={handleSortColumn}
           handleOrder={handleOrder}
           currentOrder={order}
@@ -366,8 +364,8 @@ function TableSection() {
       {/* change column and data props */}
       <div className="inventory-table-wrapper">
         <Table
-          columns={columns}
-          data={inventory_items}
+          columns={Object.keys(inventory_items[0])}
+          data={filteredItems || []}
           handleClickedRecord={handleClickedRecord}
         />
       </div>
@@ -403,6 +401,7 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
     quantity_dropdown: "",
     expiration_picker: format(new Date(), "yyyy-MM-dd"),
   });
+  
 
   //display list of type of wastes
   useEffect(()=>{

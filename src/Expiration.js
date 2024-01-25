@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import "./css/expiration.css";
 import axios from 'axios';
-import { SearchBar, SortBy } from "./Search";
+import { SearchBar, SortBy, Filter } from "./Search";
 import Table from "./Table";
 import { SecondHeader  } from "./Header";
 
 //sample columns
 const columns = [
-  "Exp_ID",
+  "ID",
   "Ingredient",
+  "Type Name",
   "Pcs",
   "Kgs",
   "Price",
@@ -29,31 +30,35 @@ export default function Expiration() {
 function TableSection() {
   //table section with form section
   //for query
-    const[expired_items, setExpiredItems] = useState(
+    //for waste
+    const[inventory_items, setInventoryItems] = useState(
       [
         {
-        id: 0,
-        ingredient: "",     
-        pieces: 0,
-        weight: 0,
-        price: 0,
-        expiration:""
+          id: 0,
+          ingredient: "",
+          type: "",
+          pieces: 0,
+          weight: 0,
+          price: 0,
+          expiration:""
         
         }
       ]
     );
+    const [filteredItems, setFilteredItems] = useState([]);
+
   //display ingredients from inventory
   useEffect(()=>{
-    const fetchAllExpired = async () => {
+    const fetchAllIngredients = async () => {
       try{
-        const res = await axios.get("http://localhost:8081/expiration-table")
-        setExpiredItems(res.data)
+        const res = await axios.get("http://localhost:8081/inventory/expiration-table")
+        setInventoryItems(res.data)
       } catch(err){
         console.log(err)
       }
     };
 
-    fetchAllExpired();
+    fetchAllIngredients();
   }, []);
 
   const [searchValue, setSearchValue] = useState(""); //holds the value you type in the searchbox
@@ -83,9 +88,10 @@ function TableSection() {
   return (
     <>
       <div className="expiration-search-wrapper">
-        <SearchBar handleSearch={handleSearch} />
+        <SearchBar handleSearch={handleSearch} inventory_items={inventory_items} setFilteredItems={setFilteredItems}/>
         <SortBy
           options={columns}
+          data={filteredItems}
           handleSortColumn={handleSortColumn}
           handleOrder={handleOrder}
           currentOrder={order}
@@ -95,8 +101,11 @@ function TableSection() {
       <div className="expiration-table-wrapper">
         {/* null - even if record is clicked, no data will be received from the table unlike in inventory and today's waste */}
         <Table
-          columns={columns}
-          data={expired_items}
+          columns={Object.keys(inventory_items[0])}
+          data={filteredItems.map(item => ({
+            ...item,
+            Expiration_date: new Date(item.Expiration_date).toLocaleDateString("en-US")
+          })) || []}
           handleClickedRecord={null}
         />
       </div>

@@ -11,10 +11,16 @@ const Login = () => {
   const [data, setData] = useState({
     username: "",
     password: ""
-  })
+  });
+
+  const [errors, setErrors] = useState({
+    username: "",
+    password: ""
+  });
 
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" }); // Clear the specific error when the user starts typing
   }
 
   const handleLogin = (e) => {
@@ -23,6 +29,42 @@ const Login = () => {
       username: data.username,
       password: data.password
     }
+
+    const newErrors = {};
+    if (!data.username.trim()) {
+      newErrors.username = (
+        <>
+          <br />
+          Username is required.
+          <br />
+        </>
+      );
+    } else if (/\s/.test(data.username)) {
+      newErrors.username = "Username cannot contain white spaces\n";
+    }
+
+    if (!data.password.trim()) {
+      newErrors.password = (
+        <>
+          <br />
+          Password is required.
+          <br />
+        </>
+      );
+       } else if (/\s/.test(data.password)) {
+    newErrors.password = (
+      <>
+        <br />
+        Password cannot contain white spaces<br />
+        </>
+        );
+  }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     axios.post('http://localhost:8081/login', sendData)
       .then((res) => {
         if(res.data === "Failed") {
@@ -41,34 +83,37 @@ const Login = () => {
   }
 
   return (
-    <div class="main">
-      <h2 class="login">Login</h2>
-      <form class="form1" onSubmit={handleLogin}>
+    <div className="main">
+      <h2 className="login">Login</h2>
+      <form className="form1" onSubmit={handleLogin}>
         <label>
           Username
           <input
-            class="username"
+            className="username"
             type="text"
             name="username"
-            onChange={handleChange} value={data.username}
+            onChange={handleChange}
+            value={data.username}
             required
           />
+          <span style={{ color: 'red' }}>{errors.username}</span>
         </label>
         <br />
         <label>
           Password<br />
           <input
-            class="pass"
+            className="pass"
             type="password"
             name="password"
-            onChange={handleChange} value={data.password}
+            onChange={handleChange}
+            value={data.password}
             required
           />
+          <span style={{ color: 'red' }}>{errors.password}</span>
         </label>
         <br />
-        
       </form>
-      <button type="submit" class="submit" onClick={handleLogin}>Login</button>
+      <button type="submit" className="submit" onClick={handleLogin}>Login</button>
       <p>
         Don't have an account? <Link to="/signup"><p style={{color: "#77A6B6"}}>Sign up here</p></Link>
       </p>
