@@ -221,7 +221,12 @@ function FormSection({ clickedRecord, handleCurrentTypeRecord }) {
 
   //if crud button is clicked, pass the values from text fields, along with the operation (add, update, or delete)
   const handleOperation = (textfields, operation) => {
-    handleCurrentTypeRecord(textfields, operation, currentID);
+    if (operation === 'add' || (clickedRecord.clicked_ID !== null && clickedRecord.clicked_ID !== undefined && clickedRecord.clicked_ID !== 0)) {
+      handleCurrentTypeRecord(textfields, operation, currentID);
+    } else {
+      // Display an error message when no record is selected
+      alert("No record was selected.");
+    }
   };
 
   return (

@@ -1,19 +1,26 @@
-// AuthContext.js
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
 
+  useEffect(() => {
+    const storedAuth = Cookies.get('authenticated');
+    if (storedAuth === 'true') {
+      setAuthenticated(true);
+    }
+  }, []);
+
   const login = () => {
-    // You can set the authentication status based on your login logic
     setAuthenticated(true);
+    Cookies.set('authenticated', 'true');
   };
 
   const logout = () => {
-    // Reset the authentication status on logout
     setAuthenticated(false);
+    Cookies.remove('authenticated');
   };
 
   return (

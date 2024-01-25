@@ -314,8 +314,14 @@ function FormSection({clickedRecord,handleSetInventoryRecord}) {
 
   //if crud button is clicked, pass the values from text fields, along with the operation (add, update, or delete)
   const handleOperation = (textfields, operation) => {
-    handleSetInventoryRecord(textfields, operation, currentID);
+    if (operation === 'add' || (clickedRecord.id !== null && clickedRecord.id !== undefined && clickedRecord.id !== 0)) {
+      handleSetInventoryRecord(textfields, operation, currentID);
+    } else {
+      // Display an error message when no record is selected
+      alert("No record was selected.");
+    }
   };
+  
 
   return (
     <form>
