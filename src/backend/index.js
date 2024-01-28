@@ -112,13 +112,44 @@ app.post("/periodicWaste", (req,res)=>{
   const userID = 1000 //to be changed
   const startDate = moment.utc(req.body.startDate).format('YYYY/MM/DD')
   const endDate = moment.utc(req.body.endDate).format('YYYY/MM/DD')
-  console.log([userID, req.body.endDate, req.body.startDate])
   db.query(q,[userID, startDate, endDate],(err,data)=>{
     if(err) console.log(err)
-    console.log(data)
+    return res.json(data)
   })
 
 });
+
+app.get("/mostWasted", (req,res)=>{
+  const q = "SELECT `Name_inventory`, `Price` FROM `waste` INNER JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID WHERE waste.User_id = ?"
+  const userID = 1000 //to be changed
+
+  db.query(q,[userID],(err,data)=>{
+    if(err) console.log(err)
+    return res.json(data)
+  })
+
+});
+
+app.get("/expiredStats", (req,res)=>{
+  const q = "SELECT expired.Price FROM `expired` INNER JOIN inventory ON expired.Inventory_ID = inventory.Inventory_ID WHERE inventory.User_id = ?"
+  const userID = 1000 //to be changed
+  db.query(q,[userID],(err,data)=>{
+    if(err) console.log(err)
+    return res.json(data)
+  })
+
+});
+
+app.get("/monthlyReport", (req,res)=>{
+  const q = "SELECT SUM(Kg_waste), SUM(Price), MONTH(Date_waste) FROM waste INNER JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID GROUP BY MONTH(Date_waste)"
+  const userID = 1000 //to be change
+  db.query(q,[userID],(err,data)=>{
+    if(err) console.log(err)
+    return res.json(data)
+  })
+
+});
+
 
 app.get("/ingredients", (req,res)=>{
   const q = "SELECT `Inventory_ID`, `Name_inventory`, `Type_name`, `Pcs_inventory`, `Kg_inventory`, `Price`, DATE_FORMAT(`Expiration_date`, '%Y-%m-%d') AS `Expiration_date`, inventory.Type_ID FROM inventory INNER JOIN type ON inventory.Type_ID = type.Type_ID WHERE inventory.User_ID = ?"

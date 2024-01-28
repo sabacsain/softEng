@@ -16,38 +16,23 @@ export default function Recommendation({ setRecommOpen, data }) {
     <>
       <div class="recomm-overlay"></div>
       <div className="recomm-container">
-        {/* if exceeded, add 'exceeded' class */}
-        <p className={`recomm-result ${exceededThreshold ? "exceeded" : ""}`}>
-          Threshold Not Exceeded
+        <p className={`recomm-result`}>
+          Recommendations
         </p>
-
-        {/* if threshold was not exceeded, execute this */}
-        {!exceededThreshold && (
-          <p className="recomm-summary">
-            Congratulations! The amount of waste generated for the time period
-            is within the recommended threshold! All steps that the company is
-            doing for waste reduction have been effective. Keep up the good
-            work!{" "}
-          </p>
-        )}
-
-        {/* if threshold was exceeded, execute this */}
-        {exceededThreshold && (
-          <>
-            <p className="recomm-summary">
-              The amount of wastes generated for the time period exceeded the
-              recommended threshold. Consider the following recommendations for
-              reducing wastes:
-            </p>
-
-            <ul className="recommendations-wrapper">
-              <li>Insert Recommendation</li>
-              <li>Insert Recommendation</li>
-              <li>Insert Recommendation</li>
-            </ul>
-          </>
-        )}
-
+        <p className="recomm-summary">
+            Here are the following recommendations to reduce your food waste:{" "}
+        </p>
+        <ul className="recommendations-wrapper">
+              <li>Promote Sustainable Preparation</li>
+              <li>Avoid Over-Preparing for Food Waste Reduction</li>
+              <li>Improve Your Inventory Management</li>
+              <li>Store Food Properly</li>
+              <li>Calculate and Control Inventory Days on Hand</li>
+              <li>Repurpose Ingredients</li>
+              <li>Identify Multi-Use Menu Items</li>
+              <li>Order In-Season</li>
+              <li>Reduce Portion Sizes for Food Waste Management</li>
+        </ul>
         <button className="recomm-close-btn" onClick={HandleClick}>
           {" "}
           ✖
