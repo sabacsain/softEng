@@ -43,7 +43,7 @@
 
 .recomm-result {
   color: #27464a;
-  font-size: 20px;
+  font-size: var(--fs-big);
   font-weight: 700;
 }
 
@@ -53,7 +53,7 @@
 
 .recomm-summary {
   margin-top: 20px;
-  font-size: 16px;
+  font-size: var(--fs-medium);
   color: #273b4a;
   font-weight: 600;
 
@@ -71,6 +71,6 @@
 }
 
 .recommendations-wrapper li::marker {
-  font-size: 20px;
+  font-size: var(--fs-large);
   color: white;
 }

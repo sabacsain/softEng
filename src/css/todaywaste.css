@@ -35,6 +35,8 @@
   top: -20px;
   color: #7d9a99;
   font-weight: 600;
+  font-size: var(--fs-big);
+
 }
 
 #today-waste-details {
@@ -76,6 +78,8 @@
   width: 300px;
   height: 40px;
   font-family: "Poppins";
+  font-size: var(--fs-small);
+
   padding: 0px 10px 0px 10px;
   border-radius: 5px;
   outline: none;
@@ -101,6 +105,8 @@
   font-style: normal;
   font-weight: 600;
   cursor: pointer;
+  font-size: var(--fs-small);
+
 }
 
 .lbl-add-type:hover{
@@ -129,6 +135,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: var(--fs-small);
+
 }
 
 .dropdown-search-wrapper {
@@ -187,6 +195,8 @@
   box-sizing: border-box;
   border-radius: 2px;
   color: var(--text-color-primary);
+  font-size: var(--fs-small);
+
 }
 
 .dropdown-option:hover {

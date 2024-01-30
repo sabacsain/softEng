@@ -11,7 +11,7 @@
 
 /*-----------CURRENT DAY WASTE SECTION---------------*/
 .report-heading {
-  font-size: 16px;
+  font-size: var(--fs-medium);
   font-weight: 600;
   color: #77a6b6;
   margin-right: 20px;

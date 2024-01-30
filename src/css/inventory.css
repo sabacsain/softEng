@@ -266,6 +266,8 @@ a:hover {
   position: relative;
   border-radius: 10px;
   border: 2px solid rgba(179, 208, 207, 0.42);
+  font-size: var(--fs-medium);
+
 }
 
 .inventory-details-wrapper > h2 {
@@ -326,7 +328,7 @@ a:hover {
   outline: none;
   cursor: pointer;
   box-sizing: border-box;
-
+  font-size: var(--fs-small);
   border: none;
   border-radius: 3px;
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
@@ -343,6 +345,7 @@ a:hover {
   width: 60px;
   height: 40px;
   font-family: "Poppins";
+  font-size: var(--fs-small);
   outline: none;
   border: none;
   border-radius: 0px 3px 3px 0px;

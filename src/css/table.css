@@ -17,12 +17,16 @@ color: var(--text-color-secondary);
     border-radius: 2px;
     position: sticky;
     top: 0;
+    font-size: var(--fs-medium);
+
 }
 
 
 tr{
     text-align: center;
     color: var(--text-color-primary);
+    font-size: var(--fs-medium);
+
 }
 
 tr:hover{

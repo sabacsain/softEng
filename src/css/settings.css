@@ -28,7 +28,7 @@
 }
 
 .h1-settings {
-  font-size: 20px;
+  font-size: var(--fs-large);
   color: #27464a;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .settings-label {
-  font-size: 16px;
+  font-size: var(--fs-medium);
   font-weight: 600;
   color: #7d9a99;
   width: 100px;
@@ -60,7 +60,6 @@
 #settings-font{
   background-color: var(--body_background)  ;
   color:  var(--text-color-primary)  ;
-
-
+  font-size: var(--fs-small);
 }
 

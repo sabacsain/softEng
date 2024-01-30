@@ -7,7 +7,7 @@
   margin-right: 8px;
   font-weight: 600;
   color: #77a6b6;
-  font-size: 14px;
+  font-size: var(--fs-small);
 }
 
 .header h1 {

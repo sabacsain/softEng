@@ -10,6 +10,14 @@
   --sidebar-icon-primary: #272c37;
 
   --black:#272c37;
+
+  
+
+    /*FONT SIZES*/
+    --fs-big: 24px;
+    --fs-large: 18px;
+    --fs-medium: 16px;
+    --fs-small: 14px;
 }
 
 [data-theme="dark"] {
@@ -26,6 +34,31 @@
   --button-color-primary: black;
 
   --sidebar-icon-primary: #e8eaed;
+}
+
+
+[data-font-size="large"] {
+  --fs-bigger: 40px;
+  --fs-big: 32px;
+  --fs-large: 24px;
+  --fs-medium: 18px;
+  --fs-small: 16px;
+}
+
+[data-font-size="medium"] {
+  --fs-bigger: 32px;
+  --fs-big: 24px;
+  --fs-large: 18px;
+  --fs-medium: 16px;
+  --fs-small: 14px;
+}
+
+[data-font-size="small"] {
+  --fs-bigger: 24px;
+  --fs-big: 18px;
+  --fs-large: 16px;
+  --fs-medium: 14px;
+  --fs-small: 12px;
 }
 
 .App {

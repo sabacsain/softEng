@@ -18,7 +18,7 @@ import { useEffect } from "react";
 
 function App() {
     const [isDarkMode, setIsDarkMode] = useState(false);
-    const [currentFontSize, setFontSize] = useState("Medium");
+    const [currentFontSize, setFontSize] = useState("medium");
     const { authenticated } = useAuth();
     
     const handleChangeTheme = () => {
@@ -33,6 +33,25 @@ function App() {
         if (isDarkMode) document.querySelector("body").setAttribute("data-theme","dark")
         else document.querySelector("body").setAttribute("data-theme","light")
     }, [isDarkMode])
+    
+    useEffect(() => {
+        switch (currentFontSize) {
+            case "small":
+                document.querySelector("body").setAttribute("data-font-size","small")
+                break;
+            case "medium":
+                document.querySelector("body").setAttribute("data-font-size","medium")
+
+                break;
+
+            case "large":
+                document.querySelector("body").setAttribute("data-font-size","large")
+                break;
+            
+            default: break;
+        }
+
+    }, [currentFontSize])
     
     return (
         <div className="App">
