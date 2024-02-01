@@ -1,17 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-const SearchBar = ({ inventory_items=[], setFilteredItems }) => {
-    const [searchValue, setSearchValue] = useState("");
-  
-    useEffect(() => {
-      // Filter the inventory items based on the search value
-      const filteredItems = inventory_items.filter(item =>
-        Object.values(item).some(value =>
-          value.toString().toLowerCase().includes(searchValue.toLowerCase())
-        )
+const SearchBar = ({
+  inventory_items = [],
+  setFilteredItems,
+  searchedColumn,
+  order
+}) => {
+  const [searchValue, setSearchValue] = useState("");
+  useEffect(() => {
+    // Filter the inventory items based on the search value and searchedColumn
+    const filteredItems = inventory_items.filter((item) => {
+      const columnValue = item[searchedColumn.toLowerCase()];
+
+      return (
+        columnValue !== undefined &&
+        columnValue.toString().toLowerCase().includes(searchValue.toLowerCase())
       );
-      setFilteredItems(filteredItems);
-    }, [searchValue, inventory_items, setFilteredItems]);
+
+    });
+
+    //sort filteredItems either ASC or DESC
+    const sorted_filteredItems = order === "ASC"? filteredItems.sort() : filteredItems.reverse()
+
+    setFilteredItems(sorted_filteredItems);
+  }, [searchValue, inventory_items, setFilteredItems, searchedColumn, order]);
+
   return (
     <div className="searchbox-wrapper">
       <span className="search-icon">&#x2315;</span>
@@ -20,11 +33,11 @@ const SearchBar = ({ inventory_items=[], setFilteredItems }) => {
         className="searchbox"
         placeholder="Search item here"
         value={searchValue}
-        onChange={(e) => setSearchValue(e.target.value)} 
+        onChange={(e) => setSearchValue(e.target.value)}
       ></input>
     </div>
   );
-}
+};
 function SortBy({ options, handleSortColumn, handleOrder, currentOrder }) {
   return (
     <div className="sort-by-wrapper">
@@ -63,4 +76,4 @@ function Filter({ handleIsPerishable }) {
     </div>
   );
 }
-export {SearchBar,SortBy, Filter};
+export { SearchBar, SortBy, Filter };
