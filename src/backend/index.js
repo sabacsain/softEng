@@ -173,7 +173,7 @@ app.get("/ingredientsDropdown", (req,res)=>{
 });
 
 app.get("/wastes", (req,res)=>{
-  const q = "SELECT `Waste_ID`, `Name_inventory`, waste.Inventory_ID,  type.Type_name, `Kg_waste`, `Pcs_waste`, `Price`, inventory.Type_ID FROM waste LEFT JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID LEFT JOIN type ON inventory.Type_ID = type.Type_ID"
+  const q = "SELECT `Waste_ID`, `Name_inventory`, waste.Inventory_ID,  type.Type_name, `Kg_waste`, `Pcs_waste`, `Price`, inventory.Type_ID FROM waste LEFT JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID LEFT JOIN type ON inventory.Type_ID = type.Type_ID WHERE Expiration_date = CURRENT_DATE";
 
   db.query(q,(err,data)=>{
     if(err) console.log(err)
@@ -189,7 +189,7 @@ app.get("/inventory/expiration-table", async (req, res) => {
     await db.query(i);
 
     // Then, perform the SELECT query
-    const q = "SELECT `Exp_ID`, `Name_inventory`, `Type_name`, `Pcs_inventory`, `Kg_inventory`, expired.Price, `Expiration_date` FROM expired LEFT JOIN inventory ON expired.Inventory_ID = inventory.Inventory_ID LEFT JOIN type ON inventory.Type_ID = type.Type_ID";
+    const q = "SELECT `Exp_ID`, `Name_inventory`, `Type_name`, `Pcs_inventory`, `Kg_inventory`, expired.Price, DATE_FORMAT(`Expiration_date`, '%Y-%m-%d') AS `Expiration_date` FROM expired LEFT JOIN inventory ON expired.Inventory_ID = inventory.Inventory_ID LEFT JOIN type ON inventory.Type_ID = type.Type_ID";
     const userID = 1000 
     db.query(q, (err, data) => {
       if (err) return res.json(err);

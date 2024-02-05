@@ -14,11 +14,11 @@ const columns = [
   "ID",
   "Ingredient",
   "Type",
-  "Type ID",
-  "Pcs",
-  "Kgs",
+  "typeId",
+  "Pieces",
+  "Weight",
   "Price",
-  "Expiration Date",
+  "Expiration",
 ];
 
 export default function Inventory() {

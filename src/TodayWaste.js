@@ -8,7 +8,7 @@ import CrudButtons from "./CrudButtons.js";
 
 //columns
 const columns = [
-  "Waste_ID",
+  "Waste ID",
   "Inventory ID",
   "Ingredient",
   "Type",
