@@ -173,7 +173,7 @@ app.get("/ingredientsDropdown", (req,res)=>{
 });
 
 app.get("/wastes", (req,res)=>{
-  const q = "SELECT `Waste_ID`, `Name_inventory`, waste.Inventory_ID,  type.Type_name, `Kg_waste`, `Pcs_waste`, `Price`, inventory.Type_ID FROM waste LEFT JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID LEFT JOIN type ON inventory.Type_ID = type.Type_ID WHERE Expiration_date = CURRENT_DATE";
+  const q = "SELECT `Waste_ID`, `Name_inventory`, waste.Inventory_ID,  type.Type_name, `Kg_waste`, `Pcs_waste`, `Price`, inventory.Type_ID FROM waste LEFT JOIN inventory ON waste.Inventory_ID = inventory.Inventory_ID LEFT JOIN type ON inventory.Type_ID = type.Type_ID WHERE Date_waste = CURRENT_DATE";
 
   db.query(q,(err,data)=>{
     if(err) console.log(err)

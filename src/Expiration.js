@@ -94,7 +94,7 @@ function TableSection() {
 
   const handleSortColumn = (e) => {
     //updates the searchedColumn variable when you choose from sortby dropdown
-    setSearchedColumn((selectedOption) => (selectedOption = e.target.value));  
+    setSearchedColumn((selectedOption) => (selectedOption = e.target.value));
   };
   const handleOrder = (e) => {
     //updates when u click the arrow
