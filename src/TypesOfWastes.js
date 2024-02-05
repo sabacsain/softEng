@@ -41,7 +41,7 @@ function TableSection() {
   useEffect(()=>{
     const fetchAllTypes = async () => {
       try{
-        const res = await axios.get("http://localhost:8081/types")
+        const res = await axios.get("https://softeng-backend.onrender.com/types")
         //Rename the keys of the data object
         res.data.forEach(Rename);
         function Rename(item){
@@ -127,7 +127,7 @@ function TableSection() {
   //function for adding the currentFormRecord to the database
   //no need ng id
   const addRecord = (record) => {
-    axios.post('http://localhost:8081/addType', record)
+    axios.post('https://softeng-backend.onrender.com/addType', record)
       .then((res) => {
         if(res.data === "Failed") {
           alert("This type of waste already exists.")
@@ -143,7 +143,7 @@ function TableSection() {
 
   //function for updating the currentFormRecord from the database
   const updateRecord = (record) => {
-    axios.post('http://localhost:8081/updateType', record)
+    axios.post('https://softeng-backend.onrender.com/updateType', record)
       .then((res) => {
         alert("Successfully Updated Record.")
         console.log(res.data)
@@ -156,7 +156,7 @@ function TableSection() {
 
   //function for deleting the currentFormRecord from the database
   const deleteRecord = (record) => {
-    axios.post('http://localhost:8081/deleteType', record)
+    axios.post('https://softeng-backend.onrender.com/deleteType', record)
       .then((res) => {
         alert("Successfully Deleted Record.")
       })

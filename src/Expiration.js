@@ -51,7 +51,7 @@ function TableSection() {
   useEffect(()=>{
     const fetchAllIngredients = async () => {
       try{
-        const res = await axios.get("http://localhost:8081/inventory/expiration-table")
+        const res = await axios.get("https://softeng-backend.onrender.com/inventory/expiration-table")
         setInventoryItems(res.data)
       } catch(err){
         console.log(err)

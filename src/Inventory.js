@@ -75,7 +75,7 @@ function NotificationComponent({ handleOpenNotif }) {
   useEffect(()=>{
     const fetchExpiringToday = async () => {
       try{
-        const res = await axios.get("http://localhost:8081/expiringToday")
+        const res = await axios.get("https://softeng-backend.onrender.com/expiringToday")
         setExpiringThisDay(res.data)
       } catch(err){
         console.log(err)
@@ -90,7 +90,7 @@ function NotificationComponent({ handleOpenNotif }) {
   useEffect(()=>{
     const fetchExpiringWeek = async () => {
       try{
-        const res = await axios.get("http://localhost:8081/expiringWeek")
+        const res = await axios.get("https://softeng-backend.onrender.com/expiringWeek")
         setExpiringThisWeek(res.data)
       } catch(err){
         console.log(err)
@@ -161,7 +161,7 @@ function TableSection() {
   useEffect(()=>{
     const fetchAllIngredients = async () => {
       try{
-        const res = await axios.get("http://localhost:8081/ingredients")
+        const res = await axios.get("https://softeng-backend.onrender.com/ingredients")
         
         //Rename the keys of the data object
         res.data.forEach(Rename);
@@ -312,7 +312,7 @@ function TableSection() {
   //function for adding the currentFormRecord to the database
   //no need ng id
   const addRecord = (record) => {
-    axios.post('http://localhost:8081/addInventory', record)
+    axios.post('https://softeng-backend.onrender.com/addInventory', record)
     .then((res) => {
       if(res.data === "Failed") {
         alert("This type of ingredient already exists.")
@@ -328,7 +328,7 @@ function TableSection() {
 
   //function for updating the currentFormRecord to the database
   const updateRecord = (record) => {
-    axios.post('http://localhost:8081/updateInventory', record)
+    axios.post('https://softeng-backend.onrender.com/updateInventory', record)
       .then((res) => {
         alert("Successfully Updated Record.")
       })
@@ -340,7 +340,7 @@ function TableSection() {
 
   //function for deleting the currentFormRecord to the database
   const deleteRecord = (record) => {
-    axios.post('http://localhost:8081/deleteInventory', record)
+    axios.post('https://softeng-backend.onrender.com/deleteInventory', record)
       .then((res) => {
         alert("Successfully Deleted Record.")
       })
@@ -410,7 +410,7 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
   useEffect(()=>{
     const fetchAllTypes = async () => {
       try{
-        const res = await axios.get("http://localhost:8081/types")
+        const res = await axios.get("https://softeng-backend.onrender.com/types")
         //Rename the keys of the data object
         res.data.forEach(Rename);
         function Rename(item){

@@ -62,7 +62,7 @@ function CurrentDayWaste() {
   useEffect(()=>{
     const fetchDayWaste = async () => {
       try{
-        const res = await axios.get("http://localhost:8081/dayWaste")
+        const res = await axios.get("https://softeng-backend.onrender.com/dayWaste")
         
         //Compute today's statistics
         const priceSum = res.data.reduce((accumulator, object) => {
@@ -205,7 +205,7 @@ function PeriodicWaste() {
   //get the periodic waste statistics
   useEffect(()=>{
     const fetchPeriodicWaste = (dateRange) => {
-      axios.post('http://localhost:8081/periodicWaste', dateRange[0])
+      axios.post('https://softeng-backend.onrender.com/periodicWaste', dateRange[0])
       .then((res) => {
         const priceSum = res.data.reduce((accumulator, object) => {
           return accumulator + object.Price;
@@ -243,7 +243,7 @@ function PeriodicWaste() {
     //get the expired waste statistics
     useEffect(()=>{
       const fetchExpiredTotal = (dateRange) => {
-        axios.get('http://localhost:8081/expiredStats')
+        axios.get('https://softeng-backend.onrender.com/expiredStats')
         .then((res) => {
 
           const priceSum = res.data.reduce((accumulator, object) => {
@@ -434,7 +434,7 @@ function MostWastedCard({ dataaa }) {
   useEffect(()=>{
     const fetchMostWasted = async () => {
       try{
-        const res = await axios.get("http://localhost:8081/mostWasted")
+        const res = await axios.get("https://softeng-backend.onrender.com/mostWasted")
         
         //Rename the keys of the data object
         res.data.forEach(Rename);
@@ -591,7 +591,7 @@ function PriceEachMonthCard({ dataaa }) {
   useEffect(()=>{
     const fetchMonthlyReport= async () => {
       try{
-        const res = await axios.get("http://localhost:8081/monthlyReport")
+        const res = await axios.get("https://softeng-backend.onrender.com/monthlyReport")
         //Rename the keys of the data object
         res.data.forEach(Rename);
         function Rename(item){
