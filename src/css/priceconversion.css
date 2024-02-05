@@ -32,24 +32,8 @@
   padding-left: 20px;
   padding-right: 20px;
   box-sizing: border-box;
-  background-color:  var(--second_background);
+  background-color: var(--second_background);
   color: var(--text-color-primary);
-}
-
-#price-search-wrapper i {
-  width: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-  cursor: pointer;
-  transition: all 0.75s ease;
-  color: var(--text-color-secondary);
-
-}
-
-#price-search-wrapper i.up {
-  transform: rotate(180deg);
 }
 
 #price-search-wrapper {
@@ -58,7 +42,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  background-color:  var(--second_background);
+  background-color: var(--second_background);
   border-radius: 5px;
 }
 
@@ -75,6 +59,15 @@
   font-size: 14px;
   border: none;
   outline: none;
+}
+
+#waste-ingredient {
+  border: none;
+  color: var(--text-color-primary);
+  outline: none;
+  height: 20px !important;
+  font-family: "Poppins";
+  padding-left: 10px;
 }
 
 .ing-option:hover {
@@ -118,7 +111,7 @@ input[type="number"] {
 .compute-btn {
   width: 780px;
   height: 40px;
-  background-color:  var(--button-color-primary);
+  background-color: var(--button-color-primary);
   border: none;
   font-family: "Poppins";
   font-size: 16px;
@@ -149,7 +142,7 @@ input[type="number"] {
   border-radius: 10px;
   text-align: center;
   margin: auto;
-  background-color:  var(--second_background);
+  background-color: var(--second_background);
   font-size: var(--fs-bigger);
   color: #77a6b6;
   font-weight: 600;
