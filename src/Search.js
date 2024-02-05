@@ -4,7 +4,7 @@ const SearchBar = ({
   inventory_items = [],
   setFilteredItems,
   searchedColumn,
-  order
+  order,
 }) => {
   const [searchValue, setSearchValue] = useState("");
   useEffect(() => {
@@ -16,11 +16,25 @@ const SearchBar = ({
         columnValue !== undefined &&
         columnValue.toString().toLowerCase().includes(searchValue.toLowerCase())
       );
-
     });
+    // Sort filteredItems based on the searchedColumn
+    const sorted_filteredItems = filteredItems.sort((a, b) => {
+      const columnA = a[searchedColumn.toLowerCase()];
+      const columnB = b[searchedColumn.toLowerCase()];
 
-    //sort filteredItems either ASC or DESC
-    const sorted_filteredItems = order === "ASC"? filteredItems.sort() : filteredItems.reverse()
+      // Check if the values are numbers and perform numeric sorting
+      if (!isNaN(columnA) && !isNaN(columnB)) {
+        return order === "ASC" ? columnA - columnB : columnB - columnA;
+      }
+
+      // Perform string sorting
+      const valueA = columnA.toString().toLowerCase();
+      const valueB = columnB.toString().toLowerCase();
+
+      return order === "ASC"
+        ? valueA.localeCompare(valueB)
+        : valueB.localeCompare(valueA);
+    });
 
     setFilteredItems(sorted_filteredItems);
   }, [searchValue, inventory_items, setFilteredItems, searchedColumn, order]);
