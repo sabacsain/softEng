@@ -162,7 +162,7 @@ app.get("/ingredients", (req,res)=>{
 });
 
 app.get("/ingredientsDropdown", (req,res)=>{
-  const q = "SELECT `Inventory_ID`, `Name_inventory` FROM inventory WHERE User_Id = ?"
+  const q = "SELECT `Inventory_ID`, `Name_inventory`, `Price` FROM inventory WHERE User_Id = ?"
   const userID = 1000 
 
   db.query(q,userID,(err,data)=>{
@@ -170,6 +170,19 @@ app.get("/ingredientsDropdown", (req,res)=>{
     return res.json(data)
   })
 
+});
+
+app.get("/ingredientPrice/:id", (req, res) => {
+  const ingredientId = req.params.id;
+  const q = "SELECT `Price` FROM inventory WHERE `Inventory_ID` = ?";
+  
+  db.query(q, ingredientId, (err, data) => {
+    if (err) return res.json(err);
+    if (data.length === 0) {
+      return res.status(404).json({ error: "Ingredient not found" });
+    }
+    return res.json({ price: data[0].Price });
+  });
 });
 
 app.get("/wastes", (req,res)=>{
