@@ -182,14 +182,7 @@ function PeriodicWaste() {
     },
   ]);
 
-  const [periodicWaste, setPeriodicWaste] = useState(
-    {
-      foodItem: "apple",
-      foodItemPrice: 54,
-      totalPrice: 25,
-      totalKilo: 23
-    }
-  )
+  const [periodicWaste, setPeriodicWaste] = useState({})
 
   const [expiredTotal, setExpiredTotal] = useState(0);
 
@@ -207,29 +200,37 @@ function PeriodicWaste() {
     const fetchPeriodicWaste = (dateRange) => {
       axios.post('http://localhost:8081/periodicWaste', dateRange[0])
       .then((res) => {
-        const priceSum = res.data.reduce((accumulator, object) => {
-          return accumulator + object.Price;
-        }, 0);
+        if(Object.keys(res.data).length){
+          const priceSum = res.data.reduce((accumulator, object) => {
+            return accumulator + object.Price;
+          }, 0);
 
-        const priceKilo = res.data.reduce((accumulator, object) => {
-          return accumulator + object.Kg_inventory;
-        }, 0);
+          const priceKilo = res.data.reduce((accumulator, object) => {
+            return accumulator + object.Kg_inventory;
+          }, 0);
 
-        const mostWasted = res.data.reduce(function(prev, current) {
-          return (prev && prev.Price * prev.Kg_inventory > current.Price * current.Kg_inventory) ? prev : current
-        })
+          const mostWasted = res.data.reduce(function(prev, current) {
+            return (prev && prev.Price * prev.Kg_inventory > current.Price * current.Kg_inventory) ? prev : current
+          })
 
-        console.log("Sum",priceSum)
-        console.log("Kilo",priceKilo)
-        console.log("Most",mostWasted)
-      
-        setPeriodicWaste({
-          foodItem: mostWasted.Name_inventory,
-          foodItemPrice: mostWasted.Price * mostWasted.Kg_inventory,
-          totalPrice: priceSum,
-          totalKilo: priceKilo
-        })
-
+          console.log("Sum",priceSum)
+          console.log("Kilo",priceKilo)
+          console.log("Most",mostWasted)
+        
+          setPeriodicWaste({
+            foodItem: mostWasted.Name_inventory,
+            foodItemPrice: mostWasted.Price * mostWasted.Kg_inventory,
+            totalPrice: priceSum,
+            totalKilo: priceKilo
+          })
+        }else{
+          setPeriodicWaste({
+            foodItem: "None",
+            foodItemPrice: 0,
+            totalPrice: 0,
+            totalKilo: 0
+          })
+        }
       })
       .catch((error) => {
         console.log('Error during fetching record:', error);
@@ -259,7 +260,7 @@ function PeriodicWaste() {
         });
       }
       fetchExpiredTotal();
-    },[]);
+    },[dateRange]);
 
   return (
     <div className="report-section" id="dashboard-periodic-report">
@@ -290,11 +291,11 @@ function PeriodicWaste() {
       </div>
 
       <div className="cards-section-periodic">
-        <TotalWeightCard weight={periodicWaste.totalKilo} />
-        <MostWastedCard />
-        <TotalKgWasteCard />
-        <AccumulatedPriceCard accumulated_price={periodicWaste.totalPrice} />
-        <PriceEachMonthCard />
+        <TotalWeightCard weight={periodicWaste.totalKilo}  dateRange={dateRange}/>
+        <MostWastedCard dateRange={dateRange}/>
+        <TotalKgWasteCard  dateRange={dateRange}/>
+        <AccumulatedPriceCard accumulated_price={periodicWaste.totalPrice}  dateRange={dateRange}/>
+        <PriceEachMonthCard  dateRange={dateRange}/>
         <ExpiredCard expired_total_price={expiredTotal} />
       </div>
     </div>
@@ -365,7 +366,7 @@ function DateRangeForm({
   function HandleDateRangeChange(range) {
     setDateRange([range.selection]);
   }
-
+    console.log("Date range:", dateRange)
   return (
     <>
       {/* {render dropdown to select range } */}
@@ -425,7 +426,7 @@ function TotalWeightCard({ weight }) {
   );
 }
 
-function MostWastedCard({ dataaa }) {
+function MostWastedCard({dateRange}) {
 
   //sample data you can pass
   const [mostWasted, setMostWasted] = useState([]);
@@ -437,19 +438,25 @@ function MostWastedCard({ dataaa }) {
         const res = await axios.get("http://localhost:8081/mostWasted")
         
         //Rename the keys of the data object
-        res.data.forEach(Rename);
-        function Rename(item){
-          delete Object.assign(item, { name: item.Name_inventory })['Name_inventory'];
-          delete Object.assign(item, { value: item.Price })['Price'];
+        if(Object.keys(res.data).length){
+          res.data.forEach(Rename);
+          function Rename(item){
+            delete Object.assign(item, { name: item.Name_inventory })['Name_inventory'];
+            delete Object.assign(item, { value: item.Price })['Price'];
+          }
+          setMostWasted(res.data)
+        }else{
+          setMostWasted(0)
         }
-        setMostWasted(res.data)
+
+
       } catch(err){
         console.log(err)
       }
     };
 
     fetchMostWasted();
-  }, []);
+  },[dateRange]);
 
   //set colors of pie chart
   const COLORS = ["#D0EFB1", "#B3D89C", "#9DC3C2", "#77A6B6", "#4D7298"];
@@ -525,7 +532,7 @@ function AccumulatedPriceCard({ accumulated_price }) {
   );
 }
 
-function TotalKgWasteCard({ dataaa }) {
+function TotalKgWasteCard({dateRange}) {
   //sample data you can pass
   const [KgWaste, setKgWaste] = useState([]);
 
@@ -543,21 +550,25 @@ function TotalKgWasteCard({ dataaa }) {
       try{
         const res = await axios.get("http://localhost:8081/monthlyReport")
         //Rename the keys of the data object
-        res.data.forEach(Rename);
-        function Rename(item){
-          delete Object.assign(item, { name: getMonthName(item['MONTH(Date_waste)'])})['MONTH(Date_waste)'];
-          delete Object.assign(item, { Kg: item['SUM(Kg_waste)']})['SUM(Kg_waste)'];
-          delete item['SUM(Price)'];
-        }
+        if(Object.keys(res.data).length){
+          res.data.forEach(Rename);
+          function Rename(item){
+            delete Object.assign(item, { name: getMonthName(item['MONTH(Date_waste)'])})['MONTH(Date_waste)'];
+            delete Object.assign(item, { Kg: item['SUM(Kg_waste)']})['SUM(Kg_waste)'];
+            delete item['SUM(Price)'];
+          }
 
-        setKgWaste(res.data)
+          setKgWaste(res.data)
+        }else{
+          setKgWaste(0)
+        }
       } catch(err){
         console.log(err)
       }
     };
 
     fetchMonthlyReport();
-  },[]);
+  },[dateRange]);
 
 
   return (
@@ -575,7 +586,7 @@ function TotalKgWasteCard({ dataaa }) {
   );
 }
 
-function PriceEachMonthCard({ dataaa }) {
+function PriceEachMonthCard({dateRange}) {
   //sample data you can pass
   const [priceMonthData, setPriceMonthData] = useState([]);
 
@@ -593,14 +604,18 @@ function PriceEachMonthCard({ dataaa }) {
       try{
         const res = await axios.get("http://localhost:8081/monthlyReport")
         //Rename the keys of the data object
-        res.data.forEach(Rename);
-        function Rename(item){
-          delete Object.assign(item, { name: getMonthName(item['MONTH(Date_waste)'])})['MONTH(Date_waste)'];
-          delete Object.assign(item, { price: item['SUM(Kg_waste)'] * item['SUM(Price)']})['SUM(Kg_waste)'];
-          delete item['SUM(Price)'];
-        }
+        if(Object.keys(res.data).length){
+          res.data.forEach(Rename);
+          function Rename(item){
+            delete Object.assign(item, { name: getMonthName(item['MONTH(Date_waste)'])})['MONTH(Date_waste)'];
+            delete Object.assign(item, { price: item['SUM(Kg_waste)'] * item['SUM(Price)']})['SUM(Kg_waste)'];
+            delete item['SUM(Price)'];
+          }
 
-        setPriceMonthData(res.data)
+          setPriceMonthData(res.data)
+        }else{
+          setPriceMonthData(0)
+        }
         console.log(priceMonthData)
       } catch(err){
         console.log(err)
@@ -608,7 +623,7 @@ function PriceEachMonthCard({ dataaa }) {
     };
 
     fetchMonthlyReport();
-  },[]);
+  },[dateRange]);
 
   return (
     <div class="card" id="card-periodic-price-each-month">
