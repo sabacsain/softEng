@@ -614,7 +614,7 @@ function PriceEachMonthCard({dateRange}) {
 
           setPriceMonthData(res.data)
         }else{
-          setPriceMonthData(0)
+          setPriceMonthData([])
         }
         console.log(priceMonthData)
       } catch(err){
