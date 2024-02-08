@@ -372,18 +372,6 @@ function FormSection({clickedRecord,handleSetInventoryRecord}) {
             </div>
             <div className="today-det-row">
               <div>
-                <label for="waste-price">Price</label>
-                <input
-                  type="text"
-                  id="waste-price"
-                  placeholder="Enter price (&#8369;)"
-                  value={textfields.price_field}
-                  onChange={(e) =>
-                    handleFieldChanges("price_field", e.target.value)
-                  }
-                />
-              </div>
-              <div>
                 <label for="waste-qty">Quantity</label>
                 <div>
                   <input
