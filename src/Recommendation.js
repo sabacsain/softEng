@@ -25,10 +25,12 @@ export default function Recommendation({ setRecommOpen, mostWastedFood, totalWas
         recommendations.push(`Consider repurposing excess of ${mostWastedFood.foodItem}.`);
         recommendations.push(`Try to offer specials or discounts of dishes that use ${mostWastedFood.foodItem}.`);
       }
-    }
+    } 
 
     // Recommendation based on the total price of wasted food
-    if (totalWastePrice <= 250) {
+    if (totalWastePrice == "No waste") {
+      recommendations.push('There is zero wasted money. Keep it up!');
+    } else if (totalWastePrice <= 250) {
       recommendations.push('There is a small amount of wasted money. Consider leniently monitoring purchases and slightly cut down on costs.');
     } else if (totalWastePrice <= 500) {
       recommendations.push('There is a moderate amount of wasted money. Consider monitoring purchases and cut down on costs');
@@ -41,7 +43,9 @@ export default function Recommendation({ setRecommOpen, mostWastedFood, totalWas
     
 
     // Recommendation based on the total kilograms of waste 
-    if (totalWasteKgs <= 10) {
+    if (totalWasteKgs == "No waste") {
+      recommendations.push('There is no waste of food. Good job!');
+    } else if (totalWasteKgs <= 10) {
       recommendations.push('There is a light waste of food. Consider leniently monitoring the inventory');
     } else if (totalWasteKgs <= 25) {
       recommendations.push('There is a moderate waste of food. Consider monitoring the inventory and plan portion control to minimize leftovers');
