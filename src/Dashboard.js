@@ -73,17 +73,19 @@ function CurrentDayWaste() {
           return accumulator + object.Kg_waste;
         }, 0);
 
-        const mostWasted = res.data.reduce(function(prev, current) {
-          return (prev && prev.Price * prev.Kg_waste > current.Price * current.Kg_waste) ? prev : current
-        })
-      
+        const mostWasted = res.data.reduce(function (prev, current) {
+          return prev &&
+            prev.Price * (prev.Pcs_waste === 0? prev.Kg_waste: prev.Pcs_waste) > current.Price * (current.Pcs_waste === 0? current.Kg_waste: current.Pcs_waste)
+            ? prev
+            : current;
+        });
 
         setDayWaste({
           foodItem: mostWasted.Name_inventory,
-          foodItemPrice: mostWasted.Price * mostWasted.Kg_waste,
+          foodItemPrice: mostWasted.Price *  (mostWasted.Pcs_waste === 0? mostWasted.Kg_waste: mostWasted.Pcs_waste),
           totalPrice: priceSum,
-          totalKilo: priceKilo
-        })
+          totalKilo: priceKilo,
+        });
       } catch(err){
         console.log(err)
       }
