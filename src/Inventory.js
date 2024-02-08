@@ -2,23 +2,23 @@ import { useEffect, useState } from "react";
 import "./css/inventory.css";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
-import { SearchBar, SortBy, Filter } from "./Search.js";
+import { SearchBar, SortBy } from "./Search.js";
 import Table from "./Table.js";
 import { format } from "date-fns";
 import CrudButtons from "./CrudButtons.js";
-import axios from 'axios';
-import moment from 'moment';
+import axios from "axios";
+import moment from "moment";
 
 //sample columns
 const columns = [
   "ID",
   "Ingredient",
   "Type",
-  "Type ID",
-  "Pcs",
-  "Kgs",
+  "typeId",
+  "Pieces",
+  "Weight",
   "Price",
-  "Expiration Date",
+  "Expiration",
 ];
 
 export default function Inventory() {
@@ -70,30 +70,29 @@ function InventoryHeader() {
 function NotificationComponent({ handleOpenNotif }) {
   const [expiringThisDay, setExpiringThisDay] = useState([]);
   const [expiringThisWeek, setExpiringThisWeek] = useState([]);
-  
+
   //get the ingredients expiring today
-  useEffect(()=>{
+  useEffect(() => {
     const fetchExpiringToday = async () => {
-      try{
-        const res = await axios.get("http://localhost:8081/expiringToday")
-        setExpiringThisDay(res.data)
-      } catch(err){
-        console.log(err)
+      try {
+        const res = await axios.get("http://localhost:8081/expiringToday");
+        setExpiringThisDay(res.data);
+      } catch (err) {
+        console.log(err);
       }
     };
 
     fetchExpiringToday();
   }, []);
 
-
   //get the ingredients expiring week
-  useEffect(()=>{
+  useEffect(() => {
     const fetchExpiringWeek = async () => {
-      try{
-        const res = await axios.get("http://localhost:8081/expiringWeek")
-        setExpiringThisWeek(res.data)
-      } catch(err){
-        console.log(err)
+      try {
+        const res = await axios.get("http://localhost:8081/expiringWeek");
+        setExpiringThisWeek(res.data);
+      } catch (err) {
+        console.log(err);
       }
     };
 
@@ -112,7 +111,9 @@ function NotificationComponent({ handleOpenNotif }) {
           <Link to="/inventory/expiration-table">See all expired items</Link>
         </div>
 
-        <h3 class="h3-inventory tomorrow">Tomorrow ({expiringThisDay.length})</h3>
+        <h3 class="h3-inventory tomorrow">
+          Tomorrow ({expiringThisDay.length})
+        </h3>
         <hr></hr>
         <div className="notif-entries-wrapper">
           {expiringThisDay.map((expiringThisDay) => (
@@ -123,7 +124,7 @@ function NotificationComponent({ handleOpenNotif }) {
         <h3 class="h3-inventory thisweek">This Week</h3>
         <hr></hr>
         <div className="notif-entries-wrapper">
-        {expiringThisWeek.map((expiringThisWeek) => (
+          {expiringThisWeek.map((expiringThisWeek) => (
             <div>{expiringThisWeek.Name_inventory}</div>
           ))}
         </div>
@@ -141,9 +142,8 @@ function TableSection() {
   //table section with form section
 
   //for ingredients
-  const[inventory_items, setInventoryItems] = useState(
-    [
-      {
+  const [inventory_items, setInventoryItems] = useState([
+    {
       id: 0,
       typeId: 1,
       ingredient: "",
@@ -151,33 +151,43 @@ function TableSection() {
       weight: 0,
       pieces: 0,
       price: 0,
-      expiration:""
-      }
-    ]
-  ); 
+      expiration: "",
+    },
+  ]);
 
   const [filteredItems, setFilteredItems] = useState([]);
   //Display ingredients from inventory
-  useEffect(()=>{
+  useEffect(() => {
     const fetchAllIngredients = async () => {
-      try{
-        const res = await axios.get("http://localhost:8081/ingredients")
-        
+      try {
+        const res = await axios.get("http://localhost:8081/ingredients");
+
         //Rename the keys of the data object
         res.data.forEach(Rename);
-        function Rename(item){
-          delete Object.assign(item, { id: item.Inventory_ID })['Inventory_ID'];
-          delete Object.assign(item, { ingredient: item.Name_inventory })['Name_inventory'];
-          delete Object.assign(item, { type: item.Type_name })['Type_name'];
-          delete Object.assign(item, { typeId: item.Type_ID })['Type_ID'];
-          delete Object.assign(item, { weight: item.Kg_inventory })['Kg_inventory'];
-          delete Object.assign(item, { pieces: item.Pcs_inventory })['Pcs_inventory'];
-          delete Object.assign(item, { price: item.Price })['Price'];
-          delete Object.assign(item, { expiration: moment.utc(item.Expiration_date).utc().format('YYYY/MM/DD') })['Expiration_date'];
+        function Rename(item) {
+          delete Object.assign(item, { id: item.Inventory_ID })["Inventory_ID"];
+          delete Object.assign(item, { ingredient: item.Name_inventory })[
+            "Name_inventory"
+          ];
+          delete Object.assign(item, { type: item.Type_name })["Type_name"];
+          delete Object.assign(item, { typeId: item.Type_ID })["Type_ID"];
+          delete Object.assign(item, { weight: item.Kg_inventory })[
+            "Kg_inventory"
+          ];
+          delete Object.assign(item, { pieces: item.Pcs_inventory })[
+            "Pcs_inventory"
+          ];
+          delete Object.assign(item, { price: item.Price })["Price"];
+          delete Object.assign(item, {
+            expiration: moment
+              .utc(item.Expiration_date)
+              .utc()
+              .format("YYYY/MM/DD"),
+          })["Expiration_date"];
         }
-        setInventoryItems(res.data)
-      } catch(err){
-        console.log(err)
+        setInventoryItems(res.data);
+      } catch (err) {
+        console.log(err);
       }
     };
 
@@ -186,7 +196,7 @@ function TableSection() {
 
   //for query
   const [searchValue, setSearchValue] = useState(""); //holds the value you type in the searchbox
-  const [searchedColumn, setSearchedColumn] = useState("Ingredient"); //hold the chosen column beside the sortby
+  const [searchedColumn, setSearchedColumn] = useState("ID"); //hold the chosen column beside the sortby
   const [order, setOrder] = useState("ASC"); //holds the chosen order, ASC or DESC
   const [isPerishable, setIsPerishable] = useState(true); //hpersihable or non
 
@@ -199,7 +209,7 @@ function TableSection() {
     weight: 0,
     pieces: 0,
     price: 0,
-    expiration: ""
+    expiration: "",
   });
 
   const handleSearch = (e) => {
@@ -218,14 +228,14 @@ function TableSection() {
     setOrder((previousOrder) => (previousOrder === "ASC" ? "DESC" : "ASC"));
   };
 
-  const handleIsPerishable = (e) => {
-    //updates isPerishable when you chosefrom filter dropdown
-    setIsPerishable((prevIsPerishable) => !prevIsPerishable);
-  };
+  // const handleIsPerishable = (e) => {
+  //   //updates isPerishable when you chosefrom filter dropdown
+  //   setIsPerishable((prevIsPerishable) => !prevIsPerishable);
+  // };
 
   const [operation, setOperation] = useState(""); //operation = checks if operation chosen is either add, update, or delete
 
-  //handleClickedRecord function -> sets the details for the clickedRecord function 
+  //handleClickedRecord function -> sets the details for the clickedRecord function
   //once a record is clicked, get the values to populate the textfields
   const handleClickedRecord = (item, isthereAnActiveRow) => {
     //check if there is an active row (clicked record). then store the values to the clickedRecord variable using setInvetoryRecord function
@@ -256,7 +266,6 @@ function TableSection() {
     }
   };
 
- 
   //currentFormRecord = stores values from textboxes
   const [currentFormRecord, setCurrentFormRecord] = useState({
     id: 0,
@@ -312,40 +321,43 @@ function TableSection() {
   //function for adding the currentFormRecord to the database
   //no need ng id
   const addRecord = (record) => {
-    axios.post('http://localhost:8081/addInventory', record)
-    .then((res) => {
-      if(res.data === "Failed") {
-        alert("This type of ingredient already exists.")
-      } else{
-        alert("Successfully added new ingredient.")
-      }
-    })
-    .catch((error) => {
-      console.log('Error during adding record:', error);
-      // Add additional error handling as needed
-    });
+    axios
+      .post("http://localhost:8081/addInventory", record)
+      .then((res) => {
+        if (res.data === "Failed") {
+          alert("This type of ingredient already exists.");
+        } else {
+          alert("Successfully added new ingedient.");
+        }
+      })
+      .catch((error) => {
+        console.log("Error during adding record:", error);
+        // Add additional error handling as needed
+      });
   };
 
   //function for updating the currentFormRecord to the database
   const updateRecord = (record) => {
-    axios.post('http://localhost:8081/updateInventory', record)
+    axios
+      .post("http://localhost:8081/updateInventory", record)
       .then((res) => {
-        alert("Successfully Updated Record.")
+        alert("Successfully Updated Record.");
       })
       .catch((error) => {
-        alert('Error during updating record:', error);
+        alert("Error during updating record:", error);
         // Add additional error handling as needed
       });
   };
 
   //function for deleting the currentFormRecord to the database
   const deleteRecord = (record) => {
-    axios.post('http://localhost:8081/deleteInventory', record)
+    axios
+      .post("http://localhost:8081/deleteInventory", record)
       .then((res) => {
-        alert("Successfully Deleted Record.")
+        alert("Successfully Deleted Record.");
       })
       .catch((error) => {
-        alert('Error during deleting record:', error);
+        alert("Error during deleting record:", error);
         // Add additional error handling as needed
       });
   };
@@ -353,7 +365,13 @@ function TableSection() {
   return (
     <>
       <div id="inventory-search-and-sorting">
-        <SearchBar handleSearch={handleSearch} inventory_items={inventory_items} setFilteredItems={setFilteredItems}/>
+        <SearchBar
+          handleSearch={handleSearch}
+          inventory_items={inventory_items}
+          setFilteredItems={setFilteredItems}
+          searchedColumn={searchedColumn}
+          order = {order}
+        />
         <SortBy
           options={columns}
           data={filteredItems}
@@ -361,7 +379,7 @@ function TableSection() {
           handleOrder={handleOrder}
           currentOrder={order}
         />
-        <Filter handleIsPerishable={handleIsPerishable} />
+        {/* <Filter handleIsPerishable={handleIsPerishable} /> */}
       </div>
 
       {/* change column and data props */}
@@ -383,16 +401,14 @@ function TableSection() {
 function FormSection({ clickedRecord, handleSetInventoryRecord }) {
   //if not 0, use this for updating and deleting record; else, add new record
   const currentID = clickedRecord.id;
-  
+
   //for types
-  const[types, setTypes] = useState(
-    [
-      {
+  const [types, setTypes] = useState([
+    {
       id: 0,
-      type_name: "Vegetable"
-      }
-    ]
-  );
+      type_name: "Vegetable",
+    },
+  ]);
 
   //variable for tracking the textfields, if there are changes in the texfields this will be updated
   const [textfields, setTextFieldsValues] = useState({
@@ -404,24 +420,27 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
     quantity_dropdown: "",
     expiration_picker: format(new Date(), "yyyy-MM-dd"),
   });
-  
 
   //display list of type of wastes
-  useEffect(()=>{
+  useEffect(() => {
     const fetchAllTypes = async () => {
-      try{
-        const res = await axios.get("http://localhost:8081/types")
+      try {
+        const res = await axios.get("http://localhost:8081/types");
         //Rename the keys of the data object
         res.data.forEach(Rename);
-        function Rename(item){
-          delete Object.assign(item, { id: item.Type_ID })['Type_ID'];
-          delete Object.assign(item, { type_name: item.Type_name })['Type_name'];
-          delete Object.assign(item, { perishable: (item.Is_perishable == 0) ? "false": "true" })['Is_perishable'];
+        function Rename(item) {
+          delete Object.assign(item, { id: item.Type_ID })["Type_ID"];
+          delete Object.assign(item, { type_name: item.Type_name })[
+            "Type_name"
+          ];
+          delete Object.assign(item, {
+            perishable: item.Is_perishable == 0 ? "false" : "true",
+          })["Is_perishable"];
         }
 
-        setTypes(res.data)
-      } catch(err){
-        console.log(err)
+        setTypes(res.data);
+      } catch (err) {
+        console.log(err);
       }
     };
 
@@ -454,17 +473,21 @@ function FormSection({ clickedRecord, handleSetInventoryRecord }) {
 
   //if crud button is clicked, pass the values from text fields, along with the operation (add, update, or delete)
   const handleOperation = (textfields, operation) => {
-    const isEmpty = Object.values(textfields).some(value => {
-      return typeof value === 'string' && value.trim() === '';
-    });  
-  
-    if (operation === 'add') {
+    const isEmpty = Object.values(textfields).some((value) => {
+      return typeof value === "string" && value.trim() === "";
+    });
+
+    if (operation === "add") {
       if (!isEmpty) {
         handleSetInventoryRecord(textfields, operation, currentID);
       } else {
         alert("Please fill in the textfields.");
       }
-    } else if (clickedRecord.id !== null && clickedRecord.id !== undefined && clickedRecord.id !== 0) {
+    } else if (
+      clickedRecord.id !== null &&
+      clickedRecord.id !== undefined &&
+      clickedRecord.id !== 0
+    ) {
       handleSetInventoryRecord(textfields, operation, currentID);
     } else {
       alert("No record was selected.");
