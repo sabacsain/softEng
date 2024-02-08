@@ -246,13 +246,15 @@ function PeriodicWaste() {
       const fetchExpiredTotal = (dateRange) => {
         axios.get('http://localhost:8081/expiredStats')
         .then((res) => {
-
+         if(Object.keys(res.data).length){
           const priceSum = res.data.reduce((accumulator, object) => {
             return accumulator + object.Price;
           }, 0);
-        
+          
           setExpiredTotal(priceSum)
-  
+         } else{
+            setExpiredTotal([])
+         }
         })
         .catch((error) => {
           console.log('Error during fetching record:', error);
