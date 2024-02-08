@@ -1,0 +1,42 @@
+table{
+width: 100%;
+color: var(--text-color-secondary);
+
+}
+
+.tr{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 2px;
+}
+
+.thead{
+    flex: 1;
+    background-color: var(--body_background);
+    border-radius: 2px;
+    position: sticky;
+    top: 0;
+    font-size: var(--fs-medium);
+
+}
+
+
+tr{
+    text-align: center;
+    color: var(--text-color-primary);
+    font-size: var(--fs-medium);
+
+}
+
+tr:hover{
+    background-color: rgba(179, 208, 207, 0.42);
+    cursor: pointer;
+}
+
+
+tr.active-row{
+    background-color: rgba(179, 208, 207, 0.2);
+
+}
+

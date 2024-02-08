@@ -1,0 +1,42 @@
+.button-section {
+    width: 85%;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    margin-top: 50px;
+  }
+  
+  .op-btn {
+    height: 40px;
+    flex: 1;
+    border: none;
+    border-radius: 5px;
+    font-family: "Poppins";
+    font-weight: 600;
+    font-size: var(--fs-medium);
+    color: white;
+    cursor: pointer;
+  }
+  
+  .op-btn:hover{
+    opacity: 0.7;
+  }
+  
+  .op-btn:active{
+    opacity: 1;
+  }
+  
+  .op-btn.add-btn {
+    background: #7d9a99;
+  }
+  
+  .op-btn.update-btn {
+    background: #77a6b6;
+  }
+  
+  .op-btn.delete-btn {
+    background: #ea6161;
+  }
+  

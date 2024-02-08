@@ -1,0 +1,364 @@
+* {
+  margin: 0;
+}
+
+.inventory {
+  margin: 40px 80px;
+  flex: 1;
+}
+
+/*HEADER*/
+.inventory-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #77a6b6;
+  max-width: 1920px;
+}
+
+.inventory-header h1 {
+  color: #77a6b6;
+  font-size: 24px;
+  margin-top: 25px;
+  display: inline;
+}
+
+.inventory-header i {
+  font-size: 30px;
+}
+
+.inventory-header i:hover {
+  color: #27464a;
+  cursor: pointer;
+}
+
+.inventory-notif-wrapper {
+  width: 50;
+  height: 100%;
+}
+
+.notif {
+  position: relative;
+}
+
+.inventory-notif-wrapper span {
+  width: 11px;
+  height: 11px;
+  background-color: #27464a;
+  border: 2px solid white;
+  display: inline-block;
+  right: 0px;
+  position: absolute;
+  right: 0;
+  border-radius: 50%;
+}
+
+/**/
+
+#inventory-search-and-sorting {
+  display: flex;
+  justify-content: space-between;
+  width: 1000px;
+}
+.searchbox-wrapper {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 5px 5px 5px;
+  background-color: var(--second_background)  ;
+  border-radius: 5px;
+  height: 40px;
+}
+
+.search-icon {
+  font-size: 30px;
+  color: #7d9a99;
+  margin-left: 5px;
+}
+.searchbox {
+  height: auto;
+  width: 300px;
+  font-size: 14px;
+  border: none;
+  padding-left: 20px;
+  position: relative;
+  outline: none;
+  background-color: transparent;
+  font-family: "Poppins";
+  color: var(--text-color-primary);
+
+}
+
+.sort-by-wrapper {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 10px;
+  gap: 10px;
+}
+
+#sort-by,
+#filter-perishable {
+  height: 40px;
+  min-height: 30px;
+
+  min-width: 200px;
+  font-size: 16px;
+  border: none;
+  font-family: "Poppins";
+  background-color:  var(--button-color-primary);
+  color: #fff;
+  padding: 2px;
+  border-radius: 5px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+}
+
+#button-asc-desc {
+  min-height: 40px;
+  min-width: 40px;
+  background-color: var(--button-color-primary);
+  border: none;
+  color: white;
+  width: 28px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#button-asc-desc:hover {
+  background-color: #7d9a99;
+}
+
+.fa {
+  transition: all 0.75s ease;
+  font-weight: 100;
+  font-weight: 600;
+}
+.fa.rotate {
+  transform: rotate(180deg);
+}
+
+.sort-option {
+  background-color: white;
+  color: #7d9a99;
+  font-weight: 600;
+}
+
+label {
+  color: #7d9a99;
+  font-weight: 600;
+}
+
+/* Styles for the modal */
+.modal {
+  width: 720px;
+  height: 600px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 50px;
+  background-color: #273b4a;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  border-radius: 20px;
+  color: #fff;
+}
+
+/* Styles for the overlay background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.exp-notif-heading {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 40px;
+}
+
+.notif-close-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  z-index: 2000;
+  border: none;
+  background-color: #fff;
+  color: #273b4a;
+  cursor: pointer;
+}
+
+.notif-close-btn:hover {
+  background-color: #bebebe;
+}
+
+a {
+  color: var(--text-color-primary);
+  font-weight: 600;
+}
+
+a:hover {
+  color: #77a6b6;
+}
+
+.modal hr {
+  color: #f7fafb;
+  margin-top: 10px;
+  opacity: 10%;
+}
+
+.h3-inventory {
+  margin-top: 20px;
+}
+.h3-inventory.tomorrow {
+  color: #ff756d;
+}
+.h3-inventory.thisweek {
+  color: #b4c0ff;
+}
+
+.notif-entries-wrapper {
+  width: 100%;
+  height: 180px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.notif-entries-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.notif-entries-wrapper {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.inventory-table-wrapper {
+  /* border: 2px solid black; */
+  max-width: 1920px;
+  margin-top: 20px;
+  height: 450px;
+  background-color: var(--second_background);
+
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 0px 2px 10px 2px;
+}
+
+.inventory-details-wrapper {
+  width: 100%;
+  max-width: 1460px;
+  height: 400px;
+  margin-top: 50px;
+  position: relative;
+  border-radius: 10px;
+  border: 2px solid rgba(179, 208, 207, 0.42);
+  font-size: var(--fs-medium);
+
+}
+
+.inventory-details-wrapper > h2 {
+  background-color: var(--body_background);
+  display: inline;
+  position: absolute;
+  left: 50px;
+  top: -20px;
+  color: #7d9a99;
+  font-weight: 600;
+}
+
+#inventory-details {
+  width: 85%;
+  height: fit-content;
+  /* background-color: white; */
+  display: flex;
+
+  margin: auto;
+  margin-top: 40px;
+  padding: 20px;
+  gap: 10px;
+}
+
+#inventory-details #inv-fields-wrapper {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+#inventory-details #inv-expiration-wrapper {
+  flex: 1;
+}
+
+.inv-det-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.inv-det-row > div {
+  flex: 1;
+}
+
+.inv-det-row label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+#inventory-details input,
+#inventory-details #details-type {
+  width: 300px;
+  height: 40px;
+  font-family: "Poppins";
+  padding: 0px 10px 0px 10px;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: var(--fs-small);
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
+  background-color: var(--second_background);
+  color: var(--text-color-secondary);
+
+}
+
+#details-qty {
+  width: 240px !important;
+}
+
+#details-qty-dropd {
+  width: 60px;
+  height: 40px;
+  font-family: "Poppins";
+  font-size: var(--fs-small);
+  outline: none;
+  border: none;
+  border-radius: 0px 3px 3px 0px;
+  box-sizing: border-box;
+
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
+  background-color: rgba(179, 208, 207, 0.42);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+#inv-expiration-wrapper label {
+  display: block;
+  margin-bottom: 10px;
+}
+
