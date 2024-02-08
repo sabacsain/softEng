@@ -116,7 +116,11 @@ function CurrentDayWaste() {
         </button>
 
         {/* If recomm button is clicked, open modal */}
-        {isRecommOpen && <Recommendation setRecommOpen={setRecommOpen} />}
+        {isRecommOpen && <Recommendation 
+          setRecommOpen={setRecommOpen} 
+          mostWastedFood={dayWaste} 
+          totalWastePrice={dayWaste.totalPrice} 
+          totalWasteKgs={dayWaste.totalKilo} />}
       </div>
 
       {/* For cards */}
@@ -280,7 +284,11 @@ function PeriodicWaste() {
             Recommendations
           </button>
           {/* If recomm button is clicked, open modal */}
-          {isRecommOpen && <Recommendation setRecommOpen={setRecommOpen} />}
+          {isRecommOpen && <Recommendation 
+            setRecommOpen={setRecommOpen} 
+            mostWastedFood={periodicWaste} 
+            totalWastePrice={periodicWaste.totalPrice} 
+            totalWasteKgs={periodicWaste.totalKilo} />}
           {/*may pass data as prop to recomm.js*/}
         </div>
 

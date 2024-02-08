@@ -272,7 +272,6 @@ app.post("/addWaste", (req,res)=>{
         return res.json(data)
       })
   });
-
 app.post("/addType", (req,res)=>{
   const q1 = "SELECT `Type_name` FROM `type` WHERE `Type_name` = ? AND User_id = ? "
   const q2 = "INSERT INTO `type` (`User_id`,`Is_perishable`,`Type_name`) VALUES (?)"
