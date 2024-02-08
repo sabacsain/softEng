@@ -116,7 +116,7 @@ function CurrentDayWaste() {
         {/* If recomm button is clicked, open modal */}
         {isRecommOpen && <Recommendation 
           setRecommOpen={setRecommOpen} 
-          mostWastedFood={dayWaste.foodItem} 
+          mostWastedFood={dayWaste} 
           totalWastePrice={dayWaste.totalPrice} 
           totalWasteKgs={dayWaste.totalKilo} />}
       </div>
@@ -282,7 +282,7 @@ function PeriodicWaste() {
           {/* If recomm button is clicked, open modal */}
           {isRecommOpen && <Recommendation 
             setRecommOpen={setRecommOpen} 
-            mostWastedFood={periodicWaste.foodItem} 
+            mostWastedFood={periodicWaste} 
             totalWastePrice={periodicWaste.totalPrice} 
             totalWasteKgs={periodicWaste.totalKilo} />}
           {/*may pass data as prop to recomm.js*/}

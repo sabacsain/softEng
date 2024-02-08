@@ -14,21 +14,41 @@ export default function Recommendation({ setRecommOpen, mostWastedFood, totalWas
     const recommendations = [];
 
     // Recommendation based on the most wasted food item
-    if (mostWastedFood != "None" && mostWastedFood != "No waste") {
-      recommendations.push(`Try to reduce waste of ${mostWastedFood}.`);
+    if (mostWastedFood.foodItem != "None" && mostWastedFood.foodItem != "No waste") {
+      if (mostWastedFood.foodItemPrice <= 100) {
+        recommendations.push(`There is a small waste of ${mostWastedFood.foodItem}. Try to buy slightly reduced amounts of this ingredient`);
+      } else if (mostWastedFood.foodItemPrice <= 250) {
+        recommendations.push(`There is a moderate waste of ${mostWastedFood.foodItem}. Try to buy reduced amounts of this ingredient`);
+        recommendations.push(`Consider repurposing excess of ${mostWastedFood.foodItem}.`);
+      } else if (mostWastedFood.foodItemPrice > 250) {
+        recommendations.push(`There is a large waste of ${mostWastedFood.foodItem}. Try to buy greatly reduced amounts of this ingredient.`);
+        recommendations.push(`Consider repurposing excess of ${mostWastedFood.foodItem}.`);
+        recommendations.push(`Try to offer specials or discounts of dishes that use ${mostWastedFood.foodItem}.`);
+      }
     }
 
     // Recommendation based on the total price of wasted food
-    if (totalWastePrice > 0) {
-      recommendations.push('Monitor purchases and consumption to reduce waste and save money.');
+    if (totalWastePrice <= 250) {
+      recommendations.push('There is a small amount of wasted money. Consider leniently monitoring purchases and slightly cut down on costs.');
+    } else if (totalWastePrice <= 500) {
+      recommendations.push('There is a moderate amount of wasted money. Consider monitoring purchases and cut down on costs');
+      recommendations.push('Try to order ingredients that are in season since they are more fresh and cost less');
+    } else if (totalWastePrice > 500) {
+      recommendations.push('There is a large amount of wasted money. Consider strictly monitoring purchases and cut greatly down on costs');
+      recommendations.push('Try to order ingredients that are in season since they are more fresh and cost less');
+      recommendations.push('Optimize the menu by replacing dishes that do not sell well and replace them with cost efficient dishes');
     }
+    
 
     // Recommendation based on the total kilograms of waste 
-    if (totalWasteKgs > 0) {
-      recommendations.push('Consider donating excess food to reduce waste and help those in need.');
+    if (totalWasteKgs <= 10) {
+      recommendations.push('There is a light waste of food. Consider leniently monitoring the inventory');
+    } else if (totalWasteKgs <= 25) {
+      recommendations.push('There is a moderate waste of food. Consider monitoring the inventory and plan portion control to minimize leftovers');
+    } else if (totalWasteKgs > 25) {  
+      recommendations.push('There is a heavy waste of food. Consider strictly monitoring the inventory and plan portion control to minimize leftovers.');
+      recommendations.push('Consider donating surplus food that were not sold to help those in need, and try to compost food waste as well to help the environment');
     }
-
-    ///Mema pa lang yung messages saka threshhold ^^^
 
     return recommendations;
   }
