@@ -250,24 +250,15 @@ app.post("/addWaste", (req,res)=>{
     req.body.pieces,
     req.body.inv_id,
   ];
-
-  //Check if ingredient is already in the waste table.
-  db.query(q1, [req.body.inv_id, userID], (err,data)=>{
-    if(err){
-      console.log(err)
-    }else if(data.length>0){
-      return res.json("Failed")
-    }else{
       //Insert new waste.
       db.query(q2, [values], (err,data)=>{
-        if(err) console.log(err)
+        if(err){
+        console.log(err)
+        return res.json("Failed")
+      }
         return res.json(data)
       })
-    }
-  })
-
-});
-
+  });
 app.post("/addType", (req,res)=>{
   const q1 = "SELECT `Type_name` FROM `type` WHERE `Type_name` = ? AND User_id = ? "
   const q2 = "INSERT INTO `type` (`User_id`,`Is_perishable`,`Type_name`) VALUES (?)"
