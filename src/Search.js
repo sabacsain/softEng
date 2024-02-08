@@ -75,19 +75,19 @@ function SortBy({ options, handleSortColumn, handleOrder, currentOrder }) {
   );
 }
 
-function Filter({ handleIsPerishable }) {
-  return (
-    <div className="sort-by-wrapper">
-      <label for="filter-perishable">Filter:</label>
-      <select id="filter-perishable" onChange={handleIsPerishable}>
-        <option className="sort-option" value="Perishable">
-          Perishable
-        </option>
-        <option className="sort-option" value="Non-perishable">
-          Non-Perishable
-        </option>
-      </select>
-    </div>
-  );
-}
-export { SearchBar, SortBy, Filter };
+// function Filter({ handleIsPerishable }) {
+//   return (
+//     <div className="sort-by-wrapper">
+//       <label for="filter-perishable">Filter:</label>
+//       <select id="filter-perishable" onChange={handleIsPerishable}>
+//         <option className="sort-option" value="Perishable">
+//           Perishable
+//         </option>
+//         <option className="sort-option" value="Non-perishable">
+//           Non-Perishable
+//         </option>
+//       </select>
+//     </div>
+//   );
+// }
+export { SearchBar, SortBy };

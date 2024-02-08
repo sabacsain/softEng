@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./css/inventory.css";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
-import { SearchBar, SortBy, Filter } from "./Search.js";
+import { SearchBar, SortBy } from "./Search.js";
 import Table from "./Table.js";
 import { format } from "date-fns";
 import CrudButtons from "./CrudButtons.js";
@@ -228,10 +228,10 @@ function TableSection() {
     setOrder((previousOrder) => (previousOrder === "ASC" ? "DESC" : "ASC"));
   };
 
-  const handleIsPerishable = (e) => {
-    //updates isPerishable when you chosefrom filter dropdown
-    setIsPerishable((prevIsPerishable) => !prevIsPerishable);
-  };
+  // const handleIsPerishable = (e) => {
+  //   //updates isPerishable when you chosefrom filter dropdown
+  //   setIsPerishable((prevIsPerishable) => !prevIsPerishable);
+  // };
 
   const [operation, setOperation] = useState(""); //operation = checks if operation chosen is either add, update, or delete
 
@@ -379,7 +379,7 @@ function TableSection() {
           handleOrder={handleOrder}
           currentOrder={order}
         />
-        <Filter handleIsPerishable={handleIsPerishable} />
+        {/* <Filter handleIsPerishable={handleIsPerishable} /> */}
       </div>
 
       {/* change column and data props */}
