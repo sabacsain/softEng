@@ -317,7 +317,7 @@ function TableSection() {
       if(res.data === "Failed") {
         alert("This type of ingredient already exists.")
       } else{
-        alert("Successfully added new ingedient.")
+        alert("Successfully added new ingredient.")
       }
     })
     .catch((error) => {
