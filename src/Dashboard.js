@@ -66,7 +66,7 @@ function CurrentDayWaste() {
         
         //Compute today's statistics
         const priceSum = res.data.reduce((accumulator, object) => {
-          return accumulator + object.Price;
+          return accumulator + object.Price * (object.Pcs_waste === 0? object.Kg_waste: object.Pcs_waste);
         }, 0);
 
         const priceKilo = res.data.reduce((accumulator, object) => {
