@@ -1,0 +1,97 @@
+.sidebar {
+  height: 820px;
+  max-height: 90vh;
+  width: 300px;
+  min-width: 300px;
+  background-color: var(--second_background);
+  position: sticky;
+  top: 5%;
+  border-radius: 0 20px 20px 0;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.sidebar li {
+  list-style: none;
+}
+.sidebar ul {
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+  justify-content: space-between;
+}
+
+.sidebarOption,
+.sidebar-logout {
+  width: 100%;
+  height: 43px;
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  font-weight: 600;
+  font-size: var(--fs-medium);
+
+}
+
+.sidebarOption span,
+.sidebar-logout span {
+  width: 50px;
+  text-align: center;
+}
+
+.sidebarOption {
+  color: var(--text-color-primary);
+}
+
+.sidebarOption:hover,
+.sidebar-logout:hover {
+  background-color: #b3d0cf;
+  border-radius: 10px 0 0 10px;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+}
+
+.sidebar hr {
+  width: 90%;
+}
+
+.logo-container {
+  height: 50px;
+  height: fit-content;
+  text-align: center;
+}
+
+#logo {
+  width: 100px;
+  height: 100px;
+  margin: 76px;
+  margin-bottom: 40px;
+}
+
+.hovered {
+  color: #7d9a99;
+}
+
+.hovered rect,
+.hovered path {
+  stroke: #7d9a99;
+  fill: #7d9a99;
+}
+
+.sidebar-logout {
+  color: var(--text-color-primary);
+}
+
+.sidebar rect,
+.sidebar path {
+  stroke: var(--sidebar-icon-primary);
+  fill: var(--sidebar-icon-primary);
+}
+
+.sidebarOption:hover path,
+.sidebarOption:hover rect,
+.sidebar-logout:hover path {
+  stroke: var(--black);
+  fill: var(--black) !important;
+}

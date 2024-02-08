@@ -1,0 +1,299 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;700&display=swap");
+
+* {
+  margin: 0;
+}
+
+.dashboard {
+  margin: 40px 80px;
+  flex: 1;
+}
+
+/*-----------CURRENT DAY WASTE SECTION---------------*/
+.report-heading {
+  font-size: var(--fs-medium);
+  font-weight: 600;
+  color: #77a6b6;
+  margin-right: 20px;
+  /* width: 300px; */
+}
+
+#dashboard-current-day-report > div {
+  display: inline-flex;
+}
+
+.button-recom {
+  background-color:  var(--button-color-primary);
+  color: white;
+  border: none;
+  padding: 3px 14px 4px 17px;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  font-family: "Poppins";
+  font-weight: 600;
+  height: 30px;
+  max-height: 50px;
+}
+
+.button-recom:hover {
+  background-color: #7d9a99;
+}
+/*-----------CURRENT DAY WASTE SECTION---------------*/
+
+.cards-section {
+  height: fit-content;
+  min-height: 120px;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.date-card {
+  background-color: #77a6b6;
+  width: fit-content;
+  min-width: 120px;
+  border-radius: 5px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#header-cd-date span {
+  display: block;
+  text-align: center;
+  line-height: 40px;
+}
+
+.cd-cards {
+  /* background-color: lightpink; */
+  width: 100%;
+  display: flex;
+  gap: 10px;
+}
+
+.cd-cards .card {
+  border-radius: 5px;
+  background-color:  var(--second_background);
+  flex: 1;
+  max-width: 400px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  font-weight: 600;
+}
+
+.cd-card-title {
+  color: #77a6b6;
+  font-weight: 600;
+  line-height: 20px;
+  width: 250px;
+}
+
+.cd-card-subtitle {
+  color: #77a6b6;
+  font-weight: 600;
+}
+
+.cd-card-value {
+  text-align: right;
+  margin-right: 100px;
+  font-size: 24px;
+  line-height: 20px;
+  color: #7d9a99;
+  margin-top: 5px;
+}
+
+.cd-card-subvalue {
+  text-align: right;
+  margin-right: 100px;
+  color: #7d9a99;
+}
+
+.horizontal-rule {
+  width: 100%;
+  max-width: 1460px;
+  height: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 25px 0;
+  opacity: 0.3;
+}
+
+.horizontal-rule span {
+  background-color: #b3d0cf;
+  height: 10px;
+  flex: 1;
+  border-radius: 20px;
+}
+/*-----------PERIODIC WASTE SECTION---------------*/
+/*-----------PERIODIC WASTE SECTION---------------*/
+
+#dashboard-periodic-report .report-sec-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1460px;
+}
+#report-date-range-container {
+  height: auto;
+  display: flex;
+  gap: 10px;
+  /* background-color: yellow; */
+}
+
+.report-heading-container {
+  display: flex;
+  align-items: center;
+}
+
+.main-range-container {
+  display: flex;
+  flex-direction: column;
+}
+
+#date-range {
+  height: 36px;
+  min-width: 213px;
+  font-family: "Poppins";
+  font-weight: 600;
+  color: #7d9a99;
+  border-radius: 2px;
+  border: 1px solid #b3d0cf;
+
+  background: var(--second_background);
+}
+
+#date-range option {
+  font-weight: 600;
+}
+
+.date-range-picker-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 50px;
+  z-index: 2;
+}
+
+.main-range-container label,
+.date-range-picker-container label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #77a6b6;
+}
+
+#actual-date-range {
+  height: 36px;
+  min-height: 36px;
+  min-width: 352px;
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 14px;
+  color: #7d9a99;
+  border-radius: 2px;
+  border: 1px solid #b3d0cf;
+
+  background: var(--second_background);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar-container {
+  border: #77a6b6 1px solid;
+}
+
+.calendar-container .close-btn {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border: none;
+}
+
+.calendar-container .close-btn:hover {
+  background-color: #b3d0cf;
+}
+
+.clickable#actual-date-range {
+  background-color: #fff;
+}
+.clickable#actual-date-range:hover {
+  cursor: pointer;
+  background-color: #77a6b6;
+  color: #fff;
+}
+
+.cards-section-periodic {
+  display: grid;
+  max-width: 1460px;
+}
+
+.cards-section-periodic {
+  margin-top: 10px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 350px 350px;
+  grid-template-areas:
+    "total-waste most-wasted kg-month kg-month"
+    "accumulated price-month price-month expired";
+  gap: 10px;
+}
+
+.cards-section-periodic .card {
+  background-color: var(--second_background);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+.cards-section-periodic .card .h3-periodic {
+  color: #77a6b6;
+  font-weight: 600;
+  text-align: center;
+}
+
+.cards-section-periodic .card .h1-periodic {
+  color: #7d9a99;
+  text-align: center;
+  position: relative;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+}
+#card-periodic-total-waste {
+  grid-area: total-waste;
+}
+
+#card-periodic-most-wasted {
+  grid-area: most-wasted;
+}
+
+#card-periodic-kg-each-month {
+  grid-area: kg-month;
+}
+
+#card-periodic-accumulated {
+  grid-area: accumulated;
+}
+
+#card-periodic-price-each-month {
+  grid-area: price-month;
+}
+
+#card-periodic-expired {
+  grid-area: expired;
+}
+
+.recharts-wrapper {
+  max-width: 95%;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.recharts-surface {
+  width: 100%;
+}

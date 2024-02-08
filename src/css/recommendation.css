@@ -1,0 +1,76 @@
+.recomm-container {
+  width: 1080px;
+  height: 720px;
+  background-color: lightblue;
+  border-radius: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 100px;
+}
+
+.recomm-overlay {
+  position: fixed;
+  z-index: 1000;
+  background-color: rgba(1, 1, 1, 0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.recomm-close-btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  z-index: 2000;
+  border: none;
+  background-color: #fff;
+  color: #273b4a;
+  cursor: pointer;
+}
+
+.recomm-close-btn:hover {
+  background-color: #bebebe;
+}
+
+.recomm-result {
+  color: #27464a;
+  font-size: var(--fs-big);
+  font-weight: 700;
+}
+
+.recomm-result.exceeded {
+  color: #ff233d;
+}
+
+.recomm-summary {
+  margin-top: 20px;
+  font-size: var(--fs-medium);
+  color: #273b4a;
+  font-weight: 600;
+
+}
+
+.recommendations-wrapper {
+  color: #273b4a;
+  height: 400px;
+  width: 100%;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-weight: 600;
+}
+
+.recommendations-wrapper li::marker {
+  font-size: var(--fs-large);
+  color: white;
+}

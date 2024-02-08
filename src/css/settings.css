@@ -1,0 +1,65 @@
+* {
+  margin: 0;
+}
+
+.settings {
+  margin: 40px 80px;
+  flex: 1;
+}
+
+.display-settings-wrapper {
+  background-color: var(--second_background)  ;
+  height: 340px;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 20px 20px 20px 30px;
+  position: relative;
+}
+
+#display-header {
+  background-color: #b3d0cf;
+  border-radius: 5px 5px 0 0;
+  padding: 5px 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.h1-settings {
+  font-size: var(--fs-large);
+  color: #27464a;
+}
+
+.display-content-wrapper {
+  display: flex;
+  margin-top: 70px;
+  gap: 25px;
+  flex-direction: column;
+}
+
+.display-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-label {
+  font-size: var(--fs-medium);
+  font-weight: 600;
+  color: #7d9a99;
+  width: 100px;
+}
+
+.settings-wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#settings-font{
+  background-color: var(--body_background)  ;
+  color:  var(--text-color-primary)  ;
+  font-size: var(--fs-small);
+}
+
