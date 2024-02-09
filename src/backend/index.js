@@ -174,14 +174,14 @@ app.get("/ingredientsDropdown", (req,res)=>{
 
 app.get("/ingredientPrice/:id", (req, res) => {
   const ingredientId = req.params.id;
-  const q = "SELECT `Price` FROM inventory WHERE `Inventory_ID` = ?";
+  const q = "SELECT `Price`, `Type_name`, inventory.Type_ID FROM inventory INNER JOIN type ON inventory.Type_ID = type.Type_ID WHERE `Inventory_ID` = ?";
   
   db.query(q, ingredientId, (err, data) => {
     if (err) return res.json(err);
     if (data.length === 0) {
       return res.status(404).json({ error: "Ingredient not found" });
     }
-    return res.json({ price: data[0].Price });
+    return res.json({ price: data[0].Price, type: data[0].Type_name });
   });
 });
 
@@ -391,22 +391,6 @@ app.post("/updateWaste", (req,res)=>{
     Inventory_ID: inv_id
   };
 
-  app.post("/deleteWaste", (req,res)=>{
-    const q = "DELETE FROM waste WHERE User_id = ? AND Waste_ID = ?";
-    const userID =  1000
-
-    //Delete type of waste
-    db.query(q, [userID, req.body.id], (err,data)=>{
-      if(err){
-        return res.json(err)
-      }else{
-        console.log("Deletion successful. Rows affected:", data.affectedRows);
-      return res.json(data);
-      }
-    })
-  
-  });
-
   //Update selected type of waste
   db.query(q, [values, userID, req.body.id], (err,data)=>{
     if(err){
@@ -414,6 +398,22 @@ app.post("/updateWaste", (req,res)=>{
       return res.json(err)
     }else{
       return res.json(data)
+    }
+  })
+
+});
+
+app.post("/deleteWaste", (req,res)=>{
+  const q = "DELETE FROM waste WHERE User_id = ? AND Waste_ID = ?";
+  const userID =  1000
+
+  //Delete type of waste
+  db.query(q, [userID, req.body.id], (err,data)=>{
+    if(err){
+      return res.json(err)
+    }else{
+      console.log("Deletion successful. Rows affected:", data.affectedRows);
+    return res.json(data);
     }
   })
 
